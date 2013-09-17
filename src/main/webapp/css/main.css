@@ -112,20 +112,6 @@
 }
 
 .sidebar-nav {
-  border-top: none;
-  border-right: 1px none;
-  border-left: none; /*
-  -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9);
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9);   //*/
   margin: 10px;
   margin-top: 20px;
-}
-
-.sidebar-nav li{
-  border:1px;
-  background-color:#f5f5f5;
-  -webkit-border-radius:5px;
-  -moz-border-radius:5px;
-  border-radius:5px;
 }
