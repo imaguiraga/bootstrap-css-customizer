@@ -202,7 +202,7 @@ window.WEB_SAFE_COLORS_RGB = [
   "00FFFF","33FFFF","66FFFF","99FFFF","CCFFFF","FFFFFF"
 ];
 
-WEB_SAFE_COLORS = { groupname:'Web-Safe Colors', colors:[]};
+WEB_SAFE_COLORS = { groupname:'Colors', colors:[]};
   //dynamically compute web safe colors
   var fontColor = 'white';
   for(var i=0;i< WEB_SAFE_COLORS_RGB.length;i++){
