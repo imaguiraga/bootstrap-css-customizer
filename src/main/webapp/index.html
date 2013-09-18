@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js" ng-app>
+<html class="no-js" ng-app="BootstrapColorPickerApp">
 	<!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
@@ -219,14 +219,14 @@
       							</ul>
       						</li>
       						<li>
-      							<a href="#">
+      							<a href="#htmlColorsLink">
       								<i class="icon-link icon-2">
       								</i>
       								Html Colors
       							</a>
       						</li>
       						<li>
-      							<a href="#">
+      							<a href="#webSafeColorsLink">
       								<i class="icon-link icon-2">
       								</i>
       								Web Safe colors(216)
@@ -274,7 +274,7 @@
 							</h1>
 							<p>
 								This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
-								based on http://en.wikipedia.org/wiki/Web_colors
+								based on <a target="_blank" href="http://en.wikipedia.org/wiki/Web_colors">http://en.wikipedia.org/wiki/Web_colors</a>
 							</p>
 							<p>
 								<a class="btn btn-primary btn-lg">
@@ -284,17 +284,21 @@
 						</div>
 					</div>
 					<div class="container well" id="htmlColors" style="background-color:#2f2f2f">
+					   <a id="htmlColorsLink"></a>
 					   <h3 style="color:white">HTML Colors</h4>
 					   <input class="form-control" type="search" ng-model="hf" placeholder="filter HtmlColors..." />
+					   <input id="toggle-name" type="checkbox" ng-model="nameChecked"/>
+				           <label style="color:white" for="toggle-name">Show Names</label>
 					   <div ng-repeat="colorGroup in htmlColors">
                                            <h4 style="color:white">{{colorGroup.groupname}}</h4>
                                              <ul class="list-unstyled">
                                               <li title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box"
                                                 style="background-color:{{color.rgb}};color:{{color.fontColor}};">
-                                              {{color.name}}<br /><span style="font-size:0.85em">{{color.hex}}</span>
+                                              <span ng-show="nameChecked">{{color.name}}</span><span ng-show="!nameChecked">A</span><br /><span style="font-size:0.85em">{{color.hex}}</span>
                                               </li>
                                              </ul>
                                            </div>
+                                           <!--
                                            <div ng-repeat="colorGroup in htmlColors">
                                            <h4 style="color:white">{{colorGroup.groupname}}</h4>
                                              <ul class="list-unstyled">
@@ -304,10 +308,11 @@
                                               </li>
                                              </ul>
                                            </div>
-
+                                            -->
 					</div>
 
                                         <div class="container well" id="webSafeColors" style="background-color:#2f2f2f">
+                                           <a id="webSafeColorsLink"></a>
                                            <h3 style="color:white">Web-Safe Colors</h4>
                                            <div ng-repeat="colorGroup in webSafeColors">
                                            <h4 style="color:white">{{colorGroup.groupname}}</h4><input class="form-control" type="search" ng-model="wf" placeholder="filter WebSafeColors..." />
@@ -316,7 +321,7 @@
                                               style="min-width:5em;background-color:{{color.hex}};color:{{color.fontColor}};">
                                                    A<br /><span style="font-size:0.85em">{{color.hex}}</span>
                                               </li>
-                                              
+
                                              </ul>
                                            </div>
 					</div>
@@ -386,11 +391,11 @@
 <img src="images/html5-badge-h-connectivity-css3-device-graphics-multimedia-performance-semantics-storage.png" width="357" height="64" alt="HTML5 Powered with Connectivity / Realtime, CSS3 / Styling, Device Access, Graphics, 3D &amp; Effects, Multimedia, Performance &amp; Integration, Semantics, and Offline &amp; Storage" title="HTML5 Powered with Connectivity / Realtime, CSS3 / Styling, Device Access, Graphics, 3D &amp; Effects, Multimedia, Performance &amp; Integration, Semantics, and Offline &amp; Storage">
 </a>
 
-				<a class="btn btn-info" style="font-size:1.5em; font-family: 'ChunkFiveRegular';" href="http://www.initializr.com/">Initializr</a>
-				<a class="btn btn-info" style="margin-left: 20px" href="http://getbootstrap.com/">Bootstrap v3.0.0</a>
-				<a class="btn btn-info" style="margin-left: 20px" href="http://bootswatch.com/">Bootswatch</a>
-				<a class="btn btn-info" style="margin-left: 20px" href="http://fortawesome.github.io/Font-Awesome/icon/list/"><i class="icon-flag"></i> Font Awesome</a>
-				<a class="btn btn-info" style="margin-left: 20px" href="https://www.openshift.com/"><b>OPEN</b>SHIFT</a>
+				<a target="_blank" class="btn btn-info" style="font-size:1.5em; font-family: 'ChunkFiveRegular';" href="http://www.initializr.com/">Initializr</a>
+				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="http://getbootstrap.com/">Bootstrap v3.0.0</a>
+				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="http://bootswatch.com/">Bootswatch</a>
+				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="http://fortawesome.github.io/Font-Awesome/icon/list/"><i class="icon-flag"></i> Font Awesome</a>
+				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="https://www.openshift.com/"><b>OPEN</b>SHIFT</a>
 			</p>
 		</footer>
 		<!--
@@ -405,6 +410,7 @@
 		<!--
 		<script src="js/vendor/jquery.xcolor.min.js"></script>
 		-->
+		<script src="js/vendor/jquery-ui-1.10.3.min.js"></script>
 		<script src="js/angular/lib/angular.min.js"></script>
                 <script src="js/angular/colorpicker.js"></script>
 		<script src="js/plugins.js"></script>

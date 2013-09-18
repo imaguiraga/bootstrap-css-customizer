@@ -1,3 +1,5 @@
+var module = angular.module('BootstrapColorPickerApp', []);
+
 /** Color Item */
 function ColorItem(fontColor,name,hex,rgb,hsl,hsv){
   this.fontColor = fontColor;

@@ -86,3 +86,7 @@ function ColorLuminance(hex, lum) {
 	return rgb;
 }
 
+$(function() {
+//    $( document ).tooltip();
+});
+
