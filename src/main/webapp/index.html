@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js">
+<html class="no-js" ng-app>
 	<!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
@@ -36,6 +36,19 @@
 				padding-top: 50px;
 				padding-bottom: 20px;
 			}
+			.color-box{
+			   text-align:center;
+                           padding:2px;
+                           border:0px solid black;
+                           font-weight:bold;
+                           text-overflow:ellipsis;
+                           display:inline-block; 
+                           margin:5px;
+                           min-width:4em;
+                           height:3em;
+                           border-radius: 3px;
+                        }
+
 		</style>
 		<!--
                 <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
@@ -54,7 +67,7 @@
                 </script>
                 -->
 	</head>
-	<body>
+	<body ng-controller="ColorPickerCtrl">
 		<!--[if lt IE 7]>
                         <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
                 <![endif]-->
@@ -136,19 +149,6 @@
 					</ul>
 
 					<form class="navbar-form navbar-right inline-form">
-					<!--
-						<div class="form-group">
-							<input type="text" placeholder="Email" class="form-control" />
-						</div>
-						<div class="form-group">
-							<input type="password" placeholder="Password" class="form-control" />
-						</div>
-						<button type="submit" class="btn btn-success">
-							<i class="icon-signin">
-							</i>
-							Sign in
-						</button>
-						-->
 
 						<div class="form-group">
 						<h4 class="inline">
@@ -170,23 +170,7 @@
 						  </select>
 						</div>
 					</form>
-					<!--
-                                        <p style="width:200px" class="navbar-text pull-right"><span style="margin-left: 20px" class="label label-default">Theme</span>
-                                        <select style="display:inline-block" id="theme-selector2" style="width:120px" class="form-control">
-							  <option value="default">default</option>
-							  <option value="amelia">amelia</option>
-							  <option value="cerulean">cerulean</option>
-							  <option value="cosmo">cosmo</option>
-							  <option value="cyborg">cyborg</option>
-							  <option value="flatly">flatly</option>
-							  <option value="journal">journal</option>
-							  <option value="readable">readable</option>
-							  <option value="simplex">simplex</option>
-							  <option value="slate">slate</option>
-							  <option value="spacelab">spacelab</option>
-							  <option value="united">united</option>
-					</select></p>
-			              -->
+
 				</div>
 				<!-- /.navbar-collapse -->
 			</div>
@@ -238,7 +222,14 @@
       							<a href="#">
       								<i class="icon-link icon-2">
       								</i>
-      								Links
+      								Html Colors
+      							</a>
+      						</li>
+      						<li>
+      							<a href="#">
+      								<i class="icon-link icon-2">
+      								</i>
+      								Web Safe colors(216)
       							</a>
       						</li>
       						<li>
@@ -283,6 +274,7 @@
 							</h1>
 							<p>
 								This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+								based on http://en.wikipedia.org/wiki/Web_colors
 							</p>
 							<p>
 								<a class="btn btn-primary btn-lg">
@@ -290,6 +282,40 @@
 								</a>
 							</p>
 						</div>
+					</div>
+					<div class="container well" id="htmlColors" style="background-color:#2f2f2f">
+					   <div ng-repeat="colorGroup in htmlColors">
+                                           <h4 style="color:white">{{colorGroup.groupname}}</h4>
+                                             <ul class="list-unstyled">
+                                              <li title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors" class="color-box"
+                                                style="background-color:{{color.rgb}};color:{{color.fontColor}};">
+                                              {{color.name}}<br /><span style="font-size:0.85em">{{color.hex}}</span>
+                                              </li>
+                                             </ul>
+                                           </div>
+                                           <div ng-repeat="colorGroup in htmlColors">
+                                           <h4 style="color:white">{{colorGroup.groupname}}</h4>
+                                             <ul class="list-unstyled">
+                                              <li title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors" class="color-box"
+                                              style="background-color:{{color.hex}};color:{{color.fontColor}};">
+                                                   A<br /><span style="font-size:0.85em">{{color.hex}}</span>
+                                              </li>
+                                             </ul>
+                                           </div>
+
+					</div>
+
+                                        <div class="container well" id="webSafeColors" style="background-color:#2f2f2f">
+
+                                           <div ng-repeat="colorGroup in webSafeColors">
+                                           <h4 style="color:white">{{colorGroup.groupname}}</h4>
+                                             <ul class="list-unstyled">
+                                              <li title="{{color.hex}}" ng-repeat="color in colorGroup.colors" class="color-box"
+                                              style="min-width:5em;background-color:{{color.hex}};color:{{color.fontColor}};">
+                                                   A<br /><span style="font-size:0.85em">{{color.hex}}</span>
+                                              </li>
+                                             </ul>
+                                           </div>
 					</div>
 					<div class="container">
 						<!-- Example row of columns -->
@@ -373,7 +399,11 @@
 			window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
 
 		<script src="js/vendor/bootstrap.min.js"></script>
+		<!--
 		<script src="js/vendor/jquery.xcolor.min.js"></script>
+		-->
+		<script src="js/angular/lib/angular.min.js"></script>
+                <script src="js/angular/colorpicker.js"></script>
 		<script src="js/plugins.js"></script>
 		<script src="js/main.js"></script>
 		<script src="js/theme.js"></script>
