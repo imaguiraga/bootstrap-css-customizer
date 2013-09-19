@@ -11,7 +11,7 @@ function ColorItem(fontColor,name,hex,rgb,hsl,hsv){
   this.hsv = hsv;
 };
 
-window.HTML_COLORS = [
+var HTML_COLORS = [
 { groupname:'Pink colors', colors :[
 new ColorItem('black','Pink','#FFC0CB','rgb(255,192,203)'),
 new ColorItem('black','LightPink','#FFB6C1','rgb(255,182,193)'),
@@ -166,7 +166,7 @@ new ColorItem('white','Black','#000000','rgb(0,0,0)')
 ]}
   ];
 
-window.WEB_SAFE_COLORS_RGB = [
+var WEB_SAFE_COLORS_RGB = [
   "000000","330000","660000","990000","CC0000","FF0000",
   "000033","330033","660033","990033","CC0033","FF0033",
   "000066","330066","660066","990066","CC0066","FF0066",
@@ -205,11 +205,11 @@ window.WEB_SAFE_COLORS_RGB = [
   "00FFFF","33FFFF","66FFFF","99FFFF","CCFFFF","FFFFFF"
 ];
 
-window.WEB_SAFE_COLORS = { groupname:'Colors', colors:[]};
+var WEB_SAFE_COLORS = { groupname:'Colors', colors:[]};
   //dynamically compute web safe colors
   var fontColor = 'white';
   for(var i=0;i< WEB_SAFE_COLORS_RGB.length;i++){
-    if( i == 143){
+    if( i === 143){
       fontColor = 'black';
     }
         var hex = '#'+WEB_SAFE_COLORS_RGB[i];
@@ -219,14 +219,25 @@ window.WEB_SAFE_COLORS = { groupname:'Colors', colors:[]};
   } ;
 
 
-/* Controllers */
-
+/** Angular Controllers */
+//Method 1 implicit injectors
 angular.module('BootstrapThemePreviewerApp.controllers', []).
-  controller('ColorPickerCtrl', [function($scope) {
-    /** Angular Controller */
+  controller('ColorPickerCtrl', function($scope) {
+    $scope.htmlColors = HTML_COLORS;
+    $scope.webSafeColors = [WEB_SAFE_COLORS];
+  })
+  .controller('MyCtrl2', function() {
+
+  });
+
+//Method 2 explicit injectors Array
+/*
+angular.module('BootstrapThemePreviewerApp.controllers', []).
+  controller('ColorPickerCtrl', ['$scope',function($scope) {
     $scope.htmlColors = HTML_COLORS;
     $scope.webSafeColors = [WEB_SAFE_COLORS];
   }])
-  .controller('MyCtrl2', [function() {
+  .controller('MyCtrl2', [[],function() {
 
   }]);
+  //*/
