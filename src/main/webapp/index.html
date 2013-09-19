@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html class="no-js" ng-app="BootstrapColorPickerApp">
+<html class="no-js" ng-app="BootstrapThemePreviewerApp">
 	<!--<![endif]-->
 	<head>
 		<meta charset="utf-8">
@@ -11,9 +11,12 @@
 		<title>
 			imaguiraga-colorpicker
 		</title>
-		<meta name="description" content="">
+		<meta name="author" content="Ibrahim Maguiraga">
+		<meta name="description" content="An advanced Botstrap CSS Previewer with color swatches and support for human perceived lightness. Works in all modern browsers and on touch devices.">
 		<meta name="viewport" content="width=device-width">
 		<meta http-equiv="Default-Style" content="default">
+                <meta itemprop="name" content="BootStrap Themes jQuery Color Picker Sliders">
+
 		<link rel="stylesheet" type="text/css" title="default" href="css/bootstrap.min.css" />
 		<!--
 		<link rel="stylesheet" title="default" href="css/theme/default/bootstrap.min.css" />
@@ -46,9 +49,23 @@
                            margin:5px;
                            min-width:4em;
                            height:3em;
+                           -moz-border-radius: 3px;
+                           -webkit-border-radius: 3px;
+                           -khtml-border-radius: 3px;
                            border-radius: 3px;
                         }
-
+                        .color-box-input{
+                          text-align:center;
+                          display:inline-block;
+                          border:0px;witdh:4em;
+                          margin:0px;
+                          font-size:0.85em;
+                          -moz-border-radius: 2px;
+                           -webkit-border-radius: 2px;
+                           -khtml-border-radius: 2px;
+                           border-radius: 2px;
+                           padding:0px;
+                        }
 		</style>
 		<!--
                 <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
@@ -286,6 +303,7 @@
 					<div class="container well" id="htmlColors" style="background-color:#2f2f2f">
 					   <a id="htmlColorsLink"></a>
 					   <h3 style="color:white">HTML Colors</h4>
+					   <!--  Toggle On/Off colornames -->
 					   <input class="form-control" type="search" ng-model="hf" placeholder="filter HtmlColors..." />
 					   <input id="toggle-name" type="checkbox" ng-model="nameChecked"/>
 				           <label style="color:white" for="toggle-name">Show Names</label>
@@ -294,21 +312,10 @@
                                              <ul class="list-unstyled">
                                               <li title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box"
                                                 style="background-color:{{color.rgb}};color:{{color.fontColor}};">
-                                              <span ng-show="nameChecked">{{color.name}}</span><span ng-show="!nameChecked">A</span><br /><span style="font-size:0.85em">{{color.hex}}</span>
+                                              <span ng-show="nameChecked">{{color.name}}</span><span ng-show="!nameChecked">A</span><br /><input size="7" type="text" class="color-box-input" style="background-color:{{color.rgb}};color:{{color.fontColor}};" value="{{color.hex}}" />
                                               </li>
                                              </ul>
                                            </div>
-                                           <!--
-                                           <div ng-repeat="colorGroup in htmlColors">
-                                           <h4 style="color:white">{{colorGroup.groupname}}</h4>
-                                             <ul class="list-unstyled">
-                                              <li title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors | filter:f" class="color-box"
-                                              style="background-color:{{color.hex}};color:{{color.fontColor}};">
-                                                   A<br /><span style="font-size:0.85em">{{color.hex}}</span>
-                                              </li>
-                                             </ul>
-                                           </div>
-                                            -->
 					</div>
 
                                         <div class="container well" id="webSafeColors" style="background-color:#2f2f2f">
@@ -317,9 +324,9 @@
                                            <div ng-repeat="colorGroup in webSafeColors">
                                            <h4 style="color:white">{{colorGroup.groupname}}</h4><input class="form-control" type="search" ng-model="wf" placeholder="filter WebSafeColors..." />
                                              <ul class="list-unstyled">
-                                              <li title="{{color.hex}}" ng-repeat="color in colorGroup.colors | filter:wf" class="color-box"
-                                              style="min-width:5em;background-color:{{color.hex}};color:{{color.fontColor}};">
-                                                   A<br /><span style="font-size:0.85em">{{color.hex}}</span>
+                                              <li title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors | filter:wf" class="color-box"
+                                              style="min-width:5em;background-color:{{color.rgb}};color:{{color.fontColor}};">
+                                                   <span>A</span><br /><input size="7" type="text" class="form-controlx color-box-input" style="background-color:{{color.rgb}};color:{{color.fontColor}};" value="{{color.hex}}" />
                                               </li>
 
                                              </ul>
@@ -407,15 +414,26 @@
 			window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
 
 		<script src="js/vendor/bootstrap.min.js"></script>
+
+		<script src="js/vendor/jquery-ui-1.10.3.min.js"></script>
+		<script src="js/angular/lib/angular.min.js"></script>
+		<script src="js/vendor/jquery.colorpickersliders.js"></script>
 		<!--
 		<script src="js/vendor/jquery.xcolor.min.js"></script>
 		-->
-		<script src="js/vendor/jquery-ui-1.10.3.min.js"></script>
-		<script src="js/angular/lib/angular.min.js"></script>
-                <script src="js/angular/colorpicker.js"></script>
-		<script src="js/plugins.js"></script>
 		<script src="js/main.js"></script>
+
+		<script src="js/plugins.js"></script>
 		<script src="js/theme.js"></script>
+                <script src="js/angular/mycolorpicker.js"></script>
+		<!-- angular js components
+		<script src="js/angular/filters.js"></script>
+		<script src="js/angular/controllers.js"></script>
+		<script src="js/angular/directives.js"></script>
+		<script src="js/angular/services.js"></script>
+                <script src="js/angular/app.js"></script>
+                 -->
+
 		<!--
 		<script>
 			var _gaq=[['_setAccount','UA-43966487-2'],['_trackPageview']];
