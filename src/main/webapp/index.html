@@ -56,6 +56,7 @@
                         }
                         .color-box-input{
                           text-align:center;
+                          text-transform:uppercase;
                           display:inline-block;
                           border:0px;witdh:4em;
                           margin:0px;
@@ -300,6 +301,7 @@
 							</p>
 						</div>
 					</div>
+					<span id="colorpicker"></span>
 					<div class="container well" id="htmlColors" style="background-color:#2f2f2f">
 					   <a id="htmlColorsLink"></a>
 					   <h3 style="color:white">HTML Colors</h4>
@@ -336,7 +338,7 @@
                                                    type="text" 
                                                    class="form-controlx color-box-input" 
                                                    style="background-color:{{color.rgb}};color:{{color.fontColor}};" 
-                                                   value="{{color.hex}}" color-picker />
+                                                   value="{{color.hex}}" ng-transclude color-picker />
                                               </li>
 
                                              </ul>
@@ -430,10 +432,10 @@
 
 		<script src="js/vendor/tinycolor-min.js"></script>
 		<script src="js/vendor/jquery.colorpickersliders.js"></script>
-		<script src="js/vendor/colorpicker.js"></script>
-		<!--
+
+		<!-- <script src="js/vendor/colorpicker.js"></script> -->
 		<script src="js/vendor/jquery.xcolor.min.js"></script>
-		-->
+
 		<script src="js/main.js"></script>
 
 		<script src="js/plugins.js"></script>

@@ -214,7 +214,7 @@ var WEB_SAFE_COLORS = { groupname:'Colors', colors:[]};
     }
         var hex = '#'+WEB_SAFE_COLORS_RGB[i];
         WEB_SAFE_COLORS.colors.push (
-                 new ColorItem(fontColor,'NA',hex,hexToRgbString(hex))
+                 new ColorItem(fontColor,$.xcolor.nearestname(hex),hex,hexToRgbString(hex))
         );
   } ;
 

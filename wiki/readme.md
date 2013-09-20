@@ -54,6 +54,27 @@ directiveModule.directive('colorPicker',
   );
 </code> </pre>
 
+use scope to lookupfor resolved variable in link functions
+
+wire onchange to background values
+https://github.com/bgrins/TinyColor
+  <pre><code>
+ onchange: function(container, color) {
+                    //update scope variables double bindings
+                    //tinycolor object is in color.tiny
+                     scope.color.hex = color.tiny.toHexString();
+                     scope.color.rgb = color.tiny.toRgbString();
+                     scope.color.name = color.tiny.toName();
+                     scope.color.name = $.xColor(color.tiny.toHexString()).getName();
+                     //fires DOM updates
+                     scope.$digest();
+                  }
+</code> </pre>
+
+color manipulation library
+http://www.xarg.org/project/jquery-color-plugin-xcolor/#meth_darken
+
+
 # AngularJs notes
 http://docs.angularjs.org/guide/
 <pre><code>
