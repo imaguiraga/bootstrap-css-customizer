@@ -53,7 +53,7 @@ directiveModule.directive('colorPicker',
                     //tinycolor object is in color.tiny
                      scope.color.hex = color.tiny.toHexString();
                      scope.color.rgb = color.tiny.toRgbString();
-                     scope.color.name = color.tiny.toName();
+                     //scope.color.name = color.tiny.toName();
                      scope.color.name = $.xcolor.nearestname(color.tiny.toHexString());
                      scope.color.hsl = color.tiny.toHslString();
                      //TODO dynamically update fontcolor
