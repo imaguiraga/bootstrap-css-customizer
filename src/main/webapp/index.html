@@ -39,7 +39,7 @@
 				padding-top: 50px;
 				padding-bottom: 20px;
 			}
-			.color-box-normal{
+			.color-box-large{
 			   text-align:center;
                padding:2px;
                border:0px solid black;
@@ -70,7 +70,7 @@
                border-radius: 2px;
             }
 
-            li.color-box-small > span,li.color-box-small > input{
+            .color-box-small > span,.color-box-small > input{
                display:none;
             }
 
@@ -305,6 +305,7 @@
 						</li>
 					</ol>
 					<!-- Main jumbotron for a primary marketing message or call to action -->
+					<!--
 					<div class="jumbotron">
 						<div class="container">
 							<h1>
@@ -321,12 +322,13 @@
 							</p>
 						</div>
 					</div>
+					-->
 					<ul class="nav nav-tabs" id="colorTab">
                       <li class="active"><a href="#htmlColors" data-toggle="tab">HTML Colors</a></li>
                       <li><a href="#webSafeColors" data-toggle="tab">Web-Safe Colors</a></li>
                     </ul>
                     
-                    <div class="tab-content" ng-init="boxSize='normal'">
+                    <div class="tab-content" ng-init="boxSize='small'">
     					<div class="tab-pane active container well" id="htmlColors" style="background-color:#2f2f2f">
     					   <a id="htmlColorsLink"></a>
     					   <h3 style="color:white;display:inline-block">HTML Colors</h3>
@@ -335,11 +337,12 @@
                                 <input type="checkbox" ng-model="nameChecked" /> Show Names
                               </label>
                               <label class="btn btn-primary active">
-                                <input type="radio" name="options" ng-model="boxSize" value="normal" /> Normal
-                              </label>
-                              <label class="btn btn-primary">
                                 <input type="radio" name="options" ng-model="boxSize" value="small" /> Small
                               </label>
+                              <label class="btn btn-primary">
+                                <input type="radio" name="options" ng-model="boxSize" value="large" /> Large
+                              </label>
+
                             </div>
     					   <!--  Toggle On/Off colornames -->
     					   <input class="form-control" type="search" ng-model="hf" placeholder="Filter Html Colors ..." />
@@ -351,7 +354,7 @@
                                     ng-repeat="color in colorGroup.colors | filter:hf"
                                     class="color-box-{{boxSize}}"
                                   style="background-color:{{color.rgb}};color:{{color.fontColor}};">
-                                <span ng-show="nameChecked">{{color.name}}</span><span>A</span><br /><input size="7"
+                                <span ng-show="nameChecked">{{color.name}}</span><span ng-show="!nameChecked">A</span><br /><input size="7"
                                      data-color-format="hex"
                                      type="text" 
                                      class="form-controlx color-box-input" 
@@ -370,10 +373,10 @@
                                 <input type="checkbox" ng-model="nameChecked" /> Show Names
                               </label>
                               <label class="btn btn-primary active">
-                                <input type="radio" name="options" ng-model="boxSize" value="normal" /> Normal
+                                <input type="radio" name="options" ng-model="boxSize" value="small" /> Small
                               </label>
                               <label class="btn btn-primary">
-                                <input type="radio" name="options" ng-model="boxSize" value="small" /> Small
+                                <input type="radio" name="options" ng-model="boxSize" value="large" /> Large
                               </label>
                             </div>
     				         <!--  Toggle On/Off colornames -->
@@ -384,7 +387,7 @@
                                   <li id="ws-color-box-{{$index}}"title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors | filter:wf" 
                                   class="color-box-{{boxSize}}"
                                   style="background-color:{{color.rgb}};color:{{color.fontColor}};">
-                                       <span ng-show="nameChecked">{{color.name}}</span><span>A</span><br /><input size="7"
+                                       <span ng-show="nameChecked">{{color.name}}</span><span ng-show="!nameChecked">A</span><br /><input size="7"
                                        data-color-format="hex"
                                        type="text" 
                                        class="form-controlx color-box-input" 
