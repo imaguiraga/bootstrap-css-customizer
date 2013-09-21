@@ -30,19 +30,34 @@ directiveModule.directive('colorPicker',
      }
   );  //*/
 
+
+directiveModule.directive('dragSource',
+     function factory() {
+       return {
+          restrict: 'A',
+          // This HTML will replace the directive.
+          replace: true,
+          // The linking function will add behavior to the template
+          link: function postLink(scope, element, attrs) {
+            //make parent element draggable
+            element.draggable({ revert: "valid",cursor: "move" });
+          }
+       }; 
+});
+
 directiveModule.directive('colorPicker',
      function factory() {
        return {
           restrict: 'A',
           // This HTML will replace the directive.
           replace: true,
-          transclude: true,
+          //transclude: true,
           // The linking function will add behavior to the template
           link: function postLink(scope, element, attrs) {
 
           //make parent element draggable
-          element.parent().draggable();
-          element.click( function(){
+          element.draggable({ revert: "valid",cursor: "move" ,opacity: 0.7, helper: "clone",revertDuration: 200 });
+          element.focusin( function(){
               var slider = $(this).ColorPickerSliders({
                   color: scope.color.hex,
                   order: {
