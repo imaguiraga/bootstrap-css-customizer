@@ -12,14 +12,14 @@ function ColorItem(fontColor,name,hex,rgb,hsl,hsv){
 };
 
 var HTML_COLORS = [
-{ groupname:'Pink colors', colors :[
+{ groupName:'Pink colors', colors :[
 new ColorItem('black','Pink','#FFC0CB','rgb(255,192,203)'),
 new ColorItem('black','LightPink','#FFB6C1','rgb(255,182,193)'),
 new ColorItem('white','HotPink','#FF69B4','rgb(255,105,180)'),
 new ColorItem('white','DeepPink','#FF1493','rgb(255,20,147)'),
 new ColorItem('white','PaleVioletRed','#DB7093','rgb(219,112,147)'),
 new ColorItem('white','MediumVioletRed','#C71585','rgb(199,21,133)')
-]} , { groupname:'Red colors', colors :[
+]} , { groupName:'Red colors', colors :[
 new ColorItem('black','LightSalmon','#FFA07A','rgb(255,160,122)'),
 new ColorItem('black','Salmon','#FA8072','rgb(250,128,114)'),
 new ColorItem('black','DarkSalmon','#E9967A','rgb(233,150,122)'),
@@ -29,14 +29,14 @@ new ColorItem('white','Crimson','#DC143C','rgb(220,20,60)'),
 new ColorItem('white','FireBrick','#B22222','rgb(178,34,34)'),
 new ColorItem('white','DarkRed','#8B0000','rgb(139,0,0)'),
 new ColorItem('white','Red','#FF0000','rgb(255,0,0)')
-]} , { groupname:'Orange colors', colors :[
+]} , { groupName:'Orange colors', colors :[
 new ColorItem('white','OrangeRed','#FF4500','rgb(255,69,0)'),
 new ColorItem('white','Tomato','#FF6347','rgb(255,99,71)'),
 new ColorItem('white','Coral','#FF7F50','rgb(255,127,80)'),
 new ColorItem('white','DarkOrange','#FF8C00','rgb(255,140,0)'),
 new ColorItem('white','Orange','#FFA500','rgb(255,165,0)'),
 new ColorItem('black','Gold','#FFD700','rgb(255,215,0)')
-]} , { groupname:'Yellow colors', colors :[
+]} , { groupName:'Yellow colors', colors :[
 new ColorItem('black','Yellow','#FFFF00','rgb(255,255,0)'),
 new ColorItem('black','LightYellow','#FFFFE0','rgb(255,255,224)'),
 new ColorItem('black','LemonChiffon','#FFFACD','rgb(255,250,205)'),
@@ -47,7 +47,7 @@ new ColorItem('black','PeachPuff','#FFDAB9','rgb(255,218,185)'),
 new ColorItem('black','PaleGoldenrod','#EEE8AA','rgb(238,232,170)'),
 new ColorItem('black','Khaki','#F0E68C','rgb(240,230,140)'),
 new ColorItem('black','DarkKhaki','#BDB76B','rgb(189,183,107)')
-]} , { groupname:'Brown colors', colors :[
+]} , { groupName:'Brown colors', colors :[
 new ColorItem('black','Cornsilk','#FFF8DC','rgb(255,248,220)'),
 new ColorItem('black','BlanchedAlmond','#FFEBCD','rgb(255,235,205)'),
 new ColorItem('black','Bisque','#FFE4C4','rgb(255,228,196)'),
@@ -65,7 +65,7 @@ new ColorItem('white','SaddleBrown','#8B4513','rgb(139,69,19)'),
 new ColorItem('white','Sienna','#A0522D','rgb(160,82,45)'),
 new ColorItem('white','Brown','#A52A2A','rgb(165,42,42)'),
 new ColorItem('white','Maroon','#800000','rgb(128,0,0)')
-]} , { groupname:'Green colors', colors :[
+]} , { groupName:'Green colors', colors :[
 new ColorItem('white','DarkOliveGreen','#556B2F','rgb(85,107,47)'),
 new ColorItem('white','Olive','#808000','rgb(128,128,0)'),
 new ColorItem('white','OliveDrab','#6B8E23','rgb(107,142,35)'),
@@ -85,7 +85,7 @@ new ColorItem('white','SeaGreen','#2E8B57','rgb(46,139,87)'),
 new ColorItem('white','ForestGreen','#228B22','rgb(34,139,34)'),
 new ColorItem('white','Green','#008000','rgb(0,128,0)'),
 new ColorItem('white','DarkGreen','#006400','rgb(0,100,0)')
-]} , { groupname:'Cyan colors', colors :[
+]} , { groupName:'Cyan colors', colors :[
 new ColorItem('black','MediumAquamarine','#66CDAA','rgb(102,205,170)'),
 new ColorItem('black','Aqua','#00FFFF','rgb(0,255,255)'),
 new ColorItem('black','Cyan','#00FFFF','rgb(0,255,255)'),
@@ -99,7 +99,7 @@ new ColorItem('white','LightSeaGreen','#20B2AA','rgb(32,178,170)'),
 new ColorItem('white','CadetBlue','#5F9EA0','rgb(95,158,160)'),
 new ColorItem('white','DarkCyan','#008B8B','rgb(0,139,139)'),
 new ColorItem('white','Teal','#008080','rgb(0,128,128)')
-]} , { groupname:'Blue colors', colors :[
+]} , { groupName:'Blue colors', colors :[
 new ColorItem('black','LightSteelBlue','#B0C4DE','rgb(176,196,222)'),
 new ColorItem('black','PowderBlue','#B0E0E6','rgb(176,224,230)'),
 new ColorItem('black','LightBlue','#ADD8E6','rgb(173,216,230)'),
@@ -115,7 +115,7 @@ new ColorItem('white','MediumBlue','#0000CD','rgb(0,0,205)'),
 new ColorItem('white','DarkBlue','#00008B','rgb(0,0,139)'),
 new ColorItem('white','Navy','#000080','rgb(0,0,128)'),
 new ColorItem('white','MidnightBlue','#191970','rgb(25,25,112)')
-]} , { groupname:'Purple colors', colors :[
+]} , { groupName:'Purple colors', colors :[
 new ColorItem('black','Lavender','#E6E6FA','rgb(230,230,250)'),
 new ColorItem('black','Thistle','#D8BFD8','rgb(216,191,216)'),
 new ColorItem('black','Plum','#DDA0DD','rgb(221,160,221)'),
@@ -134,7 +134,7 @@ new ColorItem('white','Indigo','#4B0082','rgb(75,0,130)'),
 new ColorItem('white','DarkSlateBlue','#483D8B','rgb(72,61,139)'),
 new ColorItem('white','SlateBlue','#6A5ACD','rgb(106,90,205)'),
 new ColorItem('white','MediumSlateBlue','#7B68EE','rgb(123,104,238)')
-]} , { groupname:'White colors', colors :[
+]} , { groupName:'White colors', colors :[
 new ColorItem('black','White','#FFFFFF','rgb(255,255,255)'),
 new ColorItem('black','Snow','#FFFAFA','rgb(255,250,250)'),
 new ColorItem('black','Honeydew','#F0FFF0','rgb(240,255,240)'),
@@ -152,7 +152,7 @@ new ColorItem('black','AntiqueWhite','#FAEBD7','rgb(250,235,215)'),
 new ColorItem('black','Linen','#FAF0E6','rgb(250,240,230)'),
 new ColorItem('black','LavenderBlush','#FFF0F5','rgb(255,240,245)'),
 new ColorItem('black','MistyRose','#FFE4E1','rgb(255,228,225)')
-]} , { groupname:'Gray/Grey/Black colors', colors :[
+]} , { groupName:'Gray/Grey/Black colors', colors :[
 new ColorItem('black','Gainsboro','#DCDCDC','rgb(220,220,220)'),
 new ColorItem('black','LightGray','#D3D3D3','rgb(211,211,211)'),
 new ColorItem('black','Silver','#C0C0C0','rgb(192,192,192)'),
@@ -205,7 +205,7 @@ var WEB_SAFE_COLORS_RGB = [
   "00FFFF","33FFFF","66FFFF","99FFFF","CCFFFF","FFFFFF"
 ];
 
-var WEB_SAFE_COLORS = { groupname:'Colors', colors:[]};
+var WEB_SAFE_COLORS = { groupName:'Colors', colors:[]};
   //dynamically compute web safe colors
   var fontColor = 'white';
   for(var i=0;i< WEB_SAFE_COLORS_RGB.length;i++){

@@ -31,7 +31,7 @@ directiveModule.directive('colorPicker',
   );  //*/
 
 directiveModule.directive('colorPicker',
-     function() {
+     function factory() {
        return {
           restrict: 'A',
           // This HTML will replace the directive.
@@ -40,7 +40,9 @@ directiveModule.directive('colorPicker',
           // The linking function will add behavior to the template
           link: function postLink(scope, element, attrs) {
 
-           element.click( function(){
+          //make parent element draggable
+          element.parent().draggable();
+          element.click( function(){
               var slider = $(this).ColorPickerSliders({
                   color: scope.color.hex,
                   order: {
@@ -56,7 +58,13 @@ directiveModule.directive('colorPicker',
                      //scope.color.name = color.tiny.toName();
                      scope.color.name = $.xcolor.nearestname(color.tiny.toHexString());
                      scope.color.hsl = color.tiny.toHslString();
-                     //TODO dynamically update fontcolor
+                     //dynamically update fontcolor
+                     if($.xcolor.readable("black",scope.color.hex)){
+                         scope.color.fontColor = "black";
+                      } else {
+                         scope.color.fontColor = "white";
+                      }
+
                      //fire DOM updates
                      scope.$digest();
                   }
@@ -67,9 +75,10 @@ directiveModule.directive('colorPicker',
 
             element.blur( function(){
               //hide colorpicker
-               $(this).trigger("colorpickersliders.hidePopup");
+               //$(this).trigger("colorpickersliders.hidePopup");
                //destroy DOM to
-               $(this).ColorPickerSliders().empty();
+               //var tmp = $(this) ;
+               //tmp.ColorPickerSliders().empty();
                console.log("blured - "+scope.color.hex);
             });
             //console.log(attrs+" - "+ element.attr('value')+" - "+scope.color.hex);

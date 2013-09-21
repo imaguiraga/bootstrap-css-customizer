@@ -37,6 +37,7 @@
 </code> </pre>
 * Adding color picker
 http://www.virtuosoft.eu/code/jquery-colorpickersliders/
+http://en.wikipedia.org/wiki/Web_colors
 https://github.com/bgrins/TinyColor
 Created a directive to encapsulate JQuery Object creation
 
@@ -54,7 +55,7 @@ directiveModule.directive('colorPicker',
   );
 </code> </pre>
 
-use scope to lookupfor resolved variable in link functions
+use scope to lookup for resolved variable in link functions
 
 wire onchange to background values
 https://github.com/bgrins/TinyColor
@@ -64,16 +65,39 @@ https://github.com/bgrins/TinyColor
                     //tinycolor object is in color.tiny
                      scope.color.hex = color.tiny.toHexString();
                      scope.color.rgb = color.tiny.toRgbString();
-                     scope.color.name = color.tiny.toName();
-                     scope.color.name = $.xColor(color.tiny.toHexString()).getName();
+                     //scope.color.name = color.tiny.toName();
+                     scope.color.name = $.xcolor.nearestname(color.tiny.toHexString());
+                     scope.color.hsl = color.tiny.toHslString();
+                     //dynamically update fontcolor
+                     //dynamically update fontcolor
+                     if($.xcolor.readable("black",scope.color.hex)){
+                         scope.color.fontColor = "black";
+                     } else {
+                         scope.color.fontColor = "white";
+                     }
                      //fires DOM updates
-                     scope.$digest();
+                     //scope.$digest();
+                     scope.$apply();
                   }
 </code> </pre>
+bound scope varivales are updatated automatically
+unbound field can be updated using scope$watch(scope variable/expression)(template->DOM) or attrs.$observe(DOM attribute name)(DOM -> Template)
 
 color manipulation library
 http://www.xarg.org/project/jquery-color-plugin-xcolor/#meth_darken
 
+Created tab for Colors Group
+<ul class="nav nav-tabs" id="colorTab">
+  <li class="active"><a href="#htmlColors" data-toggle="tab">HTML Colors</a></li>
+  <li><a href="#webSafeColors" data-toggle="tab">Web-Safe Colors</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="htmlColors">...</div>
+  <div class="tab-pane" id="webSafeColors">...</div>
+</div>
+
+Add Drag and Drop Capability
 
 # AngularJs notes
 http://docs.angularjs.org/guide/

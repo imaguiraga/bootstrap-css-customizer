@@ -39,34 +39,54 @@
 				padding-top: 50px;
 				padding-bottom: 20px;
 			}
-			.color-box{
+			.color-box-normal{
 			   text-align:center;
-                           padding:2px;
-                           border:0px solid black;
-                           font-weight:bold;
-                           text-overflow:ellipsis;
-                           display:inline-block; 
-                           margin:5px;
-                           min-width:4em;
-                           height:3em;
-                           -moz-border-radius: 3px;
-                           -webkit-border-radius: 3px;
-                           -khtml-border-radius: 3px;
-                           border-radius: 3px;
-                        }
-                        .color-box-input{
-                          text-align:center;
-                          text-transform:uppercase;
-                          display:inline-block;
-                          border:0px;witdh:4em;
-                          margin:0px;
-                          font-size:0.85em;
-                          -moz-border-radius: 2px;
-                           -webkit-border-radius: 2px;
-                           -khtml-border-radius: 2px;
-                           border-radius: 2px;
-                           padding:0px;
-                        }
+               padding:2px;
+               border:0px solid black;
+               font-weight:bold;
+               text-overflow:ellipsis;
+               display:inline-block; 
+               margin:5px;
+               min-width:4em;
+               height:3em;
+               -moz-border-radius: 3px;
+               -webkit-border-radius: 3px;
+               -khtml-border-radius: 3px;
+               border-radius: 3px;
+            }
+            .color-box-small{
+			   text-align:center;
+               padding:0px;
+               border:0px solid black;
+               font-weight:bold;
+               text-overflow:ellipsis;
+               display:inline-block; 
+               margin:2px;
+               width:16px;
+               height:16px;
+               -moz-border-radius: 2px;
+               -webkit-border-radius: 2px;
+               -khtml-border-radius: 2px;
+               border-radius: 2px;
+            }
+
+            li.color-box-small > span,li.color-box-small > input{
+               display:none;
+            }
+
+            .color-box-input{
+              text-align:center;
+              text-transform:uppercase;
+              display:inline-block;
+              border:0px;witdh:4em;
+              margin:0px;
+              font-size:0.85em;
+              -moz-border-radius: 2px;
+               -webkit-border-radius: 2px;
+               -khtml-border-radius: 2px;
+               border-radius: 2px;
+               padding:0px;
+            }
 		</style>
 		<!--
                 <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
@@ -301,48 +321,80 @@
 							</p>
 						</div>
 					</div>
-					<span id="colorpicker"></span>
-					<div class="container well" id="htmlColors" style="background-color:#2f2f2f">
-					   <a id="htmlColorsLink"></a>
-					   <h3 style="color:white">HTML Colors</h4>
-					   <!--  Toggle On/Off colornames -->
-					   <input class="form-control" type="search" ng-model="hf" placeholder="filter HtmlColors..." />
-					   <input id="toggle-name" type="checkbox" ng-model="nameChecked"/>
-				           <label style="color:white" for="toggle-name">Show Names</label>
-					   <div ng-repeat="colorGroup in htmlColors">
-                                           <h4 style="color:white">{{colorGroup.groupname}}</h4>
-                                             <ul class="list-unstyled">
-                                              <li id="color-box-{{$index}}" title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box"
-                                                style="background-color:{{color.rgb}};color:{{color.fontColor}};">
-                                              <span ng-show="nameChecked">{{color.name}}</span><span ng-show="!nameChecked">A</span><br /><input size="7"
-                                                   data-color-format="hex"
-                                                   type="text" 
-                                                   class="form-controlx color-box-input" 
-                                                   style="background-color:{{color.rgb}};color:{{color.fontColor}};" 
-                                                   value="{{color.hex}}" color-picker id="color-box-input-{{$index}}" />
-                                              </li>
-                                             </ul>
-                                           </div>
-					</div>
-
-                                        <div class="container well" id="webSafeColors" style="background-color:#2f2f2f">
-                                           <a id="webSafeColorsLink"></a>
-                                           <h3 style="color:white">Web-Safe Colors</h4>
-                                           <div ng-repeat="colorGroup in webSafeColors">
-                                           <h4 style="color:white">{{colorGroup.groupname}}</h4><input class="form-control" type="search" ng-model="wf" placeholder="filter WebSafeColors..." />
-                                             <ul class="list-unstyled">
-                                              <li id="ws-color-box-{{$index}}"title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors | filter:wf" class="color-box"
-                                              style="min-width:5em;background-color:{{color.rgb}};color:{{color.fontColor}};">
-                                                   <span>A</span><br /><input size="7" id="ws-color-box-input-{{$index}}"
-                                                   data-color-format="hex"
-                                                   type="text" 
-                                                   class="form-controlx color-box-input" 
-                                                   style="background-color:{{color.rgb}};color:{{color.fontColor}};" 
-                                                   value="{{color.hex}}" ng-transclude color-picker />
-                                              </li>
-
-                                             </ul>
-                                           </div>
+					<ul class="nav nav-tabs" id="colorTab">
+                      <li class="active"><a href="#htmlColors" data-toggle="tab">HTML Colors</a></li>
+                      <li><a href="#webSafeColors" data-toggle="tab">Web-Safe Colors</a></li>
+                    </ul>
+                    
+                    <div class="tab-content" ng-init="boxSize='normal'">
+    					<div class="tab-pane active container well" id="htmlColors" style="background-color:#2f2f2f">
+    					   <a id="htmlColorsLink"></a>
+    					   <h3 style="color:white;display:inline-block">HTML Colors</h3>
+  				           <div style="margin-left:20px" class="btn-group" data-toggle="buttons">
+                              <label class="btn btn-primary">
+                                <input type="checkbox" ng-model="nameChecked" /> Show Names
+                              </label>
+                              <label class="btn btn-primary active">
+                                <input type="radio" name="options" ng-model="boxSize" value="normal" /> Normal
+                              </label>
+                              <label class="btn btn-primary">
+                                <input type="radio" name="options" ng-model="boxSize" value="small" /> Small
+                              </label>
+                            </div>
+    					   <!--  Toggle On/Off colornames -->
+    					   <input class="form-control" type="search" ng-model="hf" placeholder="Filter Html Colors ..." />
+    
+    					   <div ng-repeat="colorGroup in htmlColors">
+                             <h4 style="color:white">{{colorGroup.groupName}}</h4>
+                               <ul class="list-unstyled">
+                                <li id="color-box-{{$index}}" title="{{color.name}} - {{color.rgb}}" 
+                                    ng-repeat="color in colorGroup.colors | filter:hf"
+                                    class="color-box-{{boxSize}}"
+                                  style="background-color:{{color.rgb}};color:{{color.fontColor}};">
+                                <span ng-show="nameChecked">{{color.name}}</span><span>A</span><br /><input size="7"
+                                     data-color-format="hex"
+                                     type="text" 
+                                     class="form-controlx color-box-input" 
+                                     style="background-color:{{color.rgb}};color:{{color.fontColor}};" 
+                                     value="{{color.hex}}" color-picker id="color-box-input-{{$index}}" />
+                                </li>
+                               </ul>
+                             </div>
+    					</div>
+    
+                          <div class="tab-pane container well" id="webSafeColors" style="background-color:#2f2f2f">
+                             <a id="webSafeColorsLink"></a>
+                             <h3 style="color:white;display:inline-block">Web-Safe Colors</h3>
+                             <div style="margin-left:20px" class="btn-group" data-toggle="buttons">
+                              <label class="btn btn-primary">
+                                <input type="checkbox" ng-model="nameChecked" /> Show Names
+                              </label>
+                              <label class="btn btn-primary active">
+                                <input type="radio" name="options" ng-model="boxSize" value="normal" /> Normal
+                              </label>
+                              <label class="btn btn-primary">
+                                <input type="radio" name="options" ng-model="boxSize" value="small" /> Small
+                              </label>
+                            </div>
+    				         <!--  Toggle On/Off colornames -->
+    				         <input class="form-control" type="search" ng-model="wf" placeholder="Filter Web-Safe Colors ..." />
+                             <div ng-repeat="colorGroup in webSafeColors">
+                               <h4 style="color:white">{{colorGroup.groupName}}</h4>
+                                 <ul class="list-unstyled">
+                                  <li id="ws-color-box-{{$index}}"title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors | filter:wf" 
+                                  class="color-box-{{boxSize}}"
+                                  style="background-color:{{color.rgb}};color:{{color.fontColor}};">
+                                       <span ng-show="nameChecked">{{color.name}}</span><span>A</span><br /><input size="7"
+                                       data-color-format="hex"
+                                       type="text" 
+                                       class="form-controlx color-box-input" 
+                                       style="background-color:{{color.rgb}};color:{{color.fontColor}};"
+                                       value="{{color.hex}}" color-picker id="ws-color-box-input-{{$index}}" />
+                                  </li>
+      
+                                 </ul>
+                             </div>
+    					</div>
 					</div>
 					<div class="container">
 						<!-- Example row of columns -->
