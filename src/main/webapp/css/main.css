@@ -19,8 +19,9 @@
 @import url("theme/cosmo/bootstrap.min.css");
 @import url("theme/default/bootstrap.min.css");  
 @import url("bootstrap.min.css");
+@import url("../css/bootstrap-theme.min.css");
+ @import url("theme.css");
 */
- 
  @import url("colors.css");
 
 /* Sparkline stats
