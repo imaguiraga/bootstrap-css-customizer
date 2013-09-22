@@ -21,3 +21,4 @@ $("#theme-selector").change(function(){
   console.log($(this).val());
   switch_style($(this).val());
 });
+//*/

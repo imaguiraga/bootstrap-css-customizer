@@ -223,6 +223,7 @@ var WEB_SAFE_COLORS = { groupName:'Colors', colors:[]};
 //Method 1 implicit injectors
 angular.module('BootstrapThemePreviewerApp.controllers', []).
   controller('ColorPickerCtrl', function($scope) {
+    this.name = "ColorPickerCtrl";
     $scope.htmlColors = HTML_COLORS;
     $scope.webSafeColors = [WEB_SAFE_COLORS];
     // $scope.nameChecked = true;

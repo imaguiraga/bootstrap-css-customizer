@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="BootstrapThemePreviewerApp">
+	<!--<![endif]-->
+	<head>
+	<!--[if lte IE 8]>
+      <script>
+        document.createElement('ng-include');
+        document.createElement('ng-pluralize');
+        document.createElement('ng-view');
+ 
+        // Optionally these for CSS
+        document.createElement('ng:include');
+        document.createElement('ng:pluralize');
+        document.createElement('ng:view');
+      </script>
+    <![endif]-->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>
+			imaguiraga-colorpicker
+		</title>
+		<meta name="author" content="Ibrahim Maguiraga">
+		<meta name="description" content="An advanced Botstrap CSS Previewer with color swatches and support for human perceived lightness. Works in all modern browsers and on touch devices.">
+		<meta name="viewport" content="width=device-width">
+		<meta http-equiv="Default-Style" content="default">
+                <meta itemprop="name" content="BootStrap Themes jQuery Color Picker Sliders">
+
+		<link rel="stylesheet" type="text/css" title="default" href="css/bootstrap.min.css" />
+		<!--
+		<link rel="stylesheet" title="default" href="css/theme/default/bootstrap.min.css" />
+		-->
+		<!-- alternate stylesheets -->
+		<link rel="alternate stylesheet" type="text/css" title="slate" href="css/theme/slate/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="simplex" href="css/theme/simplex/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="flatly" href="css/theme/flatly/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="united" href="css/theme/united/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="cerulean" href="css/theme/cerulean/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="spacelab" href="css/theme/spacelab/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="cosmo" href="css/theme/cosmo/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="amelia" href="css/theme/amelia/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="cyborg" href="css/theme/cyborg/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="readable" href="css/theme/readable/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="journal" href="css/theme/journal/bootstrap.min.css" />
+
+		<style>
+  		  ng-include {
+            display: block;
+          }
+			body {
+				padding-top: 50px;
+				padding-bottom: 20px;
+			}
+			.color-box-full{
+			font-family:Calibri;
+			   display:inline-block;
+			   text-align:center;
+               padding:2px;
+               border:0px solid black;
+               font-weight:bold;
+               text-overflow:ellipsis;
+               display:inline-block; 
+               margin:5px;
+               font-size:0.90em;
+               min-width:4em;
+               height:3em;
+               -moz-border-radius: 3px;
+               -webkit-border-radius: 3px;
+               -khtml-border-radius: 3px;
+               border-radius: 3px;
+            }
+            .color-box-small{
+            font-family:Calibri;
+               display:inline-block;
+			   text-align:center;
+               padding:0px;
+               border:0px solid black;
+               font-weight:bold;
+               text-overflow:ellipsis;
+               display:inline-block; 
+               margin:2px;
+               width:16px;
+               height:16px;
+               -moz-border-radius: 2px;
+               -webkit-border-radius: 2px;
+               -khtml-border-radius: 2px;
+               border-radius: 2px;
+            }
+
+            .color-box-small > span,.color-box-small > input{
+               display:none;
+            }
+             /*
+            .color-box-full > input{
+              text-align:center;
+              text-transform:uppercase;
+              display:inline-block;
+              border:0px;witdh:4em;
+              margin:0px;
+              font-size:0.85em;
+              -moz-border-radius: 2px;
+               -webkit-border-radius: 2px;
+               -khtml-border-radius: 2px;
+               border-radius: 2px;
+               padding:0px;
+            }
+            //*/
+            .color-box-input{
+              font-family:Calibri;
+              text-align:center;
+              text-transform:uppercase;
+              display:inline-block;
+              border:0px;witdh:4em;
+              margin:0px;
+              font-size:0.90em;
+              -moz-border-radius: 2px;
+               -webkit-border-radius: 2px;
+               -khtml-border-radius: 2px;
+               border-radius: 2px;
+               padding:0px;
+            }//*/
+		</style>
+		<!--
+                <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+                -->
+		<link rel="stylesheet" href="css/main.css" />
+		<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js">
+		</script>
+		<!--
+                <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                ga('create', 'UA-43966487-2', 'mysite-imaguiraga.rhcloud.com');
+                ga('send', 'pageview');
+                </script>
+                -->
+	</head>
+	<body ng-controller="ColorPickerCtrl">
+		<!--[if lt IE 7]>
+                        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+                <![endif]-->
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="icon-bar">
+						</span>
+						<span class="icon-bar">
+						</span>
+						<span class="icon-bar">
+						</span>
+					</button>
+					<a class="navbar-brand" href="#">
+						BootStrap theme                                             
+					</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="active">
+							<a href="#">
+								<i class="icon-home">
+								</i>
+								Home
+							</a>
+						</li>
+						<li>
+							<a href="#about">
+								About
+							</a>
+						</li>
+						<li>
+							<a href="#contact">
+								<i class="icon-envelope">
+								</i>
+								Contact
+							</a>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								Dropdown
+								<b class="caret">
+								</b>
+							</a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">
+										Action
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										Another action
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										Something else here
+									</a>
+								</li>
+								<li class="divider">
+								</li>
+								<li class="dropdown-header">
+									Nav header
+								</li>
+								<li>
+									<a href="#">
+										Separated link
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										One more separated link
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+
+					<form class="navbar-form navbar-right inline-form">
+
+						<div class="form-group">
+						<h4 class="inline">
+						  <span style="margin-left: 20px" class="label label-default">Theme</span>
+						</h4>
+						  <select id="theme-selector" style="width:120px" class="form-control">
+							  <option value="default">default</option>
+							  <option value="amelia">amelia</option>
+							  <option value="cerulean">cerulean</option>
+							  <option value="cosmo">cosmo</option>
+							  <option value="cyborg">cyborg</option>
+							  <option value="flatly">flatly</option>
+							  <option value="journal">journal</option>
+							  <option value="readable">readable</option>
+							  <option value="simplex">simplex</option>
+							  <option value="slate">slate</option>
+							  <option value="spacelab">spacelab</option>
+							  <option value="united">united</option>
+						  </select>
+						</div>
+					</form>
+
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+		</div>
+		
+
+     <!--  1
+		<div class="container">
+       -->
+            <ng-include
+               src="'views/testView.html'">
+                   </ng-include>
+			<div class="row">
+
+				<div class="col-lg-3" role="navigation">
+      				  <div class="well sidebar-nav">
+      					<ul class="nav nav-pills nav-stacked">
+      						<li class="active">
+      							<a href="index.html">
+      								<i class="icon-home icon-2">
+      								</i>
+      								Home
+      							</a>
+      						</li>
+      						<li>
+      							<a href="#accounts-menu" class="nav-header" data-toggle="collapse">
+      								<i class="icon-briefcase icon-2">
+      								</i>
+      								Account
+      								<span class="label label-default pull-right">
+      									+3
+      								</span>
+      							</a>
+      							<ul id="accounts-menu" class="nav nav-pills nav-stacked collapse">
+      								<li>
+      									<a href="sign-in.html">
+      										<i class="icon-signin">
+      										</i>
+      										Sign In
+      									</a>
+      								</li>
+      								<li>
+      									<a href="sign-up.html">
+      										<i class="icon-check-sign">
+      										</i>
+      										Sign Up
+      									</a>
+      								</li>
+      								<li>
+      									<a href="reset-password.html">
+      										Reset Password
+      									</a>
+      								</li>
+      							</ul>
+      						</li>
+      						<li>
+      							<a href="#htmlColorsLink">
+      								<i class="icon-link icon-2">
+      								</i>
+      								Html Colors
+      							</a>
+      						</li>
+      						<li>
+      							<a href="#webSafeColorsLink">
+      								<i class="icon-link icon-2">
+      								</i>
+      								Web Safe colors(216)
+      							</a>
+      						</li>
+      						<li>
+      							<a href="#">
+      								<i class="icon-envelope icon-2">
+      								</i>
+      								Contact
+      							</a>
+      						</li>
+      						<li>
+      							<a href="#">
+      								<i class="icon-calendar icon-2">
+      								</i>
+      								Calendar
+      							</a>
+      						</li>
+      					</ul>
+      				  </div> <!-- /sidebar-nav -->
+				</div>
+				<!-- /col-lg-3 -->
+				<div class="col-lg-9">
+				<!--
+					<ol class="breadcrumb" style="margin-top:20px">
+						<li>
+							<a href="#">
+								Home
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								Library
+							</a>
+						</li>
+						<li class="active">
+							Data
+						</li>
+					</ol>
+					-->
+					<!-- Main jumbotron for a primary marketing message or call to action -->
+					<!--
+					<div class="jumbotron">
+						<div class="container">
+							<h1>
+								Hello, world!
+							</h1>
+							<p>
+								This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+								based on <a target="_blank" href="http://en.wikipedia.org/wiki/Web_colors">http://en.wikipedia.org/wiki/Web_colors</a>
+							</p>
+							<p>
+								<a class="btn btn-primary btn-lg">
+									Learn more &raquo;
+								</a>
+							</p>
+						</div>
+					</div>
+					-->
+					<ul class="nav nav-tabs" id="colorTab" style="margin-top:10px">
+                      <li class="active"><a href="#htmlColors" data-toggle="tab">HTML Colors</a></li>
+                      <li><a href="#webSafeColors" data-toggle="tab">Web-Safe Colors</a></li>
+                    </ul>
+                    
+                    <div class="tab-content" ng-init="nameChecked=false;boxSize='small'">
+    					<div class="tab-pane active container well" id="htmlColors" style="background-color:#2f2f2f">
+    					   <a id="htmlColorsLink"></a>
+    					   <h3 style="color:white;display:inline-block">HTML Colors</h3>
+                                                                        <!-- data-toggle="buttons" -->
+  				           <div style="margin-left:10px;margin-bottom:5px;" class="btn-group" data-toggle="">
+                              <label class="btn btn-primary btn-sm">
+                                <input type="checkbox" ng-model="nameChecked" /> Names
+                              </label>
+                              <!--
+                              <label class="btn btn-primary">
+                                <i class="icon-resize-{{boxSize}}"></i> <input type="checkbox" ng-model="boxSize" ng-true-value="full" ng-false-value="small" tilte="resize {{boxSize}}" /> {{boxSize}}
+                              </label>
+                              -->
+                              <!--     -->
+                              <label class="btn btn-primary btn-sm">
+                                <i class="icon-resize-small"></i> <input type="radio" name="options" ng-model="boxSize" value="small" tilte="resize small" /> Small
+                              </label>
+
+                              <label class="btn btn-primary btn-sm">
+                                <i class="icon-resize-full"></i> <input type="radio" name="options" ng-model="boxSize" value="full" tilte="resize full" /> Large
+                              </label>
+
+                            </div>
+    					   <!--  Toggle On/Off colornames -->
+    					   <input class="form-control" type="search" ng-model="hf" placeholder="Filter Html Colors ..." />
+
+    					   <div ng-repeat="colorGroup in htmlColors">
+                               <h4 style="color:white">{{colorGroup.groupName}}</h4>
+                               <ul class="list-unstyled">
+                                <li color-picker id="color-box-{{$index}}" title="{{color.name}} - {{color.rgb}}"
+                                    ng-repeat="color in colorGroup.colors | filter:hf"
+                                    class="color-box-{{boxSize}}"
+                                  style="background-color:{{color.rgb}};color:{{color.fontColor}};">
+
+                                    <span ng-show="nameChecked">{{color.name}}</span><span ng-hide="nameChecked">A</span><br /><input size="7"
+                                         data-color-format="hex"
+                                         type="text" 
+                                         class="color-box-input"
+                                         style="background-color:{{color.rgb}};color:{{color.fontColor}};" 
+                                         value="{{color.hex}}" id="color-box-input-{{$index}}" />
+
+                                </li>
+                               </ul>
+                            </div>
+    					</div>
+    
+                          <div class="tab-pane container well" id="webSafeColors" style="background-color:#2f2f2f">
+                             <a id="webSafeColorsLink"></a>
+                             <h3 style="color:white;display:inline-block">Web-Safe Colors</h3>
+                             <div style="margin-left:10px;margin-bottom:5px;" class="btn-group" data-toggle="">
+                                <label class="btn btn-primary btn-sm">
+                                  <input type="checkbox" ng-model="nameChecked" /> Names
+                                </label>
+                                <!--
+                                <label class="btn btn-primary">
+                                  <i class="icon-resize-{{boxSize}}"></i> <input type="checkbox" ng-model="boxSize" ng-true-value="full" ng-false-value="small" tilte="resize {{boxSize}}" /> {{boxSize}}
+                                </label>
+                                -->
+                                <!--     -->
+                                <label class="btn btn-primary btn-sm">
+                                  <i class="icon-resize-small"></i> <input type="radio" name="options2" ng-model="boxSize" value="small" tilte="resize small" /> Small
+                                </label>
+  
+                                <label class="btn btn-primary btn-sm">
+                                  <i class="icon-resize-full"></i> <input type="radio" name="options2" ng-model="boxSize" value="full" tilte="resize full" /> Large
+                                </label>
+
+                            </div>
+    				         <!--  Toggle On/Off colornames -->
+    				         <input class="form-control" type="search" ng-model="wf" placeholder="Filter Web-Safe Colors ..." />
+                             <div ng-repeat="colorGroup in webSafeColors">
+                                 <h4 style="color:white">{{colorGroup.groupName}}</h4>
+                                 <ul class="list-unstyled">
+                                    <li color-picker id="ws-color-box-{{$index}}"title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors | filter:wf"
+                                    class="color-box-{{boxSize}}"
+                                    style="background-color:{{color.rgb}};color:{{color.fontColor}};">
+                                         <span ng-show="nameChecked">{{color.name}}</span><span ng-hide="nameChecked">A</span><br /><input size="7"
+                                         data-color-format="hex"
+                                         type="text" 
+                                         class="color-box-input"
+                                         style="background-color:{{color.rgb}};color:{{color.fontColor}};"
+                                         value="{{color.hex}}" id="ws-color-box-input-{{$index}}" />
+                                    </li>
+                                 </ul>
+                                   <!--
+                                  <div color-picker id="ws-color-box-{{$index}}"title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors | filter:wf"
+                                  class="color-box-{{boxSize}}"
+                                  style="background-color:{{color.rgb}};color:{{color.fontColor}};">
+                                       <span ng-show="nameChecked">{{color.name}}</span><span ng-hide="nameChecked">A</span><br /><input size="7"
+                                       data-color-format="hex"
+                                       type="text" 
+                                       class="form-controlx color-box-input" 
+                                       style="background-color:{{color.rgb}};color:{{color.fontColor}};"
+                                       value="{{color.hex}}" id="ws-color-box-input-{{$index}}" />
+                                  </div>
+                                       -->
+                             </div>
+    					</div>
+					</div>
+					<!-- 2
+					<div class="container">
+					-->
+						<!-- Example row of columns -->
+						<div class="row">
+							<div class="col-lg-4">
+								<h2>
+									Heading
+								</h2>
+								<p>
+									Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+								</p>
+								<p>
+									<a class="btn btn-default" href="#">
+										View details &raquo;
+									</a>
+								</p>
+							</div>
+							<div class="col-lg-4">
+								<h2>
+									Heading
+								</h2>
+								<p>
+									Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+								</p>
+								<p>
+									<a class="btn btn-default" href="#">
+										View details &raquo;
+									</a>
+								</p>
+							</div>
+							<div class="col-lg-4">
+								<h2>
+									Heading
+								</h2>
+								<p>
+									Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+								</p>
+								<p>
+									<a class="btn btn-default" href="#">
+										View details &raquo;
+									</a>
+								</p>
+							</div>
+						</div>
+
+						<!-- back to top link-->
+                    <!-- 2
+					</div>
+					-->
+					<!-- /container -->
+				</div>
+				<!-- /col-lg-9 -->
+			</div>
+			<!-- /row -->
+		<!-- 1
+        </div>
+         -->
+
+		<!-- /container -->
+		<!-- back to top link-->
+		<a id="goto-top" href="#" class="btn btn-default" title="Back To Top">
+			<i class="icon-chevron-sign-up icon-2">
+			</i>
+		</a>
+		<hr />
+		<footer>
+			<p>
+				Copyright &copy; imaguiraga 2013  <a href="http://www.w3.org/html/logo/" class="pull-rightx">
+<img src="images/html5-badge-h-connectivity-css3-device-graphics-multimedia-performance-semantics-storage.png" width="357" height="64" alt="HTML5 Powered with Connectivity / Realtime, CSS3 / Styling, Device Access, Graphics, 3D &amp; Effects, Multimedia, Performance &amp; Integration, Semantics, and Offline &amp; Storage" title="HTML5 Powered with Connectivity / Realtime, CSS3 / Styling, Device Access, Graphics, 3D &amp; Effects, Multimedia, Performance &amp; Integration, Semantics, and Offline &amp; Storage">
+</a>
+
+				<a target="_blank" class="btn btn-info" style="font-size:1.5em; font-family: 'ChunkFiveRegular';" href="http://www.initializr.com/">Initializr</a>
+				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="http://getbootstrap.com/">Bootstrap v3.0.0</a>
+				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="http://bootswatch.com/">Bootswatch</a>
+				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="http://fortawesome.github.io/Font-Awesome/icon/list/"><i class="icon-flag"></i> Font Awesome</a>
+				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="https://www.openshift.com/"><b>OPEN</b>SHIFT</a>
+			</p>
+		</footer>
+		<!--
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+                -->
+		<script src="js/vendor/jquery-1.10.1.min.js"></script>
+
+		<script>
+			window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+        <script src="js/vendor/jquery-ui-1.10.3.js"></script>
+		<script src="js/vendor/bootstrap.min.js"></script>
+		<script src="js/angular/lib/angular.min.js"></script>
+
+		<script src="js/vendor/tinycolor-min.js"></script>
+		<script src="js/vendor/jquery.colorpickersliders.js"></script>
+
+		<!-- <script src="js/vendor/colorpicker.js"></script> -->
+		<script src="js/vendor/jquery.xcolor.min.js"></script>
+
+		<script src="js/main.js"></script>
+
+		<script src="js/plugins.js"></script>
+		<script src="js/theme.js"></script>
+		<!--
+                <script src="js/angular/mycolorpicker.js"></script>
+                -->
+		<!-- angular js components  -->
+		<script src="js/angular/filters.js"></script>
+		<script src="js/angular/controllers.js"></script>
+		<script src="js/angular/directives.js"></script>
+		<script src="js/angular/services.js"></script>
+        <script src="js/angular/app.js"></script>
+
+
+		<!--
+		<script>
+			var _gaq=[['_setAccount','UA-43966487-2'],['_trackPageview']];
+			(function(d,t){
+				var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+				g.src='//www.google-analytics.com/ga.js';
+				s.parentNode.insertBefore(g,s)}
+			 (document,'script'));
+		</script>
+		-->
+	</body>
+</html>
