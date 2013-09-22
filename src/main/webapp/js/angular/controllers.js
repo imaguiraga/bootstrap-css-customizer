@@ -225,6 +225,8 @@ angular.module('BootstrapThemePreviewerApp.controllers', []).
   controller('ColorPickerCtrl', function($scope) {
     $scope.htmlColors = HTML_COLORS;
     $scope.webSafeColors = [WEB_SAFE_COLORS];
+    // $scope.nameChecked = true;
+    // $scope.boxSize = 'small';
   })
   .controller('MyCtrl2', function() {
 
