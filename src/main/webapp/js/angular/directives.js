@@ -40,9 +40,28 @@ directiveModule.directive('dragSource',
           // The linking function will add behavior to the template
           link: function postLink(scope, element, attrs) {
             //make parent element draggable
-            element.draggable({ revert: "valid",cursor: "move" });
+            element.draggable({ revert: "valid",helper: "clone",revertDuration: 50,zIndex: 3000 });
           }
-       }; 
+       };
+});
+
+directiveModule.directive('dropTarget',
+     function factory() {
+       return {
+          restrict: 'A',
+          // This HTML will replace the directive.
+          replace: true,
+          // The linking function will add behavior to the template
+          link: function postLink(scope, element, attrs) {
+            //make parent element draggable
+            element.droppable({
+              drop: function( event, ui ) {
+                $(this).css('background-color',ui.draggable.css('background-color'));
+                  console.log('dropped');
+              }
+            });
+          }
+       };
 });
 
 directiveModule.directive('colorPicker',
@@ -56,7 +75,7 @@ directiveModule.directive('colorPicker',
           link: function postLink(scope, element, attrs) {
 
           //make parent element draggable
-          element.draggable({ revert: "valid",cursor: "move" ,/*opacity: 0.9,*/ helper: "clone",revertDuration: 50 });
+          element.draggable({ revert: "valid",/*cursor: "move" ,opacity: 0.9,*/ helper: "clone",revertDuration: 50,zIndex: 3000 });
           element.focusin( function(){
               var slider = $(this).ColorPickerSliders({
                   color: scope.color.hex,

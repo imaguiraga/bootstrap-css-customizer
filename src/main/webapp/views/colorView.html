@@ -1,107 +1,143 @@
 <div>
-<ul class="nav nav-tabs" id="colorTab" style="margin-top:10px">
-                      <li class="active"><a href="#htmlColors" data-toggle="tab">HTML Colors</a></li>
-                      <li><a href="#webSafeColors" data-toggle="tab">Web-Safe Colors</a></li>
-                    </ul>
-                    
-                    <div class="tab-content" ng-init="nameChecked=false;boxSize='small'">
-    					<div class="tab-pane active container" id="htmlColors" style="background-color:#2f2f2f!important">
-    					   <a id="htmlColorsLink"></a>
-    					   <h3 style="color:white;display:inline-block">HTML Colors</h3>
-                                                                        <!-- data-toggle="buttons" -->
-  				           <div style="margin-left:10px;margin-bottom:5px;" class="btn-group" data-toggle="">
-                              <label class="btn btn-primary btn-sm">
-                                <input type="checkbox" ng-model="nameChecked" /> Names
-                              </label>
-                              <!--
-                              <label class="btn btn-primary">
-                                <i class="icon-resize-{{boxSize}}"></i> <input type="checkbox" ng-model="boxSize" ng-true-value="full" ng-false-value="small" tilte="resize {{boxSize}}" /> {{boxSize}}
-                              </label>
-                              -->
-                              <!--     -->
-                              <label class="btn btn-primary btn-sm">
-                                <i class="icon-resize-small"></i> <input type="radio" name="options" ng-model="boxSize" value="small" tilte="resize small" /> Small
-                              </label>
-
-                              <label class="btn btn-primary btn-sm">
-                                <i class="icon-resize-full"></i> <input type="radio" name="options" ng-model="boxSize" value="full" tilte="resize full" /> Large
-                              </label>
-
-                            </div>
-    					   <!--  Toggle On/Off colornames -->
-    					   <input class="form-control" ng-hide="boxSize == 'small'" type="search" ng-model="hf" placeholder="Filter Html Colors ..." />
-
-    					   <div ng-repeat="colorGroup in htmlColors">
-                               <h4 style="color:white">{{colorGroup.groupName}}</h4>
-                               <ul class="list-unstyled">
-                                <li color-picker id="color-box-{{$index}}" title="{{color.name}} - {{color.rgb}}"
-                                    ng-repeat="color in colorGroup.colors | filter:hf"
-                                    class="color-box-{{boxSize}}"
-                                  style="background-color:{{color.rgb}};color:{{color.fontColor}};">
-
-                                    <span ng-show="nameChecked">{{color.name}}</span><span ng-hide="nameChecked">A</span><br /><input size="7"
-                                         data-color-format="hex"
-                                         type="text" 
-                                         class="color-box-input"
-                                         style="background-color:{{color.rgb}};color:{{color.fontColor}};" 
-                                         value="{{color.hex}}" id="color-box-input-{{$index}}" />
-
-                                </li>
-                               </ul>
-                            </div>
-    					</div>
-    
-                          <div class="tab-pane container" id="webSafeColors" style="background-color:#2f2f2f!important">
-                             <a id="webSafeColorsLink"></a>
-                             <h3 style="color:white;display:inline-block">Web-Safe Colors</h3>
-                             <div style="margin-left:10px;margin-bottom:5px;" class="btn-group" data-toggle="">
-                                <label class="btn btn-primary btn-sm">
-                                  <input type="checkbox" ng-model="nameChecked" /> Names
-                                </label>
-                                <!--
-                                <label class="btn btn-primary">
-                                  <i class="icon-resize-{{boxSize}}"></i> <input type="checkbox" ng-model="boxSize" ng-true-value="full" ng-false-value="small" tilte="resize {{boxSize}}" /> {{boxSize}}
-                                </label>
-                                -->
-                                <!--     -->
-                                <label class="btn btn-primary btn-sm">
-                                  <i class="icon-resize-small"></i> <input type="radio" name="options2" ng-model="boxSize" value="small" tilte="resize small" /> Small
-                                </label>
-  
-                                <label class="btn btn-primary btn-sm">
-                                  <i class="icon-resize-full"></i> <input type="radio" name="options2" ng-model="boxSize" value="full" tilte="resize full" /> Large
-                                </label>
-
-                            </div>
-    				         <!--  Toggle On/Off colornames -->
-    				         <input class="form-control" ng-hide="boxSize == 'small'" type="search" ng-model="wf" placeholder="Filter Web-Safe Colors ..." />
-                             <div ng-repeat="colorGroup in webSafeColors">
-                                 <h4 style="color:white">{{colorGroup.groupName}}</h4>
-                                 <ul class="list-unstyled">
-                                    <li color-picker id="ws-color-box-{{$index}}"title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors | filter:wf"
-                                    class="color-box-{{boxSize}}"
-                                    style="background-color:{{color.rgb}};color:{{color.fontColor}};">
-                                         <span ng-show="nameChecked">{{color.name}}</span><span ng-hide="nameChecked">A</span><br /><input size="7"
-                                         data-color-format="hex"
-                                         type="text" 
-                                         class="color-box-input"
-                                         style="background-color:{{color.rgb}};color:{{color.fontColor}};"
-                                         value="{{color.hex}}" id="ws-color-box-input-{{$index}}" />
-                                    </li>
-                                 </ul>
-                                   <!--
-                                  <div color-picker id="ws-color-box-{{$index}}"title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors | filter:wf"
-                                  class="color-box-{{boxSize}}"
-                                  style="background-color:{{color.rgb}};color:{{color.fontColor}};">
-                                       <span ng-show="nameChecked">{{color.name}}</span><span ng-hide="nameChecked">A</span><br /><input size="7"
-                                       data-color-format="hex"
-                                       type="text" 
-                                       class="form-controlx color-box-input" 
-                                       style="background-color:{{color.rgb}};color:{{color.fontColor}};"
-                                       value="{{color.hex}}" id="ws-color-box-input-{{$index}}" />
-                                  </div>
-                                       -->
-                             </div>
-    					</div>
-    					
-    					</div>
+	<ul class="nav nav-tabs" id="colorTab" style="margin-top:10px">
+		<li class="active">
+			<a href="#htmlColors" data-toggle="tab">
+				HTML Colors
+			</a>
+		</li>
+		<li>
+			<a href="#webSafeColors" data-toggle="tab">
+				Web-Safe Colors
+			</a>
+		</li>
+	</ul>
+	<div class="tab-content" ng-init="nameChecked=false;boxSize='small'">
+		<div class="tab-pane active container" id="htmlColors" style="background-color:#2f2f2f!important">
+			<a id="htmlColorsLink">
+			</a>
+			<h3 style="color:white;display:inline-block">
+				HTML Colors
+			</h3>
+			<!-- data-toggle="buttons" -->
+			<div style="margin-left:10px;margin-bottom:5px;" class="btn-group" data-toggle="">
+				<label class="btn btn-primary btn-sm">
+					<input type="checkbox" ng-model="nameChecked" />
+					Names
+				</label>
+<!--
+<label class="btn btn-primary">
+<i class="icon-resize-{{boxSize}}"></i> <input type="checkbox" ng-model="boxSize" ng-true-value="full" ng-false-value="small" tilte="resize {{boxSize}}" /> {{boxSize}}
+</label>
+-->
+				<!--     -->
+				<label class="btn btn-primary btn-sm">
+					<i class="icon-resize-small">
+					</i>
+					<input type="radio" name="options" ng-model="boxSize" value="small" tilte="resize small" />
+					Small
+				</label>
+				<label class="btn btn-primary btn-sm">
+					<i class="icon-resize-full">
+					</i>
+					<input type="radio" name="options" ng-model="boxSize" value="full" tilte="resize full" />
+					Large
+				</label>
+			</div>
+			<!--  Toggle On/Off colornames -->
+			<input class="form-control" ng-hide="boxSize == 'small'" type="search" ng-model="hf" placeholder="Filter Html Colors ..." />
+			<div ng-repeat="colorGroup in htmlColors">
+				<h4 style="color:white">
+					{{colorGroup.groupName}}
+				</h4>
+				<ul class="list-unstyled">
+					<li color-picker id="color-box-{{$index}}" title="{{color.name}} - {{color.rgb}}"
+						ng-repeat="color in colorGroup.colors | filter:hf"
+						class="color-box-{{boxSize}}"
+						style="background-color:{{color.rgb}};color:{{color.fontColor}};">
+						<span ng-show="nameChecked">
+							{{color.name}}
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br />
+						<input size="7"
+							data-color-format="hex"
+							type="text" 
+							class="color-box-input"
+							style="background-color:{{color.rgb}};color:{{color.fontColor}};" 
+							value="{{color.hex}}" id="color-box-input-{{$index}}" />
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="tab-pane container" id="webSafeColors" style="background-color:#2f2f2f!important">
+			<a id="webSafeColorsLink">
+			</a>
+			<h3 style="color:white;display:inline-block">
+				Web-Safe Colors
+			</h3>
+			<div style="margin-left:10px;margin-bottom:5px;" class="btn-group" data-toggle="">
+				<label class="btn btn-primary btn-sm">
+					<input type="checkbox" ng-model="nameChecked" />
+					Names
+				</label>
+<!--
+<label class="btn btn-primary">
+<i class="icon-resize-{{boxSize}}"></i> <input type="checkbox" ng-model="boxSize" ng-true-value="full" ng-false-value="small" tilte="resize {{boxSize}}" /> {{boxSize}}
+</label>
+-->
+				<!--     -->
+				<label class="btn btn-primary btn-sm">
+					<i class="icon-resize-small">
+					</i>
+					<input type="radio" name="options2" ng-model="boxSize" value="small" tilte="resize small" />
+					Small
+				</label>
+				<label class="btn btn-primary btn-sm">
+					<i class="icon-resize-full">
+					</i>
+					<input type="radio" name="options2" ng-model="boxSize" value="full" tilte="resize full" />
+					Large
+				</label>
+			</div>
+			<!--  Toggle On/Off colornames -->
+			<input class="form-control" ng-hide="boxSize == 'small'" type="search" ng-model="wf" placeholder="Filter Web-Safe Colors ..." />
+			<div ng-repeat="colorGroup in webSafeColors">
+				<h4 style="color:white">
+					{{colorGroup.groupName}}
+				</h4>
+				<ul class="list-unstyled">
+					<li color-picker id="ws-color-box-{{$index}}"title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors | filter:wf"
+						class="color-box-{{boxSize}}"
+						style="background-color:{{color.rgb}};color:{{color.fontColor}};">
+						<span ng-show="nameChecked">
+							{{color.name}}
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br />
+						<input size="7"
+							data-color-format="hex"
+							type="text" 
+							class="color-box-input"
+							style="background-color:{{color.rgb}};color:{{color.fontColor}};"
+							value="{{color.hex}}" id="ws-color-box-input-{{$index}}" />
+					</li>
+				</ul>
+<!--
+<div color-picker id="ws-color-box-{{$index}}"title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors | filter:wf"
+class="color-box-{{boxSize}}"
+style="background-color:{{color.rgb}};color:{{color.fontColor}};">
+<span ng-show="nameChecked">{{color.name}}</span><span ng-hide="nameChecked">A</span><br /><input size="7"
+data-color-format="hex"
+type="text" 
+class="form-controlx color-box-input" 
+style="background-color:{{color.rgb}};color:{{color.fontColor}};"
+value="{{color.hex}}" id="ws-color-box-input-{{$index}}" />
+</div>
+-->
+			</div>
+		</div>
+	</div>

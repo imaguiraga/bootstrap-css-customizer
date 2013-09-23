@@ -28,10 +28,16 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 		<meta name="description" content="An advanced Botstrap CSS Previewer with color swatches and support for human perceived lightness. Works in all modern browsers and on touch devices.">
 		<meta name="viewport" content="width=device-width">
 		<meta http-equiv="Default-Style" content="default">
-                <meta itemprop="name" content="BootStrap Themes jQuery Color Picker Sliders">
+        <meta itemprop="name" content="BootStrap Themes jQuery Color Picker Sliders">
 
-		<link rel="stylesheet" type="text/css" title="default" href="{{template}}" />
+        <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-114.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-144.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144.png" />
+
+        <link id="bootstrap" rel="stylesheet" type="text/css" title="default" href="css/theme/default/bootstrap.min.css" />
 		<!--
+		<link rel="stylesheet" type="text/css" title="default" href="{{template}}" />
 		<link rel="stylesheet" type="text/css" title="default" href="css/bootstrap-theme.min.css" />
         -->
 		<!-- alternate stylesheets -->
@@ -163,7 +169,7 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 						</span>
 					</button>
 					<a class="navbar-brand" href="#">
-						BootStrap theme Roller
+						Bootstrap Theme roller
 					</a>
 				</div>
 				<div class="navbar-collapse collapse">
@@ -173,6 +179,16 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 								<i class="icon-home">
 								</i>
 								Home
+							</a>
+						</li>
+						<li>
+							<a href="#edit">
+								Edit
+							</a>
+						</li>
+						<li>
+							<a href="#preview">
+								Preview
 							</a>
 						</li>
 						<li>
@@ -189,26 +205,37 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 						</li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								Dropdown
+								LESS variables
 								<b class="caret">
 								</b>
 							</a>
 							<ul class="dropdown-menu">
-								<li>
-									<a href="#">
-										Action
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										Another action
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										Something else here
-									</a>
-								</li>
+								<li><a href="#variables-basics">Basics</a></li>
+                                <li><a href="#variables-buttons">Buttons</a></li>
+                                <li><a href="#variables-form-states">Form states</a></li>
+                                <li><a href="#variables-alerts">Alerts</a></li>
+                                <li><a href="#variables-navbar">Navbar</a></li>
+                                <li><a href="#variables-nav">Nav</a></li>
+                                <li><a href="#variables-tables">Tables</a></li>
+                                <li><a href="#variables-forms">Forms</a></li>
+                                <li><a href="#variables-dropdowns">Dropdowns</a></li>
+                                <li><a href="#variables-panels-wells">Panels and wells</a></li>
+                                <li><a href="#variables-accordion">Accordion</a></li>
+                                <li><a href="#variables-badges">Badges</a></li>
+                                <li><a href="#variables-breadcrumbs">Breadcrumbs</a></li>
+                                <li><a href="#variables-jumbotron">Jumbotron</a></li>
+                                <li><a href="#variables-modals">Modals</a></li>
+                                <li><a href="#variables-carousel">Carousel</a></li>
+                                <li><a href="#variables-list-group">List group</a></li>
+                                <li><a href="#variables-thumbnails">Thumbnails</a></li>
+                                <li><a href="#variables-progress">Progress bars</a></li>
+                                <li><a href="#variables-pagination">Pagination</a></li>
+                                <li><a href="#variables-pager">Pager</a></li>
+                                <li><a href="#variables-labels">Labels</a></li>
+                                <li><a href="#variables-tooltips-popovers">Tooltips and popovers</a></li>
+                                <li><a href="#variables-close">Close button</a></li>
+                                <li><a href="#variables-type">Type</a></li>
+                                <li><a href="#variables-other">Other</a></li>
 								<li class="divider">
 								</li>
 								<li class="dropdown-header">
@@ -256,27 +283,25 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 		</div>
 		
 
-     <!--  1
+      <!--  1
 		<div class="container">
+		<div class="row">
        -->
-
-			<div class="row">
-
 				<div class="well col-lg-3 hidden-xs hidden-sm">
       				  <ng-include src="'views/colorView.html'"></ng-include>
 				</div>
 				<!-- /col-lg-3 -->
 				<div class="col-lg-9">
-                    <ng-include src="'views/themeView.html'"></ng-include>
+
+				<ng-include src="'views/customizeLESSVariables.html'"></ng-include>
+				<!--
+                    <ng-include src="'views/bootswatchThemePreview.html'"></ng-include>
+                    -->
 				</div>
 				<!-- /col-lg-9 -->
-			</div>
-			<!-- /row -->
 		<!-- 1
-        </div>
-         -->
-
-		<!-- /container -->
+		</div> /row
+        </div> /container -->
 		<!-- back to top link-->
 		<a id="goto-top" href="#" class="btn btn-default" title="Back To Top">
 			<i class="icon-chevron-sign-up icon-2">
@@ -294,6 +319,7 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="http://bootswatch.com/">Bootswatch</a>
 				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="http://fortawesome.github.io/Font-Awesome/icon/list/"><i class="icon-flag"></i> Font Awesome</a>
 				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="https://www.openshift.com/"><b>OPEN</b>SHIFT</a>
+				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="http://angularjs.org/">ANGULARJS</a>
 			</p>
 		</footer>
 		<!--
@@ -312,21 +338,28 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 
 		<!-- <script src="js/vendor/colorpicker.js"></script> -->
 		<script src="js/vendor/jquery.xcolor.min.js"></script>
-        <script src="js/vendor/holder.js"></script>
 		<script src="js/main.js"></script>
 
 		<script src="js/plugins.js"></script>
 
 		<!--
-		    <script src="js/theme.js"></script>
             <script src="js/angular/mycolorpicker.js"></script>
         -->
+        <script src="js/theme.js"></script>
 		<!-- angular js components  -->
 		<script src="js/angular/filters.js"></script>
 		<script src="js/angular/controllers.js"></script>
 		<script src="js/angular/directives.js"></script>
 		<script src="js/angular/services.js"></script>
-        <script src="js/angular/app.js"></script>
+        <script src="js/angular/app.js"></script> 
+
+        <script src="../assets/js/holder.js"></script>
+        <script src="../assets/js/less.js"></script>
+        <script src="../assets/js/jszip.js"></script>
+        <script src="../assets/js/uglify.js"></script>
+        <script src="../assets/js/filesaver.js"></script>
+        <script src="../assets/js/raw-files.js"></script>
+        <script src="../assets/js/customizer.js"></script>
 
 
 		<!--

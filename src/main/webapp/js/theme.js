@@ -19,6 +19,7 @@ function switch_style ( css_title )
 //update theme when selection changes
 $("#theme-selector").change(function(){
   console.log($(this).val());
-  switch_style($(this).val());
+  var tmp = $("link[id='bootstrap']");
+  tmp.attr('href',$(this).val());
 });
 //*/

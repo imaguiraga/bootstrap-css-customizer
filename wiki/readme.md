@@ -98,6 +98,8 @@ Created tab for Colors Group
 </div>
 
 Add Drag and Drop Capability
+http://jqueryui.com/droppable/
+
 
 # AngularJs notes
 http://docs.angularjs.org/guide/
