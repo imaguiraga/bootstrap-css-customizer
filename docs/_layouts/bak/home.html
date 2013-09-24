@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="BootstrapThemePreviewerApp" ng-controller="ColorPickerCtrl" 
+ng-init="template='css/theme/default/bootstrap.min.css'">
+	<!--<![endif]-->
+	<head>
+	<!--[if lte IE 8]>
+      <script>
+        document.createElement('ng-include');
+        document.createElement('ng-pluralize');
+        document.createElement('ng-view');
+ 
+        // Optionally these for CSS
+        document.createElement('ng:include');
+        document.createElement('ng:pluralize');
+        document.createElement('ng:view');
+      </script>
+    <![endif]-->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>
+			imaguiraga-colorpicker
+		</title>
+		<meta name="author" content="Ibrahim Maguiraga">
+		<meta name="description" content="An advanced Botstrap CSS Previewer with color swatches and support for human perceived lightness. Works in all modern browsers and on touch devices.">
+		<meta name="viewport" content="width=device-width">
+		<meta http-equiv="Default-Style" content="default">
+        <meta itemprop="name" content="BootStrap Themes jQuery Color Picker Sliders">
+
+        <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-114.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-144.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144.png" />
+
+        <link id="bootstrap" rel="stylesheet" type="text/css" title="default" href="css/theme/default/bootstrap.min.css" />
+		<!--
+		<link rel="stylesheet" type="text/css" title="default" href="{{template}}" />
+		<link rel="stylesheet" type="text/css" title="default" href="css/bootstrap-theme.min.css" />
+        -->
+		<!-- alternate stylesheets -->
+		<!--
+		<link rel="alternate stylesheet" type="text/css" title="slate" href="css/theme/slate/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="simplex" href="css/theme/simplex/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="flatly" href="css/theme/flatly/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="united" href="css/theme/united/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="cerulean" href="css/theme/cerulean/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="spacelab" href="css/theme/spacelab/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="cosmo" href="css/theme/cosmo/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="amelia" href="css/theme/amelia/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="cyborg" href="css/theme/cyborg/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="readable" href="css/theme/readable/bootstrap.min.css" />
+		<link rel="alternate stylesheet" type="text/css" title="journal" href="css/theme/journal/bootstrap.min.css" />
+         -->
+		<style>
+  		  ng-include {
+            display: block;
+          }
+			body {
+				padding-top: 50px;
+				padding-bottom: 20px;
+			}
+			.color-box-full{
+			font-family:Calibri;
+			   display:inline-block;
+			   text-align:center;
+               padding:2px;
+               border:0px solid black;
+               font-weight:bold;
+               text-overflow:ellipsis;
+               display:inline-block; 
+               margin:5px;
+               font-size:0.90em;
+               min-width:4em;
+               height:3em;
+               -moz-border-radius: 3px;
+               -webkit-border-radius: 3px;
+               -khtml-border-radius: 3px;
+               border-radius: 3px;
+            }
+            .color-box-small{
+            font-family:Calibri;
+               display:inline-block;
+			   text-align:center;
+               padding:0px;
+               border:0px solid black;
+               font-weight:bold;
+               text-overflow:ellipsis;
+               display:inline-block; 
+               margin:2px;
+               width:16px;
+               height:16px;
+               -moz-border-radius: 2px;
+               -webkit-border-radius: 2px;
+               -khtml-border-radius: 2px;
+               border-radius: 2px;
+            }
+
+            .color-box-small > span,.color-box-small > input{
+               display:none;
+            }
+             /*
+            .color-box-full > input{
+              text-align:center;
+              text-transform:uppercase;
+              display:inline-block;
+              border:0px;witdh:4em;
+              margin:0px;
+              font-size:0.85em;
+              -moz-border-radius: 2px;
+               -webkit-border-radius: 2px;
+               -khtml-border-radius: 2px;
+               border-radius: 2px;
+               padding:0px;
+            }
+            //*/
+            .color-box-input{
+              font-family:Calibri;
+              text-align:center;
+              text-transform:uppercase;
+              display:inline-block;
+              border:0px;witdh:4em;
+              margin:0px;
+              font-size:0.90em;
+              -moz-border-radius: 2px;
+               -webkit-border-radius: 2px;
+               -khtml-border-radius: 2px;
+               border-radius: 2px;
+               padding:0px;
+            }//*/
+		</style>
+  <!--
+                <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+                -->
+		<link rel="stylesheet" href="css/main.css" />
+		<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js">
+		</script>
+		<!--
+                <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                ga('create', 'UA-43966487-2', 'mysite-imaguiraga.rhcloud.com');
+                ga('send', 'pageview');
+                </script>
+                -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+	</head>
+	<body>
+		<!--[if lt IE 7]>
+                        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+                <![endif]-->
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="icon-bar">
+						</span>
+						<span class="icon-bar">
+						</span>
+						<span class="icon-bar">
+						</span>
+					</button>
+					<a class="navbar-brand" href="#">
+						Bootstrap Theme roller
+					</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="active">
+							<a href="#">
+								<i class="icon-home">
+								</i>
+								Home
+							</a>
+						</li>
+						<li>
+							<a href="#edit">
+							<i class="icon-edit">
+								</i>
+								Edit
+							</a>
+						</li>
+						<li>
+							<a href="#preview">
+							<i class="icon-eye-open">
+								</i>
+								Preview
+							</a>
+						</li>
+						<li>
+							<a href="#download">
+							<i class="icon-download-alt">
+								</i>
+								Download
+							</a>
+						</li>
+						<li>
+							<a href="#about">
+								About
+							</a>
+						</li>
+						<li>
+							<a href="#contact">
+								<i class="icon-envelope">
+								</i>
+								Contact
+							</a>
+						</li>
+
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								LESS variables
+								<b class="caret">
+								</b>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="#variables-basics">Basics</a></li>
+                                <li><a href="#variables-buttons">Buttons</a></li>
+                                <li><a href="#variables-form-states">Form states</a></li>
+                                <li><a href="#variables-alerts">Alerts</a></li>
+                                <li><a href="#variables-navbar">Navbar</a></li>
+                                <li><a href="#variables-nav">Nav</a></li>
+                                <li><a href="#variables-tables">Tables</a></li>
+                                <li><a href="#variables-forms">Forms</a></li>
+                                <li><a href="#variables-dropdowns">Dropdowns</a></li>
+                                <li><a href="#variables-panels-wells">Panels and wells</a></li>
+                                <li><a href="#variables-accordion">Accordion</a></li>
+                                <li><a href="#variables-badges">Badges</a></li>
+                                <li><a href="#variables-breadcrumbs">Breadcrumbs</a></li>
+                                <li><a href="#variables-jumbotron">Jumbotron</a></li>
+                                <li><a href="#variables-modals">Modals</a></li>
+                                <li><a href="#variables-carousel">Carousel</a></li>
+                                <li><a href="#variables-list-group">List group</a></li>
+                                <li><a href="#variables-thumbnails">Thumbnails</a></li>
+                                <li><a href="#variables-progress">Progress bars</a></li>
+                                <li><a href="#variables-pagination">Pagination</a></li>
+                                <li><a href="#variables-pager">Pager</a></li>
+                                <li><a href="#variables-labels">Labels</a></li>
+                                <li><a href="#variables-tooltips-popovers">Tooltips and popovers</a></li>
+                                <li><a href="#variables-close">Close button</a></li>
+                                <li><a href="#variables-type">Type</a></li>
+                                <li><a href="#variables-other">Other</a></li>
+								<li class="divider">
+								</li>
+								<li class="dropdown-header">
+									Nav header
+								</li>
+								<li>
+									<a href="#">
+										Separated link
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										One more separated link
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+
+					<form class="navbar-form navbar-right inline-form">
+						<div class="form-group">
+						<h4 class="inline">
+						  <span style="margin-left: 20px" class="label label-default">Theme</span>
+						</h4>
+						  <select id="theme-selector" ng-model="template" style="width:120px" class="form-control input-sm" title="Bootstrap theme selector">
+							  <option value="css/theme/default/bootstrap.min.css">default</option>
+							  <option value="css/theme/amelia/bootstrap.min.css">amelia</option>
+							  <option value="css/theme/cerulean/bootstrap.min.css">cerulean</option>
+							  <option value="css/theme/cosmo/bootstrap.min.css">cosmo</option>
+							  <option value="css/theme/cyborg/bootstrap.min.css">cyborg</option>
+							  <option value="css/theme/flatly/bootstrap.min.css">flatly</option>
+							  <option value="css/theme/journal/bootstrap.min.css">journal</option>
+							  <option value="css/theme/readable/bootstrap.min.css">readable</option>
+							  <option value="css/theme/simplex/bootstrap.min.css">simplex</option>
+							  <option value="css/theme/slate/bootstrap.min.css">slate</option>
+							  <option value="css/theme/spacelab/bootstrap.min.css">spacelab</option>
+							  <option value="css/theme/united/bootstrap.min.css">united</option>
+						  </select>
+						</div>
+					</form>
+
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+		</div>
+		
+
+      <!--  1
+		<div class="container">
+		<div class="row">
+       -->
+				<div class="well col-lg-3 hidden-xs hidden-sm">
+      				  {% include colorView.inc.html %}
+				</div>
+				<!-- /col-lg-3 -->
+				<div class="col-lg-9">
+
+				{% include lessVariables.inc.html %}
+				<!--
+                    <ng-include src="'views/bootswatchThemePreview.html'"></ng-include>
+                    -->
+				</div>
+				<!-- /col-lg-9 -->
+		<!-- 1
+		</div> /row
+        </div> /container -->
+		<!-- back to top link-->
+		<a id="goto-top" href="#" class="btn btn-default" title="Back To Top">
+			<i class="icon-chevron-sign-up icon-2">
+			</i>
+		</a>
+		<hr />
+		<footer>
+			<p>
+				Copyright &copy; imaguiraga 2013  <a href="http://www.w3.org/html/logo/" class="pull-rightx">
+<img src="images/html5-badge-h-connectivity-css3-device-graphics-multimedia-performance-semantics-storage.png" width="357" height="64" alt="HTML5 Powered with Connectivity / Realtime, CSS3 / Styling, Device Access, Graphics, 3D &amp; Effects, Multimedia, Performance &amp; Integration, Semantics, and Offline &amp; Storage" title="HTML5 Powered with Connectivity / Realtime, CSS3 / Styling, Device Access, Graphics, 3D &amp; Effects, Multimedia, Performance &amp; Integration, Semantics, and Offline &amp; Storage">
+</a>
+
+				<a target="_blank" class="btn btn-info" style="font-size:1.5em; font-family: 'ChunkFiveRegular';" href="http://www.initializr.com/">Initializr</a>
+				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="http://getbootstrap.com/">Bootstrap v3.0.0</a>
+				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="http://bootswatch.com/">Bootswatch</a>
+				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="http://fortawesome.github.io/Font-Awesome/icon/list/"><i class="icon-flag"></i> Font Awesome</a>
+				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="https://www.openshift.com/"><b>OPEN</b>SHIFT</a>
+				<a target="_blank" class="btn btn-info" style="margin-left: 20px" href="http://angularjs.org/">ANGULARJS</a>
+			</p>
+		</footer>
+		<!--
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+                -->
+		<script src="js/vendor/jquery-1.10.1.min.js"></script>
+
+		<script>
+			window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+        <script src="js/vendor/jquery-ui-1.10.3.js"></script>
+		<script src="js/vendor/bootstrap.min.js"></script>
+		<script src="js/angular/lib/angular.min.js"></script>
+
+		<script src="js/vendor/tinycolor-min.js"></script>
+		<script src="js/vendor/jquery.colorpickersliders.js"></script>
+
+		<!-- <script src="js/vendor/colorpicker.js"></script> -->
+		<script src="js/vendor/jquery.xcolor.min.js"></script>
+		<script src="js/main.js"></script>
+
+		<script src="js/plugins.js"></script>
+
+		<!--
+            <script src="js/angular/mycolorpicker.js"></script>
+        -->
+        <script src="js/theme.js"></script>
+		<!-- angular js components  -->
+		<script src="js/angular/filters.js"></script>
+		<script src="js/angular/controllers.js"></script>
+		<script src="js/angular/directives.js"></script>
+		<script src="js/angular/services.js"></script>
+        <script src="js/angular/app.js"></script> 
+
+        <script src="assets/js/holder.js"></script>
+        <script src="assets/js/less.js"></script>
+        <script src="assets/js/jszip.js"></script>
+        <script src="assets/js/uglify.js"></script>
+        <script src="assets/js/filesaver.js"></script>
+        <script src="assets/js/raw-files.js"></script>
+        <script src="assets/js/customizer.js"></script>
+
+
+		<!--
+		<script>
+			var _gaq=[['_setAccount','UA-43966487-2'],['_trackPageview']];
+			(function(d,t){
+				var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+				g.src='//www.google-analytics.com/ga.js';
+				s.parentNode.insertBefore(g,s)}
+			 (document,'script'));
+		</script>
+		-->
+	</body>
+</html>

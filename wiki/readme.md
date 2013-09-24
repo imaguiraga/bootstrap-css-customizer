@@ -129,4 +129,18 @@ angular.module('BootstrapThemePreviewerApp.controllers', []).
 
 JSDoc
 
+Need tools to compile static html tempalets into html file
+replace all angularjs inclusion with jekyll templates
+restrict dyanmic directive to dynami c data
+npm
+http://jekyllrb.com/docs/home/
+https://npmjs.org/package/node-jekyll
+
+syntax highlighting
+static html; templating
+
+Grunt
+http://gruntjs.com/
+
+http://wiki.shopify.com/Liquid#No_Liquid_Zone:_the_raw_tag conflicts with angular
 

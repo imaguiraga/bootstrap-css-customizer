@@ -37,7 +37,8 @@ app.use(allowCrossDomain);
 app.use(app.router);
 //app.use(require('stylus').middleware(__dirname + '/public'));
 //app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, '../../src/main/webapp')));
+//app.use(express.static(path.join(__dirname, '../../src/main/webapp')));
+app.use(express.static(path.join(__dirname, '../../docs/_site')));
 //});
 // development only
 if ('development' == app.get('env')) {

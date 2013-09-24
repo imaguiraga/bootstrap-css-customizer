@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="BootstrapThemePreviewerApp" ng-controller="ColorPickerCtrl" 
+ng-init="template='css/theme/default/bootstrap.min.css'">
+	<!--<![endif]-->
+	<head>
+
+    <!-- Meta, title, CSS, favicons, etc. -->
+    {% include header.inc.html %}
+
+    <!--[if lte IE 8]>
+      <script>
+        document.createElement('ng-include');
+        document.createElement('ng-pluralize');
+        document.createElement('ng-view');
+ 
+        // Optionally these for CSS
+        document.createElement('ng:include');
+        document.createElement('ng:pluralize');
+        document.createElement('ng:view');
+      </script>
+    <![endif]-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <!-- Place anything custom after this. -->
+	</head>
+	<body>
+		<!--[if lt IE 7]>
+                <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="icon-bar">
+						</span>
+						<span class="icon-bar">
+						</span>
+						<span class="icon-bar">
+						</span>
+					</button>
+					<a class="navbar-brand" href="#">
+						Bootstrap Theme roller
+					</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="active">
+							<a href="#">
+								<i class="icon-home">
+								</i>
+								Home
+							</a>
+						</li>
+						<li>
+							<a href="#edit">
+							<i class="icon-edit">
+								</i>
+								Edit
+							</a>
+						</li>
+						<li>
+							<a href="#preview">
+							<i class="icon-eye-open">
+								</i>
+								Preview
+							</a>
+						</li>
+						<li>
+							<a href="#download">
+							<i class="icon-download-alt">
+								</i>
+								Download
+							</a>
+						</li>
+						<li>
+							<a href="#about">
+								About
+							</a>
+						</li>
+						<li>
+							<a href="#contact">
+								<i class="icon-envelope">
+								</i>
+								Contact
+							</a>
+						</li>
+
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								LESS variables
+								<b class="caret">
+								</b>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="#variables-basics">Basics</a></li>
+                                <li><a href="#variables-buttons">Buttons</a></li>
+                                <li><a href="#variables-form-states">Form states</a></li>
+                                <li><a href="#variables-alerts">Alerts</a></li>
+                                <li><a href="#variables-navbar">Navbar</a></li>
+                                <li><a href="#variables-nav">Nav</a></li>
+                                <li><a href="#variables-tables">Tables</a></li>
+                                <li><a href="#variables-forms">Forms</a></li>
+                                <li><a href="#variables-dropdowns">Dropdowns</a></li>
+                                <li><a href="#variables-panels-wells">Panels and wells</a></li>
+                                <li><a href="#variables-accordion">Accordion</a></li>
+                                <li><a href="#variables-badges">Badges</a></li>
+                                <li><a href="#variables-breadcrumbs">Breadcrumbs</a></li>
+                                <li><a href="#variables-jumbotron">Jumbotron</a></li>
+                                <li><a href="#variables-modals">Modals</a></li>
+                                <li><a href="#variables-carousel">Carousel</a></li>
+                                <li><a href="#variables-list-group">List group</a></li>
+                                <li><a href="#variables-thumbnails">Thumbnails</a></li>
+                                <li><a href="#variables-progress">Progress bars</a></li>
+                                <li><a href="#variables-pagination">Pagination</a></li>
+                                <li><a href="#variables-pager">Pager</a></li>
+                                <li><a href="#variables-labels">Labels</a></li>
+                                <li><a href="#variables-tooltips-popovers">Tooltips and popovers</a></li>
+                                <li><a href="#variables-close">Close button</a></li>
+                                <li><a href="#variables-type">Type</a></li>
+                                <li><a href="#variables-other">Other</a></li>
+								<li class="divider">
+								</li>
+								<li class="dropdown-header">
+									Nav header
+								</li>
+								<li>
+									<a href="#">
+										Separated link
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										One more separated link
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+                      {{ content }}
+					<form class="navbar-form navbar-right inline-form">
+						<div class="form-group">
+						<h4 class="inline">
+						  <span style="margin-left: 20px" class="label label-default">Theme</span>
+						</h4>
+						  <select id="theme-selector" ng-model="template" style="width:120px" class="form-control input-sm" title="Bootstrap theme selector">
+							  <option value="css/theme/default/bootstrap.min.css">default</option>
+							  <option value="css/theme/amelia/bootstrap.min.css">amelia</option>
+							  <option value="css/theme/cerulean/bootstrap.min.css">cerulean</option>
+							  <option value="css/theme/cosmo/bootstrap.min.css">cosmo</option>
+							  <option value="css/theme/cyborg/bootstrap.min.css">cyborg</option>
+							  <option value="css/theme/flatly/bootstrap.min.css">flatly</option>
+							  <option value="css/theme/journal/bootstrap.min.css">journal</option>
+							  <option value="css/theme/readable/bootstrap.min.css">readable</option>
+							  <option value="css/theme/simplex/bootstrap.min.css">simplex</option>
+							  <option value="css/theme/slate/bootstrap.min.css">slate</option>
+							  <option value="css/theme/spacelab/bootstrap.min.css">spacelab</option>
+							  <option value="css/theme/united/bootstrap.min.css">united</option>
+						  </select>
+						</div>
+					</form>
+
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+		</div>
+		
+
+      <!--  1
+		<div class="container">
+		<div class="row">
+       -->
+				<div class="well col-lg-3 hidden-xs hidden-sm">
+      				  {% include colorView.inc.html %}
+				</div>
+				<!-- /col-lg-3 -->
+
+				<div class="col-lg-9">
+				<!--
+    				{% include lessVariables.inc.html %}
+
+                    {% include bootswatchThemePreview.inc.html %}
+                -->
+				</div>
+
+				<!-- /col-lg-9 -->
+		<!-- 1
+		</div> /row
+        </div> /container -->
+		<!-- back to top link-->
+		<a id="goto-top" href="#" class="btn btn-default" title="Back To Top">
+			<i class="icon-chevron-sign-up icon-2">
+			</i>
+		</a>
+		<hr />
+		<footer>
+          {% include footer.inc.html %}
+		</footer>
+        <!-- JS and analytics only. -->
+        {% include footerjs.inc.html %}
+	</body>
+</html>
