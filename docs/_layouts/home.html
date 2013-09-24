@@ -178,18 +178,18 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
       <!--  1
 		<div class="container">
 
-       -->      <div class="row">
-				<div class="well col-lg-3 hidden-xs hidden-sm">
+       -->    <div class="row" style="padding:0px">
+				<div class="well col-lg-3 hidden-xs hidden-sm affix" style="margin-left:0px;margin-right:0px">
       				  {% include colorView.inc.html %}
 				</div>
 				<!-- /col-lg-3 -->
 
-				<div class="col-lg-9">
+				<div class="col-lg-9 col-lg-offset-3">
     				{% include lessVariables.inc.html %}
 				</div>
 
 				<!-- /col-lg-9 -->
-				</div>
+                 </div>
 		<!-- 1
 		/row
         </div> /container -->
