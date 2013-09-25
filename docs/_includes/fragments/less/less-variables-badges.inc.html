@@ -1,0 +1,24 @@
+    <div class="page-header"><h2 id="variables-badges">Badges</h2></div>
+    <div class="row">
+      <div class="col-lg-6">
+        <label>@badge-color</label>
+        <input type="text" class="form-control" placeholder="#fff" data-var="@badge-color">
+        <p>Badge text color</p>
+        <label>@badge-bg</label>
+        <input type="text" class="form-control" placeholder="@gray-light" data-var="@badge-bg">
+        <p>Badge background color</p>
+        <label>@badge-link-hover-color</label>
+        <input type="text" class="form-control" placeholder="#fff" data-var="@badge-link-hover-color">
+        <p>Linked badge text color on hover</p>
+      </div>
+      <div class="col-lg-6">
+        <label>@badge-active-color</label>
+        <input type="text" class="form-control" placeholder="@link-color" data-var="@badge-active-color">
+        <p>Badge text color in active nav link</p>
+        <label>@badge-active-bg</label>
+        <input type="text" class="form-control" placeholder="#fff" data-var="@badge-active-bg">
+        <p>Badge text color in active nav link</p>
+      </div>
+    </div>
+
+    {% include fragments/less/preview-badges.inc.html %}

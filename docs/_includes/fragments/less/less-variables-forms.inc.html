@@ -1,0 +1,43 @@
+    <div class="page-header"><h2 id="variables-forms">Forms</h2></div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="page-header"><h3>Inputs</h3></div>
+        <label>@input-color</label>
+        <input type="text" class="form-control" placeholder="@gray" data-var="@input-color">
+        <p class="help-block">Text color for <code>&lt;input&gt;</code>s</p>
+        <label>@input-bg</label>
+        <input type="text" class="form-control" placeholder="#fff" data-var="@input-bg">
+        <p class="help-block"><code>&lt;input&gt;</code> background color</p>
+        <label>@input-border</label>
+        <input type="text" class="form-control" placeholder="#ccc" data-var="@input-border">
+        <p class="help-block"><code>&lt;input&gt;</code> border color</p>
+        <label>@input-border-radius</label>
+        <input type="text" class="form-control" placeholder="@border-radius-base" data-var="@input-border-radius">
+        <p class="help-block"><code>&lt;input&gt;</code> border radius</p>
+        <label>@input-bg-disabled</label>
+        <input type="text" class="form-control" placeholder="@gray-lighter" data-var="@input-bg-disabled">
+        <p class="help-block"><code>&lt;input disabled&gt;</code> background color</p>
+      </div>
+      <div class="col-lg-6">
+        <div class="page-header"><h3>Placeholder</h3></div>
+        <label>@input-color-placeholder</label>
+        <input type="text" class="form-control" placeholder="@gray-light" data-var="@input-color-placeholder">
+        <p class="help-block">Placeholder text color</p>
+
+        <div class="page-header"><h3>Legend</h3></div>
+        <label>@legend-color</label>
+        <input type="text" class="form-control" placeholder="@gray" data-var="@legend-color">
+        <label>@legend-border-color</label>
+        <input type="text" class="form-control" placeholder="#e5e5e5" data-var="@legend-border-color">
+
+        <div class="page-header"><h3>Input groups</h3></div>
+        <label>@input-group-addon-bg</label>
+        <input type="text" class="form-control" placeholder="@gray-lighter" data-var="@input-group-addon-bg">
+        <p class="help-block">Background color for textual input addons</p>
+        <label>@input-group-addon-border-color</label>
+        <input type="text" class="form-control" placeholder="@input-border" data-var="@input-group-addon-border-color">
+        <p class="help-block">Border color for textual input addons</p>
+      </div>
+    </div>
+    
+    {% include fragments/less/preview-forms.inc.html %}

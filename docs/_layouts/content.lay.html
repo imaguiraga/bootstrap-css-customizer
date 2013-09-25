@@ -151,17 +151,20 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 						</h4>
 						  <select id="theme-selector" ng-model="template" style="width:120px" class="form-control input-sm" title="Bootstrap theme selector">
 							  <option value="css/theme/default/bootstrap.min.css">default</option>
-							  <option value="css/theme/amelia/bootstrap.min.css">amelia</option>
-							  <option value="css/theme/cerulean/bootstrap.min.css">cerulean</option>
-							  <option value="css/theme/cosmo/bootstrap.min.css">cosmo</option>
-							  <option value="css/theme/cyborg/bootstrap.min.css">cyborg</option>
-							  <option value="css/theme/flatly/bootstrap.min.css">flatly</option>
-							  <option value="css/theme/journal/bootstrap.min.css">journal</option>
-							  <option value="css/theme/readable/bootstrap.min.css">readable</option>
-							  <option value="css/theme/simplex/bootstrap.min.css">simplex</option>
-							  <option value="css/theme/slate/bootstrap.min.css">slate</option>
-							  <option value="css/theme/spacelab/bootstrap.min.css">spacelab</option>
-							  <option value="css/theme/united/bootstrap.min.css">united</option>
+							  <optgroup label="Bootswatch">
+  							  <option value="{{ page.bootswacth_url }}/amelia/bootstrap.min.css">amelia</option>
+  							  <option value="{{ page.bootswacth_url }}/cerulean/bootstrap.min.css">cerulean</option>
+  							  <option value="{{ page.bootswacth_url }}/cosmo/bootstrap.min.css">cosmo</option>
+  							  <option value="{{ page.bootswacth_url }}/cyborg/bootstrap.min.css">cyborg</option>
+  							  <option value="{{ page.bootswacth_url }}/flatly/bootstrap.min.css">flatly</option>
+  							  <option value="{{ page.bootswacth_url }}/journal/bootstrap.min.css">journal</option>
+  							  <option value="{{ page.bootswacth_url }}/readable/bootstrap.min.css">readable</option>
+  							  <option value="{{ page.bootswacth_url }}/simplex/bootstrap.min.css">simplex</option>
+  							  <option value="{{ page.bootswacth_url }}/slate/bootstrap.min.css">slate</option>
+  							  <option value="{{ page.bootswacth_url }}/spacelab/bootstrap.min.css">spacelab</option>
+  							  <option value="{{ page.bootswacth_url }}/united/bootstrap.min.css">united</option>
+							  </optgroup> 
+
 						  </select>
 						</div>
 					</form>
@@ -170,28 +173,25 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 				<!-- /.navbar-collapse -->
 			</div>
 		</div>
-		
+
 
       <!--  1
 		<div class="container">
-		<div class="row">
-       -->
-				<div class="well col-lg-3 hidden-xs hidden-sm">
+
+       -->    <div class="row" style="padding:0px">
+				<div class="well col-lg-3 hidden-xs hidden-sm affix" style="margin-left:0px;margin-right:0px">
       				  {% include colorView.inc.html %}
 				</div>
 				<!-- /col-lg-3 -->
 
-				<div class="col-lg-9">
-				<!--
+				<div class="col-lg-9 col-lg-offset-3"  style="z-index:500">
     				{% include lessVariables.inc.html %}
-
-                    {% include bootswatchThemePreview.inc.html %}
-                -->
 				</div>
 
 				<!-- /col-lg-9 -->
+                 </div>
 		<!-- 1
-		</div> /row
+		/row
         </div> /container -->
 		<!-- back to top link-->
 		<a id="goto-top" href="#" class="btn btn-default" title="Back To Top">
