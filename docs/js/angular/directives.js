@@ -93,12 +93,19 @@ directiveModule.directive('colorPicker',
                      scope.color.name = $.xcolor.nearestname(color.tiny.toHexString());
                      scope.color.hsl = color.tiny.toHslString();
                      //dynamically update fontcolor
+					 /*
                      if($.xcolor.readable("black",scope.color.hex)){
                          scope.color.fontColor = "black";
                       } else {
                          scope.color.fontColor = "white";
                       }
-
+					  //*/
+					if (color.cielch.l < 60) {
+						scope.color.fontColor = "white";
+					}
+					else {
+						scope.color.fontColor = "black";
+					}
                      //fire DOM updates
                      scope.$digest();
                   }

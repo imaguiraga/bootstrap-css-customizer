@@ -111,6 +111,7 @@ $(".color-input")
   .attr("data-color-format","hex")
   .ColorPickerSliders({
        // color: $(this).css('background-color'),
+	   connectedinput: $(this),
         order: {
             preview:1,
             hsl: 2,
@@ -127,23 +128,46 @@ $(".color-input")
 
            //dynamically update fontcolor
            var fontColor = "black";
-           if($.xcolor.readable("white",colorHex)){
+           /*
+           if($.xcolor.readable("white",newVal)){
                $(this).css("color", "white");
             } else {
+                $(this).css("color", "black");
+            }//*/
+			if (color.cielch.l < 60) {
+                $(this).css("color", "white");
+            }
+            else {
                 $(this).css("color", "black");
             }
         }
       }).droppable({
         drop: function( event, ui ) {
           var newVal = ui.draggable.css('background-color');
-          $(this)
-           .css('background-color',newVal);
-           $( this ).val(rgb2hex(newVal));
+		  var hex = rgb2hex(newVal);
+		  
+		  $( this ).val(hex);
+ 
+		   var color = "white";
+		   
            if($.xcolor.readable("white",newVal)){
-               $(this).css("color", "white");
+                color = "white";
             } else {
+                color = "black";
+            }
+			
+			$(this).css( {'background-color' :hex, 'color' : color} );
+			//*/
+			
+			/*
+			if (color.cielch.l < 60) {
+                $(this).css("color", "white");
+            }
+            else {
                 $(this).css("color", "black");
             }
+			//*/
+			$(this).trigger("colorpickersliders.updateColor",newVal);
     
         }
     });
