@@ -1,0 +1,1396 @@
+<div class="tab-pane active container" id="htmlColors" style="background-color:#2f2f2f!important">
+			<a id="htmlColorsLink">
+			</a>
+			<!--
+			<h3 style="color:white;display:inline-block">
+				HTML Colors
+			</h3>
+			-->
+			<!-- data-toggle="buttons" -->
+			<div style="margin:5px;" class="btn-group" data-toggle="">
+				<label class="btn btn-primary btn-sm">
+					<input type="checkbox" ng-model="nameChecked" class="ng-pristine ng-valid">
+					Names
+				</label>
+<!--
+<label class="btn btn-primary">
+<i class="icon-resize-{{boxSize}}"></i> <input type="checkbox" ng-model="boxSize" ng-true-value="full" ng-false-value="small" tilte="resize {{boxSize}}" /> {{boxSize}}
+</label>
+-->
+				<!--     -->
+				<label class="btn btn-primary btn-sm">
+					<i class="icon-resize-small">
+					</i>
+					<input type="radio" name="options" ng-model="boxSize" value="small" tilte="resize small" class="ng-pristine ng-valid">
+					Small
+				</label>
+				<label class="btn btn-primary btn-sm">
+					<i class="icon-resize-full">
+					</i>
+					<input type="radio" name="options" ng-model="boxSize" value="full" tilte="resize full" class="ng-pristine ng-valid">
+					Large
+				</label>
+			</div>
+			<!--  Toggle On/Off colornames -->
+			<input class="form-control ng-pristine ng-valid" ng-hide="boxSize == 'small'" type="search" ng-model="hf" placeholder="Filter Html Colors ..." style="display: none;">
+			<!-- ngRepeat: colorGroup in htmlColors --><div ng-repeat="colorGroup in htmlColors" class="ng-scope">
+				<!-- -->
+                <h5 style="color:white" class="ng-binding">
+					Pink colors
+				</h5>
+
+				<ul class="list-unstyled">
+					<!-- ngRepeat: color in colorGroup.colors | filter:hf --><li color-picker="" id="color-box-0" title="Pink - rgb(255,192,203)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,192,203);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Pink
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,192,203);color:black;" value="#FFC0CB" id="color-box-input-0">
+					</li><li color-picker="" id="color-box-1" title="LightPink - rgb(255,182,193)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,182,193);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LightPink
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,182,193);color:black;" value="#FFB6C1" id="color-box-input-1">
+					</li><li color-picker="" id="color-box-2" title="HotPink - rgb(255,105,180)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,105,180);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							HotPink
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,105,180);color:white;" value="#FF69B4" id="color-box-input-2">
+					</li><li color-picker="" id="color-box-3" title="DeepPink - rgb(255,20,147)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,20,147);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DeepPink
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,20,147);color:white;" value="#FF1493" id="color-box-input-3">
+					</li><li color-picker="" id="color-box-4" title="PaleVioletRed - rgb(219,112,147)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(219,112,147);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							PaleVioletRed
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(219,112,147);color:white;" value="#DB7093" id="color-box-input-4">
+					</li><li color-picker="" id="color-box-5" title="MediumVioletRed - rgb(199,21,133)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(199,21,133);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							MediumVioletRed
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(199,21,133);color:white;" value="#C71585" id="color-box-input-5">
+					</li>
+				</ul>
+			</div><div ng-repeat="colorGroup in htmlColors" class="ng-scope">
+				<!-- -->
+                <h5 style="color:white" class="ng-binding">
+					Red colors
+				</h5>
+
+				<ul class="list-unstyled">
+					<!-- ngRepeat: color in colorGroup.colors | filter:hf --><li color-picker="" id="color-box-0" title="LightSalmon - rgb(255,160,122)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,160,122);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LightSalmon
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,160,122);color:black;" value="#FFA07A" id="color-box-input-0">
+					</li><li color-picker="" id="color-box-1" title="Salmon - rgb(250,128,114)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(250,128,114);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Salmon
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(250,128,114);color:black;" value="#FA8072" id="color-box-input-1">
+					</li><li color-picker="" id="color-box-2" title="DarkSalmon - rgb(233,150,122)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(233,150,122);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkSalmon
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(233,150,122);color:black;" value="#E9967A" id="color-box-input-2">
+					</li><li color-picker="" id="color-box-3" title="LightCoral - rgb(240,128,128)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(240,128,128);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LightCoral
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(240,128,128);color:black;" value="#F08080" id="color-box-input-3">
+					</li><li color-picker="" id="color-box-4" title="IndianRed - rgb(205,92,92)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(205,92,92);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							IndianRed
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(205,92,92);color:white;" value="#CD5C5C" id="color-box-input-4">
+					</li><li color-picker="" id="color-box-5" title="Crimson - rgb(220,20,60)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(220,20,60);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Crimson
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(220,20,60);color:white;" value="#DC143C" id="color-box-input-5">
+					</li><li color-picker="" id="color-box-6" title="FireBrick - rgb(178,34,34)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(178,34,34);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							FireBrick
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(178,34,34);color:white;" value="#B22222" id="color-box-input-6">
+					</li><li color-picker="" id="color-box-7" title="DarkRed - rgb(139,0,0)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(139,0,0);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkRed
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(139,0,0);color:white;" value="#8B0000" id="color-box-input-7">
+					</li><li color-picker="" id="color-box-8" title="Red - rgb(255,0,0)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,0,0);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Red
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,0,0);color:white;" value="#FF0000" id="color-box-input-8">
+					</li>
+				</ul>
+			</div><div ng-repeat="colorGroup in htmlColors" class="ng-scope">
+				<!-- -->
+                <h5 style="color:white" class="ng-binding">
+					Orange colors
+				</h5>
+
+				<ul class="list-unstyled">
+					<!-- ngRepeat: color in colorGroup.colors | filter:hf --><li color-picker="" id="color-box-0" title="OrangeRed - rgb(255,69,0)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,69,0);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							OrangeRed
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,69,0);color:white;" value="#FF4500" id="color-box-input-0">
+					</li><li color-picker="" id="color-box-1" title="Tomato - rgb(255,99,71)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,99,71);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Tomato
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,99,71);color:white;" value="#FF6347" id="color-box-input-1">
+					</li><li color-picker="" id="color-box-2" title="Coral - rgb(255,127,80)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,127,80);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Coral
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,127,80);color:white;" value="#FF7F50" id="color-box-input-2">
+					</li><li color-picker="" id="color-box-3" title="DarkOrange - rgb(255,140,0)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,140,0);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkOrange
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,140,0);color:white;" value="#FF8C00" id="color-box-input-3">
+					</li><li color-picker="" id="color-box-4" title="Orange - rgb(255,165,0)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,165,0);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Orange
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,165,0);color:white;" value="#FFA500" id="color-box-input-4">
+					</li><li color-picker="" id="color-box-5" title="Gold - rgb(255,215,0)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,215,0);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Gold
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,215,0);color:black;" value="#FFD700" id="color-box-input-5">
+					</li>
+				</ul>
+			</div><div ng-repeat="colorGroup in htmlColors" class="ng-scope">
+				<!-- -->
+                <h5 style="color:white" class="ng-binding">
+					Yellow colors
+				</h5>
+
+				<ul class="list-unstyled">
+					<!-- ngRepeat: color in colorGroup.colors | filter:hf --><li color-picker="" id="color-box-0" title="Yellow - rgb(255,255,0)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,255,0);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Yellow
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,255,0);color:black;" value="#FFFF00" id="color-box-input-0">
+					</li><li color-picker="" id="color-box-1" title="LightYellow - rgb(255,255,224)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,255,224);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LightYellow
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,255,224);color:black;" value="#FFFFE0" id="color-box-input-1">
+					</li><li color-picker="" id="color-box-2" title="LemonChiffon - rgb(255,250,205)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,250,205);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LemonChiffon
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,250,205);color:black;" value="#FFFACD" id="color-box-input-2">
+					</li><li color-picker="" id="color-box-3" title="LightGoldenrodYellow - rgb(250,250,210)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(250,250,210);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LightGoldenrodYellow
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(250,250,210);color:black;" value="#FAFAD2" id="color-box-input-3">
+					</li><li color-picker="" id="color-box-4" title="PapayaWhip - rgb(255,239,213)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,239,213);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							PapayaWhip
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,239,213);color:black;" value="#FFEFD5" id="color-box-input-4">
+					</li><li color-picker="" id="color-box-5" title="Moccasin - rgb(255,228,181)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,228,181);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Moccasin
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,228,181);color:black;" value="#FFE4B5" id="color-box-input-5">
+					</li><li color-picker="" id="color-box-6" title="PeachPuff - rgb(255,218,185)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,218,185);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							PeachPuff
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,218,185);color:black;" value="#FFDAB9" id="color-box-input-6">
+					</li><li color-picker="" id="color-box-7" title="PaleGoldenrod - rgb(238,232,170)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(238,232,170);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							PaleGoldenrod
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(238,232,170);color:black;" value="#EEE8AA" id="color-box-input-7">
+					</li><li color-picker="" id="color-box-8" title="Khaki - rgb(240,230,140)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(240,230,140);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Khaki
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(240,230,140);color:black;" value="#F0E68C" id="color-box-input-8">
+					</li><li color-picker="" id="color-box-9" title="DarkKhaki - rgb(189,183,107)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(189,183,107);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkKhaki
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(189,183,107);color:black;" value="#BDB76B" id="color-box-input-9">
+					</li>
+				</ul>
+			</div><div ng-repeat="colorGroup in htmlColors" class="ng-scope">
+				<!-- -->
+                <h5 style="color:white" class="ng-binding">
+					Brown colors
+				</h5>
+
+				<ul class="list-unstyled">
+					<!-- ngRepeat: color in colorGroup.colors | filter:hf --><li color-picker="" id="color-box-0" title="Cornsilk - rgb(255,248,220)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,248,220);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Cornsilk
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,248,220);color:black;" value="#FFF8DC" id="color-box-input-0">
+					</li><li color-picker="" id="color-box-1" title="BlanchedAlmond - rgb(255,235,205)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,235,205);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							BlanchedAlmond
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,235,205);color:black;" value="#FFEBCD" id="color-box-input-1">
+					</li><li color-picker="" id="color-box-2" title="Bisque - rgb(255,228,196)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,228,196);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Bisque
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,228,196);color:black;" value="#FFE4C4" id="color-box-input-2">
+					</li><li color-picker="" id="color-box-3" title="NavajoWhite - rgb(255,222,173)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,222,173);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							NavajoWhite
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,222,173);color:black;" value="#FFDEAD" id="color-box-input-3">
+					</li><li color-picker="" id="color-box-4" title="Wheat - rgb(245,222,179)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(245,222,179);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Wheat
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(245,222,179);color:black;" value="#F5DEB3" id="color-box-input-4">
+					</li><li color-picker="" id="color-box-5" title="BurlyWood - rgb(222,184,135)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(222,184,135);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							BurlyWood
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(222,184,135);color:black;" value="#DEB887" id="color-box-input-5">
+					</li><li color-picker="" id="color-box-6" title="Tan - rgb(210,180,140)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(210,180,140);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Tan
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(210,180,140);color:black;" value="#D2B48C" id="color-box-input-6">
+					</li><li color-picker="" id="color-box-7" title="RosyBrown - rgb(188,143,143)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(188,143,143);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							RosyBrown
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(188,143,143);color:black;" value="#BC8F8F" id="color-box-input-7">
+					</li><li color-picker="" id="color-box-8" title="SandyBrown - rgb(244,164,96)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(244,164,96);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							SandyBrown
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(244,164,96);color:black;" value="#F4A460" id="color-box-input-8">
+					</li><li color-picker="" id="color-box-9" title="Goldenrod - rgb(218,165,32)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(218,165,32);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Goldenrod
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(218,165,32);color:black;" value="#DAA520" id="color-box-input-9">
+					</li><li color-picker="" id="color-box-10" title="DarkGoldenrod - rgb(184,134,11)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(184,134,11);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkGoldenrod
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(184,134,11);color:white;" value="#B8860B" id="color-box-input-10">
+					</li><li color-picker="" id="color-box-11" title="Peru - rgb(205,133,63)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(205,133,63);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Peru
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(205,133,63);color:white;" value="#CD853F" id="color-box-input-11">
+					</li><li color-picker="" id="color-box-12" title="Chocolate - rgb(210,105,30)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(210,105,30);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Chocolate
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(210,105,30);color:white;" value="#D2691E" id="color-box-input-12">
+					</li><li color-picker="" id="color-box-13" title="SaddleBrown - rgb(139,69,19)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(139,69,19);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							SaddleBrown
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(139,69,19);color:white;" value="#8B4513" id="color-box-input-13">
+					</li><li color-picker="" id="color-box-14" title="Sienna - rgb(160,82,45)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(160,82,45);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Sienna
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(160,82,45);color:white;" value="#A0522D" id="color-box-input-14">
+					</li><li color-picker="" id="color-box-15" title="Brown - rgb(165,42,42)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(165,42,42);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Brown
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(165,42,42);color:white;" value="#A52A2A" id="color-box-input-15">
+					</li><li color-picker="" id="color-box-16" title="Maroon - rgb(128,0,0)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(128,0,0);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Maroon
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(128,0,0);color:white;" value="#800000" id="color-box-input-16">
+					</li>
+				</ul>
+			</div><div ng-repeat="colorGroup in htmlColors" class="ng-scope">
+				<!-- -->
+                <h5 style="color:white" class="ng-binding">
+					Green colors
+				</h5>
+
+				<ul class="list-unstyled">
+					<!-- ngRepeat: color in colorGroup.colors | filter:hf --><li color-picker="" id="color-box-0" title="DarkOliveGreen - rgb(85,107,47)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(85,107,47);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkOliveGreen
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(85,107,47);color:white;" value="#556B2F" id="color-box-input-0">
+					</li><li color-picker="" id="color-box-1" title="Olive - rgb(128,128,0)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(128,128,0);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Olive
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(128,128,0);color:white;" value="#808000" id="color-box-input-1">
+					</li><li color-picker="" id="color-box-2" title="OliveDrab - rgb(107,142,35)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(107,142,35);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							OliveDrab
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(107,142,35);color:white;" value="#6B8E23" id="color-box-input-2">
+					</li><li color-picker="" id="color-box-3" title="YellowGreen - rgb(154,205,50)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(154,205,50);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							YellowGreen
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(154,205,50);color:black;" value="#9ACD32" id="color-box-input-3">
+					</li><li color-picker="" id="color-box-4" title="LimeGreen - rgb(50,205,50)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(50,205,50);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LimeGreen
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(50,205,50);color:black;" value="#32CD32" id="color-box-input-4">
+					</li><li color-picker="" id="color-box-5" title="Lime - rgb(0,255,0)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(0,255,0);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Lime
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(0,255,0);color:black;" value="#00FF00" id="color-box-input-5">
+					</li><li color-picker="" id="color-box-6" title="LawnGreen - rgb(124,252,0)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(124,252,0);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LawnGreen
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(124,252,0);color:black;" value="#7CFC00" id="color-box-input-6">
+					</li><li color-picker="" id="color-box-7" title="Chartreuse - rgb(127,255,0)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(127,255,0);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Chartreuse
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(127,255,0);color:black;" value="#7FFF00" id="color-box-input-7">
+					</li><li color-picker="" id="color-box-8" title="GreenYellow - rgb(173,255,47)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(173,255,47);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							GreenYellow
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(173,255,47);color:black;" value="#ADFF2F" id="color-box-input-8">
+					</li><li color-picker="" id="color-box-9" title="SpringGreen - rgb(0,255,127)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(0,255,127);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							SpringGreen
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(0,255,127);color:black;" value="#00FF7F" id="color-box-input-9">
+					</li><li color-picker="" id="color-box-10" title="MediumSpringGreen - rgb(0,250,154)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(0,250,154);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							MediumSpringGreen
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(0,250,154);color:black;" value="#00FA9A" id="color-box-input-10">
+					</li><li color-picker="" id="color-box-11" title="LightGreen - rgb(144,238,144)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(144,238,144);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LightGreen
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(144,238,144);color:black;" value="#90EE90" id="color-box-input-11">
+					</li><li color-picker="" id="color-box-12" title="PaleGreen - rgb(152,251,152)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(152,251,152);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							PaleGreen
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(152,251,152);color:black;" value="#98FB98" id="color-box-input-12">
+					</li><li color-picker="" id="color-box-13" title="DarkSeaGreen - rgb(143,188,143)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(143,188,143);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkSeaGreen
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(143,188,143);color:black;" value="#8FBC8F" id="color-box-input-13">
+					</li><li color-picker="" id="color-box-14" title="MediumSeaGreen - rgb(60,179,113)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(60,179,113);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							MediumSeaGreen
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(60,179,113);color:white;" value="#3CB371" id="color-box-input-14">
+					</li><li color-picker="" id="color-box-15" title="SeaGreen - rgb(46,139,87)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(46,139,87);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							SeaGreen
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(46,139,87);color:white;" value="#2E8B57" id="color-box-input-15">
+					</li><li color-picker="" id="color-box-16" title="ForestGreen - rgb(34,139,34)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(34,139,34);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							ForestGreen
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(34,139,34);color:white;" value="#228B22" id="color-box-input-16">
+					</li><li color-picker="" id="color-box-17" title="Green - rgb(0,128,0)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(0,128,0);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Green
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(0,128,0);color:white;" value="#008000" id="color-box-input-17">
+					</li><li color-picker="" id="color-box-18" title="DarkGreen - rgb(0,100,0)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(0,100,0);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkGreen
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(0,100,0);color:white;" value="#006400" id="color-box-input-18">
+					</li>
+				</ul>
+			</div><div ng-repeat="colorGroup in htmlColors" class="ng-scope">
+				<!-- -->
+                <h5 style="color:white" class="ng-binding">
+					Cyan colors
+				</h5>
+
+				<ul class="list-unstyled">
+					<!-- ngRepeat: color in colorGroup.colors | filter:hf --><li color-picker="" id="color-box-0" title="MediumAquamarine - rgb(102,205,170)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(102,205,170);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							MediumAquamarine
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(102,205,170);color:black;" value="#66CDAA" id="color-box-input-0">
+					</li><li color-picker="" id="color-box-1" title="Aqua - rgb(0,255,255)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(0,255,255);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Aqua
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(0,255,255);color:black;" value="#00FFFF" id="color-box-input-1">
+					</li><li color-picker="" id="color-box-2" title="Cyan - rgb(0,255,255)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(0,255,255);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Cyan
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(0,255,255);color:black;" value="#00FFFF" id="color-box-input-2">
+					</li><li color-picker="" id="color-box-3" title="LightCyan - rgb(224,255,255)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(224,255,255);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LightCyan
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(224,255,255);color:black;" value="#E0FFFF" id="color-box-input-3">
+					</li><li color-picker="" id="color-box-4" title="PaleTurquoise - rgb(175,238,238)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(175,238,238);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							PaleTurquoise
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(175,238,238);color:black;" value="#AFEEEE" id="color-box-input-4">
+					</li><li color-picker="" id="color-box-5" title="Aquamarine - rgb(127,255,212)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(127,255,212);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Aquamarine
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(127,255,212);color:black;" value="#7FFFD4" id="color-box-input-5">
+					</li><li color-picker="" id="color-box-6" title="Turquoise - rgb(64,224,208)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(64,224,208);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Turquoise
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(64,224,208);color:black;" value="#40E0D0" id="color-box-input-6">
+					</li><li color-picker="" id="color-box-7" title="MediumTurquoise - rgb(72,209,204)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(72,209,204);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							MediumTurquoise
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(72,209,204);color:black;" value="#48D1CC" id="color-box-input-7">
+					</li><li color-picker="" id="color-box-8" title="DarkTurquoise - rgb(0,206,209)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(0,206,209);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkTurquoise
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(0,206,209);color:white;" value="#00CED1" id="color-box-input-8">
+					</li><li color-picker="" id="color-box-9" title="LightSeaGreen - rgb(32,178,170)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(32,178,170);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LightSeaGreen
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(32,178,170);color:white;" value="#20B2AA" id="color-box-input-9">
+					</li><li color-picker="" id="color-box-10" title="CadetBlue - rgb(95,158,160)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(95,158,160);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							CadetBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(95,158,160);color:white;" value="#5F9EA0" id="color-box-input-10">
+					</li><li color-picker="" id="color-box-11" title="DarkCyan - rgb(0,139,139)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(0,139,139);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkCyan
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(0,139,139);color:white;" value="#008B8B" id="color-box-input-11">
+					</li><li color-picker="" id="color-box-12" title="Teal - rgb(0,128,128)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(0,128,128);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Teal
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(0,128,128);color:white;" value="#008080" id="color-box-input-12">
+					</li>
+				</ul>
+			</div><div ng-repeat="colorGroup in htmlColors" class="ng-scope">
+				<!-- -->
+                <h5 style="color:white" class="ng-binding">
+					Blue colors
+				</h5>
+
+				<ul class="list-unstyled">
+					<!-- ngRepeat: color in colorGroup.colors | filter:hf --><li color-picker="" id="color-box-0" title="LightSteelBlue - rgb(176,196,222)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(176,196,222);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LightSteelBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(176,196,222);color:black;" value="#B0C4DE" id="color-box-input-0">
+					</li><li color-picker="" id="color-box-1" title="PowderBlue - rgb(176,224,230)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(176,224,230);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							PowderBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(176,224,230);color:black;" value="#B0E0E6" id="color-box-input-1">
+					</li><li color-picker="" id="color-box-2" title="LightBlue - rgb(173,216,230)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(173,216,230);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LightBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(173,216,230);color:black;" value="#ADD8E6" id="color-box-input-2">
+					</li><li color-picker="" id="color-box-3" title="SkyBlue - rgb(135,206,235)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(135,206,235);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							SkyBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(135,206,235);color:black;" value="#87CEEB" id="color-box-input-3">
+					</li><li color-picker="" id="color-box-4" title="LightSkyBlue - rgb(135,206,250)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(135,206,250);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LightSkyBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(135,206,250);color:black;" value="#87CEFA" id="color-box-input-4">
+					</li><li color-picker="" id="color-box-5" title="DeepSkyBlue - rgb(0,191,255)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(0,191,255);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DeepSkyBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(0,191,255);color:white;" value="#00BFFF" id="color-box-input-5">
+					</li><li color-picker="" id="color-box-6" title="DodgerBlue - rgb(30,144,255)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(30,144,255);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DodgerBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(30,144,255);color:white;" value="#1E90FF" id="color-box-input-6">
+					</li><li color-picker="" id="color-box-7" title="CornflowerBlue - rgb(100,149,237)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(100,149,237);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							CornflowerBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(100,149,237);color:white;" value="#6495ED" id="color-box-input-7">
+					</li><li color-picker="" id="color-box-8" title="SteelBlue - rgb(70,130,180)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(70,130,180);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							SteelBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(70,130,180);color:white;" value="#4682B4" id="color-box-input-8">
+					</li><li color-picker="" id="color-box-9" title="RoyalBlue - rgb(65,105,225)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(65,105,225);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							RoyalBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(65,105,225);color:white;" value="#4169E1" id="color-box-input-9">
+					</li><li color-picker="" id="color-box-10" title="Blue - rgb(0,0,255)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(0,0,255);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Blue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(0,0,255);color:white;" value="#0000FF" id="color-box-input-10">
+					</li><li color-picker="" id="color-box-11" title="MediumBlue - rgb(0,0,205)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(0,0,205);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							MediumBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(0,0,205);color:white;" value="#0000CD" id="color-box-input-11">
+					</li><li color-picker="" id="color-box-12" title="DarkBlue - rgb(0,0,139)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(0,0,139);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(0,0,139);color:white;" value="#00008B" id="color-box-input-12">
+					</li><li color-picker="" id="color-box-13" title="Navy - rgb(0,0,128)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(0,0,128);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Navy
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(0,0,128);color:white;" value="#000080" id="color-box-input-13">
+					</li><li color-picker="" id="color-box-14" title="MidnightBlue - rgb(25,25,112)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(25,25,112);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							MidnightBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(25,25,112);color:white;" value="#191970" id="color-box-input-14">
+					</li>
+				</ul>
+			</div><div ng-repeat="colorGroup in htmlColors" class="ng-scope">
+				<!-- -->
+                <h5 style="color:white" class="ng-binding">
+					Purple colors
+				</h5>
+
+				<ul class="list-unstyled">
+					<!-- ngRepeat: color in colorGroup.colors | filter:hf --><li color-picker="" id="color-box-0" title="Lavender - rgb(230,230,250)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(230,230,250);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Lavender
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(230,230,250);color:black;" value="#E6E6FA" id="color-box-input-0">
+					</li><li color-picker="" id="color-box-1" title="Thistle - rgb(216,191,216)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(216,191,216);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Thistle
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(216,191,216);color:black;" value="#D8BFD8" id="color-box-input-1">
+					</li><li color-picker="" id="color-box-2" title="Plum - rgb(221,160,221)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(221,160,221);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Plum
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(221,160,221);color:black;" value="#DDA0DD" id="color-box-input-2">
+					</li><li color-picker="" id="color-box-3" title="Violet - rgb(238,130,238)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(238,130,238);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Violet
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(238,130,238);color:black;" value="#EE82EE" id="color-box-input-3">
+					</li><li color-picker="" id="color-box-4" title="Orchid - rgb(218,112,214)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(218,112,214);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Orchid
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(218,112,214);color:black;" value="#DA70D6" id="color-box-input-4">
+					</li><li color-picker="" id="color-box-5" title="Fuchsia - rgb(255,0,255)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,0,255);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Fuchsia
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,0,255);color:white;" value="#FF00FF" id="color-box-input-5">
+					</li><li color-picker="" id="color-box-6" title="Magenta - rgb(255,0,255)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,0,255);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Magenta
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,0,255);color:white;" value="#FF00FF" id="color-box-input-6">
+					</li><li color-picker="" id="color-box-7" title="MediumOrchid - rgb(186,85,211)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(186,85,211);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							MediumOrchid
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(186,85,211);color:white;" value="#BA55D3" id="color-box-input-7">
+					</li><li color-picker="" id="color-box-8" title="MediumPurple - rgb(147,112,219)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(147,112,219);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							MediumPurple
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(147,112,219);color:white;" value="#9370DB" id="color-box-input-8">
+					</li><li color-picker="" id="color-box-9" title="BlueViolet - rgb(138,43,226)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(138,43,226);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							BlueViolet
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(138,43,226);color:white;" value="#8A2BE2" id="color-box-input-9">
+					</li><li color-picker="" id="color-box-10" title="DarkViolet - rgb(148,0,211)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(148,0,211);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkViolet
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(148,0,211);color:white;" value="#9400D3" id="color-box-input-10">
+					</li><li color-picker="" id="color-box-11" title="DarkOrchid - rgb(153,50,204)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(153,50,204);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkOrchid
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(153,50,204);color:white;" value="#9932CC" id="color-box-input-11">
+					</li><li color-picker="" id="color-box-12" title="DarkMagenta - rgb(139,0,139)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(139,0,139);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkMagenta
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(139,0,139);color:white;" value="#8B008B" id="color-box-input-12">
+					</li><li color-picker="" id="color-box-13" title="Purple - rgb(128,0,128)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(128,0,128);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Purple
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(128,0,128);color:white;" value="#800080" id="color-box-input-13">
+					</li><li color-picker="" id="color-box-14" title="Indigo - rgb(75,0,130)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(75,0,130);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Indigo
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(75,0,130);color:white;" value="#4B0082" id="color-box-input-14">
+					</li><li color-picker="" id="color-box-15" title="DarkSlateBlue - rgb(72,61,139)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(72,61,139);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkSlateBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(72,61,139);color:white;" value="#483D8B" id="color-box-input-15">
+					</li><li color-picker="" id="color-box-16" title="SlateBlue - rgb(106,90,205)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(106,90,205);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							SlateBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(106,90,205);color:white;" value="#6A5ACD" id="color-box-input-16">
+					</li><li color-picker="" id="color-box-17" title="MediumSlateBlue - rgb(123,104,238)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(123,104,238);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							MediumSlateBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(123,104,238);color:white;" value="#7B68EE" id="color-box-input-17">
+					</li>
+				</ul>
+			</div><div ng-repeat="colorGroup in htmlColors" class="ng-scope">
+				<!-- -->
+                <h5 style="color:white" class="ng-binding">
+					White colors
+				</h5>
+
+				<ul class="list-unstyled">
+					<!-- ngRepeat: color in colorGroup.colors | filter:hf --><li color-picker="" id="color-box-0" title="White - rgb(255,255,255)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,255,255);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							White
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,255,255);color:black;" value="#FFFFFF" id="color-box-input-0">
+					</li><li color-picker="" id="color-box-1" title="Snow - rgb(255,250,250)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,250,250);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Snow
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,250,250);color:black;" value="#FFFAFA" id="color-box-input-1">
+					</li><li color-picker="" id="color-box-2" title="Honeydew - rgb(240,255,240)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(240,255,240);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Honeydew
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(240,255,240);color:black;" value="#F0FFF0" id="color-box-input-2">
+					</li><li color-picker="" id="color-box-3" title="MintCream - rgb(245,255,250)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(245,255,250);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							MintCream
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(245,255,250);color:black;" value="#F5FFFA" id="color-box-input-3">
+					</li><li color-picker="" id="color-box-4" title="Azure - rgb(240,255,255)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(240,255,255);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Azure
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(240,255,255);color:black;" value="#F0FFFF" id="color-box-input-4">
+					</li><li color-picker="" id="color-box-5" title="AliceBlue - rgb(240,248,255)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(240,248,255);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							AliceBlue
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(240,248,255);color:black;" value="#F0F8FF" id="color-box-input-5">
+					</li><li color-picker="" id="color-box-6" title="GhostWhite - rgb(248,248,255)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(248,248,255);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							GhostWhite
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(248,248,255);color:black;" value="#F8F8FF" id="color-box-input-6">
+					</li><li color-picker="" id="color-box-7" title="WhiteSmoke - rgb(245,245,245)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(245,245,245);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							WhiteSmoke
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(245,245,245);color:black;" value="#F5F5F5" id="color-box-input-7">
+					</li><li color-picker="" id="color-box-8" title="Seashell - rgb(255,245,238)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,245,238);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Seashell
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,245,238);color:black;" value="#FFF5EE" id="color-box-input-8">
+					</li><li color-picker="" id="color-box-9" title="Beige - rgb(245,245,220)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(245,245,220);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Beige
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(245,245,220);color:black;" value="#F5F5DC" id="color-box-input-9">
+					</li><li color-picker="" id="color-box-10" title="OldLace - rgb(253,245,230)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(253,245,230);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							OldLace
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(253,245,230);color:black;" value="#FDF5E6" id="color-box-input-10">
+					</li><li color-picker="" id="color-box-11" title="FloralWhite - rgb(255,250,240)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,250,240);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							FloralWhite
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,250,240);color:black;" value="#FFFAF0" id="color-box-input-11">
+					</li><li color-picker="" id="color-box-12" title="Ivory - rgb(255,255,240)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,255,240);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Ivory
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,255,240);color:black;" value="#FFFFF0" id="color-box-input-12">
+					</li><li color-picker="" id="color-box-13" title="AntiqueWhite - rgb(250,235,215)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(250,235,215);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							AntiqueWhite
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(250,235,215);color:black;" value="#FAEBD7" id="color-box-input-13">
+					</li><li color-picker="" id="color-box-14" title="Linen - rgb(250,240,230)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(250,240,230);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Linen
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(250,240,230);color:black;" value="#FAF0E6" id="color-box-input-14">
+					</li><li color-picker="" id="color-box-15" title="LavenderBlush - rgb(255,240,245)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,240,245);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LavenderBlush
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,240,245);color:black;" value="#FFF0F5" id="color-box-input-15">
+					</li><li color-picker="" id="color-box-16" title="MistyRose - rgb(255,228,225)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(255,228,225);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							MistyRose
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(255,228,225);color:black;" value="#FFE4E1" id="color-box-input-16">
+					</li>
+				</ul>
+			</div><div ng-repeat="colorGroup in htmlColors" class="ng-scope">
+				<!-- -->
+                <h5 style="color:white" class="ng-binding">
+					Gray/Grey/Black colors
+				</h5>
+
+				<ul class="list-unstyled">
+					<!-- ngRepeat: color in colorGroup.colors | filter:hf --><li color-picker="" id="color-box-0" title="Gainsboro - rgb(220,220,220)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(220,220,220);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Gainsboro
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(220,220,220);color:black;" value="#DCDCDC" id="color-box-input-0">
+					</li><li color-picker="" id="color-box-1" title="LightGray - rgb(211,211,211)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(211,211,211);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LightGray
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(211,211,211);color:black;" value="#D3D3D3" id="color-box-input-1">
+					</li><li color-picker="" id="color-box-2" title="Silver - rgb(192,192,192)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(192,192,192);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Silver
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(192,192,192);color:black;" value="#C0C0C0" id="color-box-input-2">
+					</li><li color-picker="" id="color-box-3" title="DarkGray - rgb(169,169,169)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(169,169,169);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkGray
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(169,169,169);color:black;" value="#A9A9A9" id="color-box-input-3">
+					</li><li color-picker="" id="color-box-4" title="Gray - rgb(128,128,128)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(128,128,128);color:black;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Gray
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(128,128,128);color:black;" value="#808080" id="color-box-input-4">
+					</li><li color-picker="" id="color-box-5" title="DimGray - rgb(105,105,105)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(105,105,105);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DimGray
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(105,105,105);color:white;" value="#696969" id="color-box-input-5">
+					</li><li color-picker="" id="color-box-6" title="LightSlateGray - rgb(119,136,153)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(119,136,153);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							LightSlateGray
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(119,136,153);color:white;" value="#778899" id="color-box-input-6">
+					</li><li color-picker="" id="color-box-7" title="SlateGray - rgb(112,128,144)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(112,128,144);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							SlateGray
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(112,128,144);color:white;" value="#708090" id="color-box-input-7">
+					</li><li color-picker="" id="color-box-8" title="DarkSlateGray - rgb(47,79,79)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(47,79,79);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							DarkSlateGray
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(47,79,79);color:white;" value="#2F4F4F" id="color-box-input-8">
+					</li><li color-picker="" id="color-box-9" title="Black - rgb(0,0,0)" ng-repeat="color in colorGroup.colors | filter:hf" class="color-box-small" style="background-color:rgb(0,0,0);color:white;">
+						<span ng-show="nameChecked" class="ng-binding" style="display: none;">
+							Black
+						</span>
+						<span ng-hide="nameChecked">
+							A
+						</span>
+						<br>
+						<input size="7" data-color-format="hex" type="text" class="color-box-input" style="background-color:rgb(0,0,0);color:white;" value="#000000" id="color-box-input-9">
+					</li>
+				</ul>
+			</div>
+		</div>

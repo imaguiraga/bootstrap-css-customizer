@@ -75,7 +75,7 @@ directiveModule.directive('colorPicker',
           link: function postLink(scope, element, attrs) {
 
           //make parent element draggable
-          element.draggable({ revert: "valid",/*cursor: "move" ,opacity: 0.9,*/ helper: "clone",revertDuration: 50,zIndex: 10000 });
+          element.draggable({ revert: "valid",cursor: "move" ,opacity: 0.9, helper: "clone",revertDuration: 50,zIndex: 6000 });
           element.focusin( function(){
               var slider = $(this).ColorPickerSliders({
                   color: scope.color.hex,

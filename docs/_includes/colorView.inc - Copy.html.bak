@@ -115,7 +115,7 @@
 					{{colorGroup.groupName}}
 				</h5>
 				<ul class="list-unstyled">
-					<li color-picker id="ws-color-box-{{$index}}" title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors | filter:wf"
+					<li color-picker id="ws-color-box-{{$index}}"title="{{color.name}} - {{color.rgb}}" ng-repeat="color in colorGroup.colors | filter:wf"
 						class="color-box-{{boxSize}}"
 						style="background-color:{{color.rgb}};color:{{color.fontColor}};">
 						<span ng-show="nameChecked">

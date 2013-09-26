@@ -144,7 +144,9 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 						</li>
 					</ul>
                       {{ content }}
+
 					<form class="navbar-form navbar-right inline-form">
+
 						<div class="form-group">
 						<h4 class="inline">
 						  <span style="margin-left: 20px" class="label label-default">Theme</span>
@@ -167,7 +169,8 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 
 						  </select>
 						</div>
-					</form>
+
+                    </form>
 
 				</div>
 				<!-- /.navbar-collapse -->
@@ -179,12 +182,12 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 		<div class="container">
 
        -->    <div class="row" style="padding:0px">
-				<div class="well col-lg-3 hidden-xs hidden-sm affix" style="margin-left:0px;margin-right:0px">
+				<div class="well col-lg-3 hidden-xs hidden-sm affix" style="margin-left:0px;margin-right:0px;">
       				  {% include colorView.inc.html %}
 				</div>
 				<!-- /col-lg-3 -->
 
-				<div class="col-lg-9 col-lg-offset-3"  style="z-index:500">
+				<div class="col-lg-9 col-lg-offset-3">
     				{% include lessVariables.inc.html %}
 				</div>
 

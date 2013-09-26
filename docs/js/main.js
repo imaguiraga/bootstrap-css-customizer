@@ -98,5 +98,47 @@ function hexToRgbString(hex) {
 
 $(function() {
 //    $( document ).tooltip();
+
+$(".color-input")
+  .attr("data-color-format","hex")
+  .ColorPickerSliders({
+       // color: $(this).css('background-color'),
+        order: {
+            preview:1,
+            hsl: 2,
+            opacity:3
+        } ,
+        onchange: function(container, color) {
+
+          //update scope variables double bindings
+          //tinycolor object is in color.tiny
+           var colorHex = color.tiny.toHexString();
+           var colorRgb = color.tiny.toRgbString();
+
+           var colorName = $.xcolor.nearestname(colorHex);
+
+           //dynamically update fontcolor
+           var fontColor = "black";
+           if($.xcolor.readable("black",colorHex)){
+               $(this).css("color", "black");
+            } else {
+                $(this).css("color", "white");
+            }
+        }
+      }).droppable({
+        drop: function( event, ui ) {
+          var newVal = ui.draggable.css('background-color');
+          $(this)
+           .css('background-color',newVal);
+           $( this ).val(newVal);
+           if($.xcolor.readable("black",newVal)){
+               $(this).css("color", "black");
+            } else {
+                $(this).css("color", "newVal");
+            }
+    
+        }
+    });
+
 });
 
