@@ -96,6 +96,14 @@ function hexToRgbString(hex) {
    return 'rgb('+tmp.r+','+tmp.g+','+tmp.b+')';
 }
 
+function rgb2hex(rgb) {
+ rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+ function hex(x) {
+  return ("0" + parseInt(x).toString(16)).slice(-2);
+ }
+ return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+}
+
 $(function() {
 //    $( document ).tooltip();
 
@@ -119,10 +127,10 @@ $(".color-input")
 
            //dynamically update fontcolor
            var fontColor = "black";
-           if($.xcolor.readable("black",colorHex)){
-               $(this).css("color", "black");
+           if($.xcolor.readable("white",colorHex)){
+               $(this).css("color", "white");
             } else {
-                $(this).css("color", "white");
+                $(this).css("color", "black");
             }
         }
       }).droppable({
@@ -130,11 +138,11 @@ $(".color-input")
           var newVal = ui.draggable.css('background-color');
           $(this)
            .css('background-color',newVal);
-           $( this ).val(newVal);
-           if($.xcolor.readable("black",newVal)){
-               $(this).css("color", "black");
+           $( this ).val(rgb2hex(newVal));
+           if($.xcolor.readable("white",newVal)){
+               $(this).css("color", "white");
             } else {
-                $(this).css("color", "newVal");
+                $(this).css("color", "black");
             }
     
         }
