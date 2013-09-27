@@ -106,12 +106,43 @@ function rgb2hex(rgb) {
 
 //update less variables
 var LESS_VARIABLES = {};
+var LESS_VARIABLES_REF = {};
 
 function updateLESSVariables(key, value){
 	if( key !== undefined){
-		LESS_VARIABLES [key].value = colorHex; 
-		console.log("{"+key + "} = [ "+colorHex+" ]");
+		LESS_VARIABLES [key].value = value; 
+		console.log("{"+key + "} = [ "+value+" ]");
 	}
+	
+	
+}
+
+function addLESSVariablesRef(key,value){
+	/*
+	darken(@link-color, 15%)
+	(@popover-arrow-width 1)
+	@brand-primary
+	(@popover-arrow-width 1) 
+	//*/
+	var pattern =/@(\D*)\s?/gm;
+	//pattern =/@(\D*)(?=[,|\s]?)/gm;
+	//find reference
+	var result = value.replace(","," ").trim().match(pattern);
+	if(result){
+		var reference = result[0];
+		if( typeof reference === "string"){
+			reference = reference.trim();
+			console.log("{"+key+ "} -> {"+reference+"}");
+			if(typeof LESS_VARIABLES_REF[reference] === "undefined"){
+				LESS_VARIABLES_REF[reference] = [];	
+			}
+			
+			if(LESS_VARIABLES_REF[reference].length){
+				LESS_VARIABLES_REF[reference].push(key);
+			}
+		}
+	}
+
 }
 
 $(function() {
@@ -131,6 +162,10 @@ $("input:text.form-control")
 		//console.log(this.attributes["data-var"].value);
 		console.log(i+" - {"+key + "} = [ "+value+" ]");
 		LESS_VARIABLES [key] = {'default':value,'value':value };
+		//contains @
+		if(value && value.indexOf("@") >= 0){
+			addLESSVariablesRef(key,value);
+		}
 		
 	})
 	.filter(".color-input")

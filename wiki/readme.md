@@ -198,10 +198,18 @@ jQuery plugins
             $(this);
         
         });
-     
+
     };
  
 })( jQuery );
 
 
 http://learn.jquery.com/
+
+Undocumented less functions
+https://github.com/less/less.js/blob/master/dist/less-1.4.2.js
+
+var color = (new (less.tree.Color)("333333"));
+console.log(color.toCSS());
+var color = (new (less.tree.Color)("333333"));
+console.log(less.tree.functions.darken(color,{value:10}/*amount*/).toCSS());
