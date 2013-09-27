@@ -104,33 +104,57 @@ function rgb2hex(rgb) {
 	return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
 }
 
+//update less variables
+var LESS_VARIABLES = {};
+
+function updateLESSVariables(key, value){
+	if( key !== undefined){
+		LESS_VARIABLES [key].value = colorHex; 
+		console.log("{"+key + "} = [ "+colorHex+" ]");
+	}
+}
+
 $(function() {
 //    $( document ).tooltip();
 
-$("input:text.color-input")
-	.before("<i class='icon-bullseye'></i>")
-	.each( function(){
+$("input:text.form-control")
+	.filter("[data-var]")
+	.each( function(i,elt){
 	
-		var $this = $(this);
-		var value =  $this.attr("data-var");
-		$this.filter("[data-var]").attr({
-			"data-color-format" : "hex",
-			"id" : value
+		var $this = $(elt);
+		var key = $this.attr("data-var");
+		var value = $this.val().length > 0 ? $this.val():$this.attr("placeholder");
+		$this.val(value);
+		$this.attr({
+			"id" : key
 		});
 		//console.log(this.attributes["data-var"].value);
-		console.log(value);
+		console.log(i+" - {"+key + "} = [ "+value+" ]");
+		LESS_VARIABLES [key] = {'default':value,'value':value };
 		
 	})
+	.filter(".color-input")
+	.each( function(i,elt){
+	
+		var $this = $(elt);
+		$this.before("<i class='icon-bullseye'></i>");
+		var key =  $this.attr("data-var");
+		var value =  $this.val();
+		$this.attr({
+			"data-color-format" : "hex",			
+		});
+		$this.css('background-color',value);
+
+	})	
 	.ColorPickerSliders({
-       // color: $(this).css('background-color'),
-	    connectedinput: $(this),
+
         order: {
             preview:1,
             hsl: 2,
             opacity:3
         } ,
         onchange: function(container, color) {
-
+			var $this = $(this);
           //update scope variables double bindings
           //tinycolor object is in color.tiny
            var colorHex = color.tiny.toHexString();
@@ -147,15 +171,22 @@ $("input:text.color-input")
             else {
                 fontColor = "black";
             }
-			$(this).css("color", fontColor);
+			//$this.val(colorHex);
+			
+			var $input = $(this.connectedinput);
+			$this.css("color", fontColor);
+			var key = $input.attr("data-var");
+			updateLESSVariables(key, colorHex);
+	
         }
 		
-      }).droppable({
+    })
+	.droppable({
         drop: function( event, ui ) {
           var newVal = ui.draggable.css('background-color');
-		  var hex = rgb2hex(newVal);
-		  
-		  $( this ).val(hex);
+		  var colorHex = rgb2hex(newVal);
+		  var $this = $(this);
+		  $this.val(colorHex);
  
 		   var fontColor = "white";
 		   
@@ -165,7 +196,7 @@ $("input:text.color-input")
                 fontColor = "black";
             }
 			
-			$(this).css( {'background-color' :hex, 'color' : fontColor} );
+			$this.css( {'background-color' :colorHex, 'color' : fontColor} );
 			//*/
 			
 			/*
@@ -176,8 +207,11 @@ $("input:text.color-input")
                 $(this).css("color", "black");
             }
 			//*/
-			$(this).trigger("colorpickersliders.updateColor",newVal);
-    
+			$this.trigger("colorpickersliders.updateColor",newVal);
+			//update variables
+			var key = $this.attr("data-var");
+			updateLESSVariables(key, colorHex);
+						
         }
 		
     });
