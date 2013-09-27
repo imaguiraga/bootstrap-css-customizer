@@ -197,7 +197,9 @@
             
             .color-input{
               position: relative;
-             z-index: 50!important;
+              z-index: 50!important;
+			  border-width: 3px;
+			  border-color: black;
             }
             
             .droppable-box{

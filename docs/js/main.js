@@ -97,21 +97,33 @@ function hexToRgbString(hex) {
 }
 
 function rgb2hex(rgb) {
- rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
- function hex(x) {
-  return ("0" + parseInt(x).toString(16)).slice(-2);
- }
- return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+	rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+	function hex(x) {
+		return ("0" + parseInt(x).toString(16)).slice(-2);
+	}
+	return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
 }
 
 $(function() {
 //    $( document ).tooltip();
 
-$(".color-input")
-  .attr("data-color-format","hex")
-  .ColorPickerSliders({
+$("input:text.color-input")
+	.before("<i class='icon-bullseye'></i>")
+	.each( function(){
+	
+		var $this = $(this);
+		var value =  $this.attr("data-var");
+		$this.filter("[data-var]").attr({
+			"data-color-format" : "hex",
+			"id" : value
+		});
+		//console.log(this.attributes["data-var"].value);
+		console.log(value);
+		
+	})
+	.ColorPickerSliders({
        // color: $(this).css('background-color'),
-	   connectedinput: $(this),
+	    connectedinput: $(this),
         order: {
             preview:1,
             hsl: 2,
@@ -128,19 +140,16 @@ $(".color-input")
 
            //dynamically update fontcolor
            var fontColor = "black";
-           /*
-           if($.xcolor.readable("white",newVal)){
-               $(this).css("color", "white");
-            } else {
-                $(this).css("color", "black");
-            }//*/
+
 			if (color.cielch.l < 60) {
-                $(this).css("color", "white");
+                fontColor = "white";
             }
             else {
-                $(this).css("color", "black");
+                fontColor = "black";
             }
+			$(this).css("color", fontColor);
         }
+		
       }).droppable({
         drop: function( event, ui ) {
           var newVal = ui.draggable.css('background-color');
@@ -148,15 +157,15 @@ $(".color-input")
 		  
 		  $( this ).val(hex);
  
-		   var color = "white";
+		   var fontColor = "white";
 		   
            if($.xcolor.readable("white",newVal)){
-                color = "white";
+                fontColor = "white";
             } else {
-                color = "black";
+                fontColor = "black";
             }
 			
-			$(this).css( {'background-color' :hex, 'color' : color} );
+			$(this).css( {'background-color' :hex, 'color' : fontColor} );
 			//*/
 			
 			/*
@@ -170,6 +179,7 @@ $(".color-input")
 			$(this).trigger("colorpickersliders.updateColor",newVal);
     
         }
+		
     });
 
 });

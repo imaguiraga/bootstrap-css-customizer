@@ -144,3 +144,64 @@ http://gruntjs.com/
 
 http://wiki.shopify.com/Liquid#No_Liquid_Zone:_the_raw_tag conflicts with angular
 
+jQuery plugins
+
+(function( $ ) {
+    //constructor
+    $.fn.showLinkLocation = function(options ) {
+ 
+        return this.filter( "a" ).append(function() {
+            //function content
+            return " (" + this.href + ")";
+        
+        });
+ 
+    };
+ 
+})( jQuery );
+
+
+
+(function( $ ) {
+ 
+    $.fn.showLinkLocation = function(options ) {
+ 
+        return this.filter( "a" ).each(function() {
+
+            $( this ).append( " (" + $( this ).attr( "href" ) + ")" );
+
+        });
+ 
+    };
+ 
+})( jQuery );
+ 
+ // Usage example:
+ $( "a" ).showLinkLocation();
+
+
+
+
+(function( $ ) {
+ 
+    $.fn.plugin =  function( options ) {
+
+        var defaults = {
+           ....
+        };
+     
+        var settings = $.extend( true, {}, defaults, options );
+     
+        return this.each(function() {
+
+            // Plugin code would go here...
+            $(this);
+        
+        });
+     
+    };
+ 
+})( jQuery );
+
+
+http://learn.jquery.com/
