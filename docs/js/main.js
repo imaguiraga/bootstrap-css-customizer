@@ -114,6 +114,19 @@ function updateLESSVariables(key, value){
 		console.log("{"+key + "} = [ "+value+" ]");
 	}
 	
+	//find references and update their values 
+	var $source = $("[id='"+key+"']");
+    var ref = LESS_VARIABLES_REF[key];
+	for(var i in ref){
+		var $target =$("[id='"+ref[i]+"']");
+		//$target.val($source.val());
+		$target.css({
+			"background-color": $source.css("background-color"),
+			"color": $source.css("color")
+		});
+		
+	}
+	
 	
 }
 
@@ -137,9 +150,9 @@ function addLESSVariablesRef(key,value){
 				LESS_VARIABLES_REF[reference] = [];	
 			}
 			
-			if(LESS_VARIABLES_REF[reference].length){
+			//if(LESS_VARIABLES_REF[reference].length){
 				LESS_VARIABLES_REF[reference].push(key);
-			}
+			//}
 		}
 	}
 
