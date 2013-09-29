@@ -107,30 +107,17 @@ function rgb2hex(rgb) {
 //update less variables
 var LESS_VARIABLES = {};
 var LESS_VARIABLES_REF = {};
-
-function updateLESSVariables(key, value){
-	if( key !== undefined){
-		LESS_VARIABLES [key].value = value; 
-		console.log("{"+key + "} = [ "+value+" ]");
-	}
-	
-	//find references and update their values 
-	var $source = $("[id='"+key+"']");
-    var ref = LESS_VARIABLES_REF[key];
-	for(var i in ref){
-		var $target =$("[id='"+ref[i]+"']");
-		//$target.val($source.val());
-		$target.css({
-			"background-color": $source.css("background-color"),
-			"color": $source.css("color")
-		});
-		
-	}
-	
-	
-}
+var parser = new less.Parser(new less.tree.parseEnv(less));
 
 function addLESSVariablesRef(key,value){
+	if( typeof key === "undefined"){
+		return;
+	}
+	
+	if(key.charAt(0) === "@"){
+		key = key.slice(1); 
+	}
+	
 	/*
 	darken(@link-color, 15%)
 	(@popover-arrow-width 1)
@@ -145,18 +132,171 @@ function addLESSVariablesRef(key,value){
 		var reference = result[0];
 		if( typeof reference === "string"){
 			reference = reference.trim();
+			if(reference.charAt(0) === "@"){
+				reference = reference.slice(1); 
+			}
 			console.log("{"+key+ "} -> {"+reference+"}");
 			if(typeof LESS_VARIABLES_REF[reference] === "undefined"){
 				LESS_VARIABLES_REF[reference] = [];	
 			}
 			
 			//if(LESS_VARIABLES_REF[reference].length){
-				LESS_VARIABLES_REF[reference].push(key);
+				LESS_VARIABLES_REF[reference].push({'key' : key, 'value' :value});
 			//}
 		}
 	}
 
 }
+
+function updateLESSVariables(key, value){	
+	if( typeof key !== "undefined"){
+		if(key.charAt(0) === "@"){
+			key = key.slice(1); 
+		}
+		LESS_VARIABLES [key].value = value; 
+		console.log("{"+key + "} = [ "+value+" ]");
+		
+	}else{
+		return;
+	}
+	
+	
+	
+	//find references and update their values 
+	var $source = $("[id='"+key+"']");
+    var ref = LESS_VARIABLES_REF[key];
+	for(var i in ref){
+		var $target = $("[id='"+ref[i]+"']");
+		//$target.val($source.val());
+		/*
+		$target.css({
+			"background-color": $source.css("background-color"),
+			"color": $source.css("color")
+		});
+		//*/
+		var target = ref[i];
+		var $css = "@"+key+":"+value+"; #"+target.key+" {background-color:"+target.value+";color:"+$source.css("color")+";}";
+		parser.parse($css, function (err, tree) {
+			if (err) { return console.error(err) ;}
+			createCSS(tree.toCSS(),target.key);
+		});
+	}
+	
+}
+
+/**
+helper method to add computed styles
+*/
+function createCSS(styles, target, lastModified) {
+
+    // If there is no title set, use the filename, minus the extension
+    var id = 'less:' + target;
+
+    // If this has already been inserted into the DOM, we may need to replace it
+    var oldCss = document.getElementById(id);
+    var keepOldCss = false;
+
+    // Create a new stylesheet node for insertion or (if necessary) replacement
+    var css = document.createElement('style');
+    css.setAttribute('type', 'text/css');
+
+    css.id = id;
+
+    if (css.styleSheet) { // IE
+        try {
+            css.styleSheet.cssText = styles;
+        } catch (e) {
+            throw new(Error)("Couldn't reassign styleSheet.cssText.");
+        }
+    } else {
+        css.appendChild(document.createTextNode(styles));
+
+        // If new contents match contents of oldCss, don't replace oldCss
+        keepOldCss = (oldCss !== null && oldCss.childNodes.length > 0 && css.childNodes.length > 0 &&
+            oldCss.firstChild.nodeValue === css.firstChild.nodeValue);
+    }
+
+    var head = document.getElementsByTagName('head')[0];
+
+
+    if (oldCss && keepOldCss === false) {
+        head.removeChild(oldCss);
+    }
+    // If there is no oldCss, just append; otherwise, only append if we need
+    // to replace oldCss with an updated stylesheet
+    if (oldCss == null || keepOldCss === false) {
+        //var nextEl = sheet && sheet.nextSibling || null;
+        //(nextEl || document.getElementsByTagName('head')[0]).parentNode.insertBefore(css, nextEl);
+		head.appendChild(css);
+    }
+	
+    // Don't update the local store if the file wasn't modified
+    if (lastModified && cache) {
+        log('saving ' + href + ' to cache.');
+        try {
+            cache.setItem(href, styles);
+            cache.setItem(href + ':timestamp', lastModified);
+        } catch(e) {
+            //TODO - could do with adding more robust error handling
+            console.log('failed to save');
+        }
+    }
+}
+
+function clearCSS(styles, target, lastModified) {
+
+    // If there is no title set, use the filename, minus the extension
+    var id = 'less:' + target;
+
+    // If this has already been inserted into the DOM, we may need to replace it
+    var oldCss = document.getElementById(id);
+    var keepOldCss = false;
+
+    // Create a new stylesheet node for insertion or (if necessary) replacement
+    var css = document.createElement('style');
+    css.setAttribute('type', 'text/css');
+
+    css.id = id;
+
+    if (css.styleSheet) { // IE
+        try {
+            css.styleSheet.cssText = styles;
+        } catch (e) {
+            throw new(Error)("Couldn't reassign styleSheet.cssText.");
+        }
+    } else {
+        css.appendChild(document.createTextNode(styles));
+
+        // If new contents match contents of oldCss, don't replace oldCss
+        keepOldCss = (oldCss !== null && oldCss.childNodes.length > 0 && css.childNodes.length > 0 &&
+            oldCss.firstChild.nodeValue === css.firstChild.nodeValue);
+    }
+
+    var head = document.getElementsByTagName('head')[0];
+
+    // If there is no oldCss, just append; otherwise, only append if we need
+    // to replace oldCss with an updated stylesheet
+    if (oldCss == null || keepOldCss === false) {
+        var nextEl = sheet && sheet.nextSibling || null;
+        (nextEl || document.getElementsByTagName('head')[0]).parentNode.insertBefore(css, nextEl);
+    }
+    if (oldCss && keepOldCss === false) {
+        head.removeChild(oldCss);
+    }
+
+    // Don't update the local store if the file wasn't modified
+    if (lastModified && cache) {
+        log('saving ' + href + ' to cache.');
+        try {
+            cache.setItem(href, styles);
+            cache.setItem(href + ':timestamp', lastModified);
+        } catch(e) {
+            //TODO - could do with adding more robust error handling
+            console.log('failed to save');
+        }
+    }
+}
+
 
 $(function() {
 //    $( document ).tooltip();
@@ -166,7 +306,11 @@ $("input:text.form-control")
 	.each( function(i,elt){
 	
 		var $this = $(elt);
+		//remove @ from key
 		var key = $this.attr("data-var");
+		if(key.charAt(0) === "@"){
+			key = key.slice(1); 
+		}
 		var value = $this.val().length > 0 ? $this.val():$this.attr("placeholder");
 		$this.val(value);
 		$this.attr({

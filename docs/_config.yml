@@ -12,7 +12,7 @@ permalink:        pretty
 exclude:          [".editorconfig", ".gitignore", ".project",
  ".classpath", "pom.xml", ".ruby-version", "bower.json", "composer.json", 
  "CONTRIBUTING.md", "CNAME", "LICENSE", "Gruntfile.js",
- "package.json", "node_modules", "README.md", "less", "docs", "run", "wiki", "src" ]
+ "package.json", "node_modules", "README.md", "docs", "run", "wiki", "src" ]
 port:             9001
 
 # Custom vars

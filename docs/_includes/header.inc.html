@@ -14,9 +14,9 @@
         <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-144.png" />
         <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144.png" />
-
+<!--
         <link id="bootstrap" rel="stylesheet" type="text/css" title="default" href="css/theme/default/bootstrap.min.css" />
-		<!--
+		
 		<link rel="stylesheet" type="text/css" title="default" href="css/bootstrap-theme.min.css" />
         -->
 		<!-- alternate stylesheets -->
@@ -34,32 +34,50 @@
 		<link rel="alternate stylesheet" type="text/css" title="journal" href="css/theme/journal/bootstrap.min.css" />
          -->
 		<style>
-  		  ng-include {
-            display: block;
-          }
+			ng-include {
+				display: block;
+			}
 			body {
 				padding-top: 50px;
 				padding-bottom: 20px;
                 position:relative;
 			}
 
-
-
 		</style>
-  <!--
-                <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
-                -->
+		
+		<script type="text/javascript">
+			less = {
+				env: "development", // or "production"
+				async: false,       // load imports async
+				fileAsync: false,   // load imports async when in a page under
+									// a file protocol
+				poll: 1000,         // when in watch mode, time in ms between polls
+				functions: {},      // user functions, keyed by name
+				dumpLineNumbers: "comments", // or "mediaQuery" or "all"
+				relativeUrls: false // whether to adjust url's to be relative
+									// if false, url's are already relative to the
+									// entry less file
+				//rootpath: ":/a.com/"// a path to add on to the start of every url
+									//resource
+			};
+		</script>
+		<link rel="stylesheet/less" type="text/css" href="less/custom.less" />
+		<!--
+		<link rel="stylesheet/less" type="text/css" href="less/bootstrap/bootstrap.less" />
+		<link rel="stylesheet/less" type="text/css" href="less/bootswatch/slate/variables.less" />	
+		-->		
+		<script src="assets/js/less.js"></script>
 		<link rel="stylesheet" href="css/main.css" />
 		<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js">
 		</script>
 		<!--
-                <script>
+            <script>
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
                 ga('create', 'UA-43966487-2', 'mysite-imaguiraga.rhcloud.com');
                 ga('send', 'pageview');
-                </script>
-                -->
+            </script>
+         -->
   {% endraw %}
