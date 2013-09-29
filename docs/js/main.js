@@ -168,18 +168,19 @@ function updateLESSVariables(key, value){
 	for(var i in ref){
 		var $target = $("[id='"+ref[i]+"']");
 		//$target.val($source.val());
-		/*
+		
 		$target.css({
 			"background-color": $source.css("background-color"),
 			"color": $source.css("color")
 		});
 		//*/
+		/*
 		var target = ref[i];
 		var $css = "@"+key+":"+value+"; #"+target.key+" {background-color:"+target.value+";color:"+$source.css("color")+";}";
 		parser.parse($css, function (err, tree) {
 			if (err) { return console.error(err) ;}
 			createCSS(tree.toCSS(),target.key);
-		});
+		});//*/
 	}
 	
 }
