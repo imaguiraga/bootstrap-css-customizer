@@ -206,6 +206,12 @@ jQuery plugins
 
 http://learn.jquery.com/
 
+npm -g install less
+npm -g install uglify-js
+npm install jdom
+npm install jquery
+https://npmjs.org/package/jquery
+
 Undocumented less functions
 https://github.com/less/less.js/blob/master/dist/less-1.4.2.js
 
