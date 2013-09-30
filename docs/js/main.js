@@ -159,14 +159,12 @@ function updateLESSVariables(key, value){
 	}else{
 		return;
 	}
-	
-	
-	
+		
 	//find references and update their values 
-	var $source = $("[id='"+key+"']");
+	var $source = $("#"+key);//$("[id='"+key+"']");
     var ref = LESS_VARIABLES_REF[key];
 	for(var i in ref){
-		var $target = $("[id='"+ref[i]+"']");
+		var $target = $("#"+ref[i]);//$("[id='"+ref[i]+"']");
 		//$target.val($source.val());
 		
 		$target.css({
@@ -308,15 +306,17 @@ $("input:text.form-control")
 	
 		var $this = $(elt);
 		//remove @ from key
-		var key = $this.attr("data-var");
+		var key = $this.attr("id");//$this.attr("data-var");
 		if(key.charAt(0) === "@"){
 			key = key.slice(1); 
 		}
 		var value = $this.val().length > 0 ? $this.val():$this.attr("placeholder");
 		$this.val(value);
+		/*
 		$this.attr({
 			"id" : key
 		});
+		//*/
 		//console.log(this.attributes["data-var"].value);
 		console.log(i+" - {"+key + "} = [ "+value+" ]");
 		LESS_VARIABLES [key] = {'default':value,'value':value };
