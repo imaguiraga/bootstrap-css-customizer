@@ -151,50 +151,66 @@ function updateLESSVariables(key, value){
 	}else{
 		return;
 	}
+	
+    var stack = [{'key':key,'value':value}];
+    while(stack.length > 0){
+		var current = stack.shift();
+		//find references and update their values 
+		var id = "#"+current.key;
+		var $source = $(id);
+		var ref = LESS_VARIABLES_REF[current.key];
+		var regex = /\{(.*)\}/;
+		regex =/background-color:(.*);color:(.*);?/;
 		
-	//find references and update their values 
-	var id = "#"+key;
-	var $source = $(id);
-    var ref = LESS_VARIABLES_REF[key];
-	var regex = /\{(.*)\}/;
-	regex =/background-color:(.*);color:(.*);?/
-	for(var i in ref){
-	    id = "#"+ref[i].key;
-		var $target = $(id);
-		var target = ref[i];
-		var fontColor = $source.css("color");
-		var backgroundColor = $source.css("background-color");
-		
-		//no need to compute the value for direct assignment
-		if(target.value.charAt(0) === "@"){
-			$target.css({
-				"background-color": backgroundColor,
-				"color": fontColor
-			});
-		}else{
-			//generate CSS and parse it fro content
-			var $css = "@"+key+":"+value+"; #"+target.key+" {background-color:"+target.value+";color:"+$source.css("color")+";}";
-			parser.parse($css, function (err, tree) {
-				if (err) { return console.error(err) ;}
-				var rule = tree.toCSS({'compress':true}).match(regex);
-				if(rule.length == 3){
-					fontColor = "white";
-					backgroundColor = rule[1];
-					//determine fontcolor
-					if($.xcolor.readable("white",backgroundColor)){
+		for(var i in ref){
+			var target = ref[i];
+			var depKey = target.key;
+			id = "#"+depKey;
+			var $target = $(id);
+			
+			var fontColor = $source.css("color");
+			var backgroundColor = $source.css("background-color");
+						
+			//no need to compute the value for direct assignment
+			if(target.value.charAt(0) === "@"){
+				$target.css({
+					"background-color": backgroundColor,
+					"color": fontColor
+				});
+				 								
+			}else{
+				//generate CSS and parse it for content
+				var $css = "@"+current.key+":"+current.value+"; #"+target.key+" {background-color:"+target.value+";color:"+fontColor+";}";
+				parser.parse($css, function (err, tree) {
+					if (err) { return console.error(err) ;}
+					var rule = tree.toCSS({'compress':true}).match(regex);
+					if(rule.length == 3){
 						fontColor = "white";
-					} else {
-						fontColor = "black";
+						backgroundColor = rule[1];
+						//determine fontcolor
+						if($.xcolor.readable("white",backgroundColor)){
+							fontColor = "white";
+						} else {
+							fontColor = "black";
+						}
+								
+						$target.css({
+							"background-color": backgroundColor,
+							"color": fontColor
+						});
 					}
-							
-					$target.css({
-						"background-color": backgroundColor,
-						"color": fontColor
-					});
-				}
-			});//*/
+				});//*/
+			}
+			
+			//check if there are dependencies
+			var deps = LESS_VARIABLES_REF[depKey];
+			if( (typeof deps) !== "undefined" && deps.length > 0){
+				//put newly computed value on the stack
+				stack.push({'key':depKey,'value':backgroundColor});
+				console.log("next = "+depKey);
+			}
+		
 		}
-    
 	}
 	
 }
