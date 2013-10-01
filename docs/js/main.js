@@ -114,9 +114,7 @@ function addLESSVariablesRef(key,value){
 		return;
 	}
 	
-	if(key.charAt(0) === "@"){
-		key = key.slice(1); 
-	}
+	key = getVariableKey(key); 
 	
 	/*
 	darken(@link-color, 15%)
@@ -131,10 +129,8 @@ function addLESSVariablesRef(key,value){
 	if(result){
 		var reference = result[0];
 		if( typeof reference === "string"){
-			reference = reference.trim();
-			if(reference.charAt(0) === "@"){
-				reference = reference.slice(1); 
-			}
+			reference = getVariableKey(reference.trim());
+
 			console.log("{"+key+ "} -> {"+reference+"}");
 			if(typeof LESS_VARIABLES_REF[reference] === "undefined"){
 				LESS_VARIABLES_REF[reference] = [];	
@@ -148,9 +144,7 @@ function addLESSVariablesRef(key,value){
 
 function updateLESSVariables(key, value){	
 	if( typeof key !== "undefined"){
-		if(key.charAt(0) === "@"){
-			key = key.slice(1); 
-		}
+		key = getVariableKey(key);
 		LESS_VARIABLES [key].value = value; 
 		console.log("{"+key + "} = [ "+value+" ]");
 		
@@ -171,6 +165,7 @@ function updateLESSVariables(key, value){
 		var fontColor = $source.css("color");
 		var backgroundColor = $source.css("background-color");
 		
+		//no need to compute the value for direct assignment
 		if(target.value.charAt(0) === "@"){
 			$target.css({
 				"background-color": backgroundColor,
@@ -204,6 +199,14 @@ function updateLESSVariables(key, value){
 	
 }
 
+function getVariableKey(key){
+	if(key.charAt(0) === "@"){
+		return key.slice(1); 
+	}else{
+		return key;
+	}
+}
+
 $(function() {
 //    $( document ).tooltip();
 
@@ -213,10 +216,8 @@ $("input:text.form-control")
 	
 		var $this = $(elt);
 		//remove @ from key
-		var key = $this.attr("id");
-		if(key.charAt(0) === "@"){
-			key = key.slice(1); 
-		}
+		var key = getVariableKey($this.attr("id"));
+
 		var value = $this.val().length > 0 ? $this.val():$this.attr("placeholder");
 		$this.val(value);
 		/*
