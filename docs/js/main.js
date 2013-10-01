@@ -125,7 +125,7 @@ function addLESSVariablesRef(key,value){
 	(@popover-arrow-width 1) 
 	//*/
 	var pattern =/@(\D*)\s?/gm;
-	//pattern =/@(\D*)(?=[,|\s]?)/gm;
+	pattern =/@([a-zA-Z0-9\-])*/gm;
 	//find reference
 	var result = value.replace(","," ").trim().match(pattern);
 	if(result){
@@ -140,9 +140,7 @@ function addLESSVariablesRef(key,value){
 				LESS_VARIABLES_REF[reference] = [];	
 			}
 			
-			//if(LESS_VARIABLES_REF[reference].length){
-				LESS_VARIABLES_REF[reference].push({'key' : key, 'value' :value});
-			//}
+			LESS_VARIABLES_REF[reference].push({'key' : key, 'value' :value});
 		}
 	}
 
@@ -161,141 +159,50 @@ function updateLESSVariables(key, value){
 	}
 		
 	//find references and update their values 
-	var $source = $("#"+key);//$("[id='"+key+"']");
+	var id = "#"+key;
+	var $source = $(id);
     var ref = LESS_VARIABLES_REF[key];
+	var regex = /\{(.*)\}/;
+	regex =/background-color:(.*);color:(.*);?/
 	for(var i in ref){
-		var $target = $("#"+ref[i]);//$("[id='"+ref[i]+"']");
-		//$target.val($source.val());
-		
-		$target.css({
-			"background-color": $source.css("background-color"),
-			"color": $source.css("color")
-		});
-		//*/
-		/*
+	    id = "#"+ref[i].key;
+		var $target = $(id);
 		var target = ref[i];
-		var $css = "@"+key+":"+value+"; #"+target.key+" {background-color:"+target.value+";color:"+$source.css("color")+";}";
-		parser.parse($css, function (err, tree) {
-			if (err) { return console.error(err) ;}
-			createCSS(tree.toCSS(),target.key);
-		});//*/
+		var fontColor = $source.css("color");
+		var backgroundColor = $source.css("background-color");
+		
+		if(target.value.charAt(0) === "@"){
+			$target.css({
+				"background-color": backgroundColor,
+				"color": fontColor
+			});
+		}else{
+			//generate CSS and parse it fro content
+			var $css = "@"+key+":"+value+"; #"+target.key+" {background-color:"+target.value+";color:"+$source.css("color")+";}";
+			parser.parse($css, function (err, tree) {
+				if (err) { return console.error(err) ;}
+				var rule = tree.toCSS({'compress':true}).match(regex);
+				if(rule.length == 3){
+					fontColor = "white";
+					backgroundColor = rule[1];
+					//determine fontcolor
+					if($.xcolor.readable("white",backgroundColor)){
+						fontColor = "white";
+					} else {
+						fontColor = "black";
+					}
+							
+					$target.css({
+						"background-color": backgroundColor,
+						"color": fontColor
+					});
+				}
+			});//*/
+		}
+    
 	}
 	
 }
-
-/**
-helper method to add computed styles
-*/
-function createCSS(styles, target, lastModified) {
-
-    // If there is no title set, use the filename, minus the extension
-    var id = 'less:' + target;
-
-    // If this has already been inserted into the DOM, we may need to replace it
-    var oldCss = document.getElementById(id);
-    var keepOldCss = false;
-
-    // Create a new stylesheet node for insertion or (if necessary) replacement
-    var css = document.createElement('style');
-    css.setAttribute('type', 'text/css');
-
-    css.id = id;
-
-    if (css.styleSheet) { // IE
-        try {
-            css.styleSheet.cssText = styles;
-        } catch (e) {
-            throw new(Error)("Couldn't reassign styleSheet.cssText.");
-        }
-    } else {
-        css.appendChild(document.createTextNode(styles));
-
-        // If new contents match contents of oldCss, don't replace oldCss
-        keepOldCss = (oldCss !== null && oldCss.childNodes.length > 0 && css.childNodes.length > 0 &&
-            oldCss.firstChild.nodeValue === css.firstChild.nodeValue);
-    }
-
-    var head = document.getElementsByTagName('head')[0];
-
-
-    if (oldCss && keepOldCss === false) {
-        head.removeChild(oldCss);
-    }
-    // If there is no oldCss, just append; otherwise, only append if we need
-    // to replace oldCss with an updated stylesheet
-    if (oldCss == null || keepOldCss === false) {
-        //var nextEl = sheet && sheet.nextSibling || null;
-        //(nextEl || document.getElementsByTagName('head')[0]).parentNode.insertBefore(css, nextEl);
-		head.appendChild(css);
-    }
-	
-    // Don't update the local store if the file wasn't modified
-    if (lastModified && cache) {
-        log('saving ' + href + ' to cache.');
-        try {
-            cache.setItem(href, styles);
-            cache.setItem(href + ':timestamp', lastModified);
-        } catch(e) {
-            //TODO - could do with adding more robust error handling
-            console.log('failed to save');
-        }
-    }
-}
-
-function clearCSS(styles, target, lastModified) {
-
-    // If there is no title set, use the filename, minus the extension
-    var id = 'less:' + target;
-
-    // If this has already been inserted into the DOM, we may need to replace it
-    var oldCss = document.getElementById(id);
-    var keepOldCss = false;
-
-    // Create a new stylesheet node for insertion or (if necessary) replacement
-    var css = document.createElement('style');
-    css.setAttribute('type', 'text/css');
-
-    css.id = id;
-
-    if (css.styleSheet) { // IE
-        try {
-            css.styleSheet.cssText = styles;
-        } catch (e) {
-            throw new(Error)("Couldn't reassign styleSheet.cssText.");
-        }
-    } else {
-        css.appendChild(document.createTextNode(styles));
-
-        // If new contents match contents of oldCss, don't replace oldCss
-        keepOldCss = (oldCss !== null && oldCss.childNodes.length > 0 && css.childNodes.length > 0 &&
-            oldCss.firstChild.nodeValue === css.firstChild.nodeValue);
-    }
-
-    var head = document.getElementsByTagName('head')[0];
-
-    // If there is no oldCss, just append; otherwise, only append if we need
-    // to replace oldCss with an updated stylesheet
-    if (oldCss == null || keepOldCss === false) {
-        var nextEl = sheet && sheet.nextSibling || null;
-        (nextEl || document.getElementsByTagName('head')[0]).parentNode.insertBefore(css, nextEl);
-    }
-    if (oldCss && keepOldCss === false) {
-        head.removeChild(oldCss);
-    }
-
-    // Don't update the local store if the file wasn't modified
-    if (lastModified && cache) {
-        log('saving ' + href + ' to cache.');
-        try {
-            cache.setItem(href, styles);
-            cache.setItem(href + ':timestamp', lastModified);
-        } catch(e) {
-            //TODO - could do with adding more robust error handling
-            console.log('failed to save');
-        }
-    }
-}
-
 
 $(function() {
 //    $( document ).tooltip();
@@ -306,7 +213,7 @@ $("input:text.form-control")
 	
 		var $this = $(elt);
 		//remove @ from key
-		var key = $this.attr("id");//$this.attr("data-var");
+		var key = $this.attr("id");
 		if(key.charAt(0) === "@"){
 			key = key.slice(1); 
 		}
@@ -317,7 +224,7 @@ $("input:text.form-control")
 			"id" : key
 		});
 		//*/
-		//console.log(this.attributes["data-var"].value);
+
 		console.log(i+" - {"+key + "} = [ "+value+" ]");
 		LESS_VARIABLES [key] = {'default':value,'value':value };
 		//contains @
@@ -356,7 +263,7 @@ $("input:text.form-control")
            var colorName = $.xcolor.nearestname(colorHex);
 
            //dynamically update fontcolor
-           var fontColor = "black";
+            var fontColor = "black";
 
 			if (color.cielch.l < 60) {
                 fontColor = "white";
@@ -364,7 +271,6 @@ $("input:text.form-control")
             else {
                 fontColor = "black";
             }
-			//$this.val(colorHex);
 			
 			var $input = $(this.connectedinput);
 			$this.css("color", fontColor);
@@ -391,15 +297,7 @@ $("input:text.form-control")
 			
 			$this.css( {'background-color' :colorHex, 'color' : fontColor} );
 			//*/
-			
-			/*
-			if (color.cielch.l < 60) {
-                $(this).css("color", "white");
-            }
-            else {
-                $(this).css("color", "black");
-            }
-			//*/
+
 			$this.trigger("colorpickersliders.updateColor",newVal);
 			//update variables
 			var key = $this.attr("data-var");
