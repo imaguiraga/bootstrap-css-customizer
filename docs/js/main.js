@@ -143,9 +143,15 @@ function addLESSVariablesRef(key,value){
 }
 
 function updateLESSVariables(key, value){	
+    var variables = null;//variables that changed
 	if( typeof key !== "undefined"){
+		if(key.charAt(0) === "@" && value != null){	
+			variables = {};
+			variables[key] = value;
+		}
 		key = getVariableKey(key);
 		LESS_VARIABLES [key].value = value; 
+		
 		console.log("{"+key + "} = [ "+value+" ]");
 		
 	}else{
@@ -153,6 +159,7 @@ function updateLESSVariables(key, value){
 	}
 	
     var stack = [{'key':key,'value':value}];
+		
     while(stack.length > 0){
 		var current = stack.shift();
 		//find references and update their values 
@@ -172,6 +179,7 @@ function updateLESSVariables(key, value){
 			var backgroundColor = $source.css("background-color");
 						
 			//no need to compute the value for direct assignment
+			//@link-color
 			if(target.value.charAt(0) === "@"){
 				$target.css({
 					"background-color": backgroundColor,
@@ -212,6 +220,12 @@ function updateLESSVariables(key, value){
 		
 		}
 	}
+	//refresh less variables
+	if(variables != null){
+		if((typeof less) !== "undefined"){
+			//less.modifyVars(variables);
+		}
+	}
 	
 }
 
@@ -223,8 +237,69 @@ function getVariableKey(key){
 	}
 }
 
+
+function initDroppable(){
+	$(".icon-resize-full").next("input").click(function (evt){
+		evt.stopPropagation();
+		$(this).attr('checked',true);
+		$(".color-picker").each( function(i,elt){
+			var $this = $(this);
+			$this.addClass("color-box-full");
+			$this.removeClass("color-box-small");
+		});
+	});
+	
+	$(".icon-resize-small").next("input").click(function (evt){
+		evt.stopPropagation();
+		$(this).attr('checked',true);
+		$(".color-picker").each( function(i,elt){
+			var $this = $(this);
+			$this.addClass("color-box-small");
+			$this.removeClass("color-box-full");
+		});
+	});
+
+
+//make parent element draggable
+  $(".color-picker").draggable({ revert: "valid",cursor: "move" ,opacity: 0.9, helper: "clone",revertDuration: 50,zIndex: 6000 });
+	/* Disable Color picker for now
+	.focusin( function(){
+	  var slider = $(this).ColorPickerSliders({
+		  color: scope.color.hex,
+		  order: {
+			  preview:1,
+			  hsl: 2,
+			  opacity:3
+		  } ,
+		  onchange: function(container, color) {
+			//update scope variables double bindings
+			//tinycolor object is in color.tiny
+			 scope.color.hex = color.tiny.toHexString();
+			 scope.color.rgb = color.tiny.toRgbString();
+			 //scope.color.name = color.tiny.toName();
+			 scope.color.name = $.xcolor.nearestname(color.tiny.toHexString());
+			 scope.color.hsl = color.tiny.toHslString();
+			 //dynamically update fontcolor
+
+			if (color.cielch.l < 60) {
+				scope.color.fontColor = "white";
+			}
+			else {
+				scope.color.fontColor = "black";
+			}
+			 //fire DOM updates
+			 scope.$digest();
+		  }
+		});
+	  //force display
+	  $(this).trigger("colorpickersliders.showPopup");
+	});
+//*/
+}
+
 $(function() {
-//    $( document ).tooltip();
+
+initDroppable();
 
 $("input:text.form-control")
 	.filter("[data-var]")

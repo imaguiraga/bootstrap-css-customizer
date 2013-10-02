@@ -3,8 +3,11 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
+<!--
 <html class="no-js" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="BootstrapThemePreviewerApp" ng-controller="ColorPickerCtrl" 
 ng-init="template='css/theme/default/bootstrap.min.css'">
+-->
+<html class="no-js" xmlns:ng="http://angularjs.org" id="ng-app">
 	<!--<![endif]-->
 	<head>
 
@@ -183,7 +186,7 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 
        -->    <div class="row" style="padding:0px">
 				<div class="well col-lg-3 hidden-xs hidden-sm affix" style="margin-left:0px;margin-right:0px;">
-      				  {% include colorView.inc.html %}
+      				  {% include colorView.compiled.inc.html %}
 				</div>
 				<!-- /col-lg-3 -->
 
