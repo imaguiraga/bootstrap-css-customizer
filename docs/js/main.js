@@ -229,6 +229,89 @@ function updateLESSVariables(key, value){
 	
 }
 
+function collectLESSVariables(){
+	var variables = [];
+	$("input:text.form-control")
+		.filter("[data-var]")
+		.each( function(i,elt){	
+			var $this = $(elt);
+			var id = $this.attr("id");
+			variables.push("@"+id+": "+$this.val()+"");
+		});
+
+	variables.push("@import 'less/additional.less'");
+	variables.push("@import 'less/bootstrap/mixins.less'");
+
+	// Reset
+	variables.push("@import 'less/bootstrap/normalize.less'");
+	variables.push("@import 'less/bootstrap/print.less'");
+
+	// Core CSS
+	variables.push("@import 'less/bootstrap/scaffolding.less'");
+	variables.push("@import 'less/bootstrap/type.less'");
+	variables.push("@import 'less/bootstrap/code.less'");
+	variables.push("@import 'less/bootstrap/grid.less'");
+	variables.push("@import 'less/bootstrap/tables.less'");
+	variables.push("@import 'less/bootstrap/forms.less'");
+	variables.push("@import 'less/bootstrap/buttons.less'");
+
+	// Components
+	variables.push("@import 'less/bootstrap/component-animations.less'");
+	variables.push("@import 'less/bootstrap/glyphicons.less'");
+	variables.push("@import 'less/bootstrap/dropdowns.less'");
+	variables.push("@import 'less/bootstrap/button-groups.less'");
+	variables.push("@import 'less/bootstrap/input-groups.less'");
+	variables.push("@import 'less/bootstrap/navs.less'");
+	variables.push("@import 'less/bootstrap/navbar.less'");
+	variables.push("@import 'less/bootstrap/breadcrumbs.less'");
+	variables.push("@import 'less/bootstrap/pagination.less'");
+	variables.push("@import 'less/bootstrap/pager.less'");
+	variables.push("@import 'less/bootstrap/labels.less'");
+	variables.push("@import 'less/bootstrap/badges.less'");
+	variables.push("@import 'less/bootstrap/jumbotron.less'");
+	variables.push("@import 'less/bootstrap/thumbnails.less'");
+	variables.push("@import 'less/bootstrap/alerts.less'");
+	variables.push("@import 'less/bootstrap/progress-bars.less'");
+	variables.push("@import 'less/bootstrap/media.less'");
+	variables.push("@import 'less/bootstrap/list-group.less'");
+	variables.push("@import 'less/bootstrap/panels.less'");
+	variables.push("@import 'less/bootstrap/wells.less'");
+	variables.push("@import 'less/bootstrap/close.less'");
+
+	// Components w/ JavaScript
+	variables.push("@import 'less/bootstrap/modals.less'");
+	variables.push("@import 'less/bootstrap/tooltip.less'");
+	variables.push("@import 'less/bootstrap/popovers.less'");
+	variables.push("@import 'less/bootstrap/carousel.less'");
+
+	// Utility classes
+	variables.push("@import 'less/bootstrap/utilities.less'");
+	variables.push("@import 'less/bootstrap/responsive-utilities.less'");
+	variables.push("@import 'less/bootstrap/theme.less'");
+
+	return variables.join(";\n")+";";
+}
+
+function compileCSS(){
+	var css = null;
+	var lessInput = collectLESSVariables();
+	var parser = new(less.Parser);
+
+	parser.parse(lessInput, function (err, tree) {
+		if (err) { 
+			//console.log(lessInput);
+			return console.error(err);
+		}
+		try{
+		  css = tree.toCSS();
+		} catch(e){
+		  console.error(e);
+		}		
+		console.log(css);
+	});
+	return css;
+}
+
 function getVariableKey(key){
 	if(key.charAt(0) === "@"){
 		return key.slice(1); 
@@ -237,8 +320,7 @@ function getVariableKey(key){
 	}
 }
 
-
-function initDroppable(){
+function initDraggable(){
 
 	$(".icon-resize-full").next("input").click(function (evt){
 		evt.stopPropagation();
@@ -298,32 +380,35 @@ function initDroppable(){
 //*/
 }
 
-$(function() {
-
-$("#preview").click(function (evt) {
-evt.stopPropagation();
-evt.preventDefault();
-	var $this = $(this);
-	var $prev = $this.find("i");
-	if($this.hasClass("edit-view")){		
-		$this.html("<i class='icon-edit'></i>Edit");
-		$this.removeClass("edit-view");
-		$(".edit-view").hide();
-		$("#variables").removeClass("col-lg-9 col-lg-offset-3").addClass("col-lg-12");
-		$("#colortab").removeClass("hidden-xs hidden-sm affix");
-	}else{
+function initPreviewToggle(){
+	//init PreviewToggle
+	$("#preview").click(function (evt) {
+	evt.stopPropagation();
+	evt.preventDefault();
+		var $this = $(this);
+		var $prev = $this.find("i");
+		if($this.hasClass("edit-view")){
+			$this.attr("title","Click to Edit Variables");
+			$this.html("<i class='icon-edit'></i>Edit");
+			$this.removeClass("edit-view");
+			$(".edit-view").hide();
+			$("#variables").removeClass("col-lg-9 col-lg-offset-3").addClass("col-lg-12");
+			$("#colortab").removeClass("hidden-xs hidden-sm affix");
+			compileCSS();
+		}else{
+			$this.attr("title","Click to Compile and Preview stylesheet");
+			$this.html("<i class='icon-eye-open'></i>Preview");
+			$(".edit-view").show();
+			$this.addClass("edit-view");
+			$("#variables").removeClass("col-lg-12").addClass("col-lg-9 col-lg-offset-3");
+			$("#colortab").addClass("hidden-xs hidden-sm affix");
+		}
 		
-		$this.html("<i class='icon-eye-open'></i>Preview");
-		$(".edit-view").show();
-		$this.addClass("edit-view");
-		$("#variables").removeClass("col-lg-12").addClass("col-lg-9 col-lg-offset-3");
-		$("#colortab").addClass("hidden-xs hidden-sm affix");
-	}
-	
-});
+	});
 
-initDroppable();
+}
 
+function initColorPickers(){
 $("input:text.form-control")
 	.filter("[data-var]")
 	.each( function(i,elt){
@@ -334,11 +419,6 @@ $("input:text.form-control")
 
 		var value = $this.val().length > 0 ? $this.val():$this.attr("placeholder");
 		$this.val(value);
-		/*
-		$this.attr({
-			"id" : key
-		});
-		//*/
 
 		console.log(i+" - {"+key + "} = [ "+value+" ]");
 		LESS_VARIABLES [key] = {'default':value,'value':value };
@@ -421,6 +501,16 @@ $("input:text.form-control")
         }
 		
     });
+
+}
+
+$(function() {
+
+initPreviewToggle();
+
+initDraggable();
+
+initColorPickers();
 
 });
 

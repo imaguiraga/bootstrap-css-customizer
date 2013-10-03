@@ -44,33 +44,38 @@
 		</style>
 		
 		<script type="text/javascript">
+			function resolveURL(str){
+				var base = document.location.origin+document.location.path+"/";
+				var url = base + str;
+				return url;
+			};
+			
 			less = {
-				env: "development", // or "production"
+				env: "production", // or "production"
 				async: false,       // load imports async
 				fileAsync: false,   // load imports async when in a page under
 									// a file protocol
 				poll: 1000,         // when in watch mode, time in ms between polls
-				functions: {},      // user functions, keyed by name
+				functions: {"resolveURL":resolveURL},      // user functions, keyed by name
 				dumpLineNumbers: "comments", // or "mediaQuery" or "all"
 				relativeUrls: false // whether to adjust url's to be relative
 									// if false, url's are already relative to the
 									// entry less file
+				//rootpath: "http://localhost:3000/"
 				//rootpath: ":/a.com/"// a path to add on to the start of every url
 									//resource
 			};
 		</script>
 		<!--
 		<link rel="stylesheet/less" type="text/css" href="less/custom.less" />
-		
-		
+			
 		<link rel="stylesheet/less" type="text/css" href="less/bootswatch/slate/variables.less" />			
 		<link rel="stylesheet/less" type="text/css" href="less/bootstrap/bootstrap.less" />
 		-->	
 		
-		
-		
-		<script src="js/less.js"></script>
 		<link rel="stylesheet" href="css/main.css" />
+		<script src="js/less.js"></script>
+		
 		<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js">
 		</script>
 		<!--
