@@ -17,9 +17,20 @@ function switch_style ( css_title )
 }
 
 //update theme when selection changes
-$("#theme-selector").change(function(){
-  console.log($(this).val());
-  var tmp = $("link[id='bootstrap']");
-  tmp.attr('href',$(this).val());
+$("#theme-selector").change(function(evt){ 
+  var theme = $(this).val();
+  console.log(theme);
+  var $link = document.getElementById("bootstrap:css");
+  var $compiled = $(document.getElementById("compiled:css"));
+	
+  if( theme === "compiled" && COMPILED_LESS_CSS != null){	
+	$link.disabled = true;
+	$compiled.append(COMPILED_LESS_CSS);
+	
+  }else{
+	$link.disabled = false;
+	$link.href=theme;
+	$compiled.empty();
+  }
 });
 //*/

@@ -105,6 +105,7 @@ function rgb2hex(rgb) {
 }
 
 //update less variables
+var COMPILED_LESS_CSS = null;
 var LESS_VARIABLES = {};
 var LESS_VARIABLES_REF = {};
 var parser = new less.Parser(new less.tree.parseEnv(less));
@@ -230,7 +231,9 @@ function updateLESSVariables(key, value){
 }
 
 function collectLESSVariables(){
-	var variables = [];
+	//add default variables
+	var variables = ["@import 'less/bootstrap/variables.less'"];
+    //override default variables
 	$("input:text.form-control")
 		.filter("[data-var]")
 		.each( function(i,elt){	
@@ -238,8 +241,7 @@ function collectLESSVariables(){
 			var id = $this.attr("id");
 			variables.push("@"+id+": "+$this.val()+"");
 		});
-
-	variables.push("@import 'less/additional.less'");
+	//add import sections
 	variables.push("@import 'less/bootstrap/mixins.less'");
 
 	// Reset
@@ -287,12 +289,14 @@ function collectLESSVariables(){
 	// Utility classes
 	variables.push("@import 'less/bootstrap/utilities.less'");
 	variables.push("@import 'less/bootstrap/responsive-utilities.less'");
-	variables.push("@import 'less/bootstrap/theme.less'");
+	//variables.push("@import 'less/bootstrap/theme.less'");
 
 	return variables.join(";\n")+";";
 }
 
 function compileCSS(){
+	var startTime, endTime;
+    startTime = endTime = new(Date);
 	var css = null;
 	var lessInput = collectLESSVariables();
 	var parser = new(less.Parser);
@@ -307,9 +311,19 @@ function compileCSS(){
 		} catch(e){
 		  console.error(e);
 		}		
-		console.log(css);
+		
 	});
+	console.log("css compiled in "+ (new(Date) - endTime) + "ms");
 	return css;
+}
+
+function updateCompiledCSS(){
+	COMPILED_LESS_CSS = compileCSS();
+	if(COMPILED_LESS_CSS != null){
+		$("#theme-selector").trigger("change","compiled");
+		//disable default CSS
+		//activate alternate CSS
+	}	
 }
 
 function getVariableKey(key){
@@ -394,7 +408,8 @@ function initPreviewToggle(){
 			$(".edit-view").hide();
 			$("#variables").removeClass("col-lg-9 col-lg-offset-3").addClass("col-lg-12");
 			$("#colortab").removeClass("hidden-xs hidden-sm affix");
-			compileCSS();
+			updateCompiledCSS();
+			
 		}else{
 			$this.attr("title","Click to Compile and Preview stylesheet");
 			$this.html("<i class='icon-eye-open'></i>Preview");
