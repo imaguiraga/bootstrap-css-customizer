@@ -217,7 +217,7 @@ var WEB_SAFE_COLORS = { groupName:'Colors', colors:[]};
                  new ColorItem(fontColor,$.xcolor.nearestname(hex),hex,hexToRgbString(hex))
         );
   } ;
-
+//console.log(JSON.stringify([WEB_SAFE_COLORS],null,4));
 
 /** Angular Controllers */
 //Method 1 implicit injectors

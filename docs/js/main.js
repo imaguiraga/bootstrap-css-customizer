@@ -239,6 +239,7 @@ function getVariableKey(key){
 
 
 function initDroppable(){
+
 	$(".icon-resize-full").next("input").click(function (evt){
 		evt.stopPropagation();
 		$(this).attr('checked',true);
@@ -298,6 +299,28 @@ function initDroppable(){
 }
 
 $(function() {
+
+$("#preview").click(function (evt) {
+evt.stopPropagation();
+evt.preventDefault();
+	var $this = $(this);
+	var $prev = $this.find("i");
+	if($this.hasClass("edit-view")){		
+		$this.html("<i class='icon-edit'></i>Edit");
+		$this.removeClass("edit-view");
+		$(".edit-view").hide();
+		$("#variables").removeClass("col-lg-9 col-lg-offset-3").addClass("col-lg-12");
+		$("#colortab").removeClass("hidden-xs hidden-sm affix");
+	}else{
+		
+		$this.html("<i class='icon-eye-open'></i>Preview");
+		$(".edit-view").show();
+		$this.addClass("edit-view");
+		$("#variables").removeClass("col-lg-12").addClass("col-lg-9 col-lg-offset-3");
+		$("#colortab").addClass("hidden-xs hidden-sm affix");
+	}
+	
+});
 
 initDroppable();
 

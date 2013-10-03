@@ -96,7 +96,308 @@ function hexToRgbString(hex) {
    return 'rgb('+tmp.r+','+tmp.g+','+tmp.b+')';
 }
 
+function rgb2hex(rgb) {
+	rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+	function hex(x) {
+		return ("0" + parseInt(x).toString(16)).slice(-2);
+	}
+	return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+}
+
+//update less variables
+var LESS_VARIABLES = {};
+var LESS_VARIABLES_REF = {};
+var parser = new less.Parser(new less.tree.parseEnv(less));
+
+function addLESSVariablesRef(key,value){
+	if( typeof key === "undefined"){
+		return;
+	}
+	
+	key = getVariableKey(key); 
+	
+	/*
+	darken(@link-color, 15%)
+	(@popover-arrow-width 1)
+	@brand-primary
+	(@popover-arrow-width 1) 
+	//*/
+	var pattern =/@(\D*)\s?/gm;
+	pattern =/@([a-zA-Z0-9\-])*/gm;
+	//find reference
+	var result = value.replace(","," ").trim().match(pattern);
+	if(result){
+		var reference = result[0];
+		if( typeof reference === "string"){
+			reference = getVariableKey(reference.trim());
+
+			console.log("{"+key+ "} -> {"+reference+"}");
+			if(typeof LESS_VARIABLES_REF[reference] === "undefined"){
+				LESS_VARIABLES_REF[reference] = [];	
+			}
+			
+			LESS_VARIABLES_REF[reference].push({'key' : key, 'value' :value});
+		}
+	}
+
+}
+
+function updateLESSVariables(key, value){	
+    var variables = null;//variables that changed
+	if( typeof key !== "undefined"){
+		if(key.charAt(0) === "@" && value != null){	
+			variables = {};
+			variables[key] = value;
+		}
+		key = getVariableKey(key);
+		LESS_VARIABLES [key].value = value; 
+		
+		console.log("{"+key + "} = [ "+value+" ]");
+		
+	}else{
+		return;
+	}
+	
+    var stack = [{'key':key,'value':value}];
+		
+    while(stack.length > 0){
+		var current = stack.shift();
+		//find references and update their values 
+		var id = "#"+current.key;
+		var $source = $(id);
+		var ref = LESS_VARIABLES_REF[current.key];
+		var regex = /\{(.*)\}/;
+		regex =/background-color:(.*);color:(.*);?/;
+		
+		for(var i in ref){
+			var target = ref[i];
+			var depKey = target.key;
+			id = "#"+depKey;
+			var $target = $(id);
+			
+			var fontColor = $source.css("color");
+			var backgroundColor = $source.css("background-color");
+						
+			//no need to compute the value for direct assignment
+			//@link-color
+			if(target.value.charAt(0) === "@"){
+				$target.css({
+					"background-color": backgroundColor,
+					"color": fontColor
+				});
+				 								
+			}else{
+				//generate CSS and parse it for content
+				var $css = "@"+current.key+":"+current.value+"; #"+target.key+" {background-color:"+target.value+";color:"+fontColor+";}";
+				parser.parse($css, function (err, tree) {
+					if (err) { return console.error(err) ;}
+					var rule = tree.toCSS({'compress':true}).match(regex);
+					if(rule.length == 3){
+						fontColor = "white";
+						backgroundColor = rule[1];
+						//determine fontcolor
+						if($.xcolor.readable("white",backgroundColor)){
+							fontColor = "white";
+						} else {
+							fontColor = "black";
+						}
+								
+						$target.css({
+							"background-color": backgroundColor,
+							"color": fontColor
+						});
+					}
+				});//*/
+			}
+			
+			//check if there are dependencies
+			var deps = LESS_VARIABLES_REF[depKey];
+			if( (typeof deps) !== "undefined" && deps.length > 0){
+				//put newly computed value on the stack
+				stack.push({'key':depKey,'value':backgroundColor});
+				console.log("next = "+depKey);
+			}
+		
+		}
+	}
+	//refresh less variables
+	if(variables != null){
+		if((typeof less) !== "undefined"){
+			//less.modifyVars(variables);
+		}
+	}
+	
+}
+
+function getVariableKey(key){
+	if(key.charAt(0) === "@"){
+		return key.slice(1); 
+	}else{
+		return key;
+	}
+}
+
+
+function initDroppable(){
+	$(".icon-resize-full").next("input").click(function (evt){
+		evt.stopPropagation();
+		$(this).attr('checked',true);
+		$(".color-picker").each( function(i,elt){
+			var $this = $(this);
+			$this.addClass("color-box-full");
+			$this.removeClass("color-box-small");
+		});
+	});
+	
+	$(".icon-resize-small").next("input").click(function (evt){
+		evt.stopPropagation();
+		$(this).attr('checked',true);
+		$(".color-picker").each( function(i,elt){
+			var $this = $(this);
+			$this.addClass("color-box-small");
+			$this.removeClass("color-box-full");
+		});
+	});
+
+
+//make parent element draggable
+  $(".color-picker").draggable({ revert: "valid",cursor: "move" ,opacity: 0.9, helper: "clone",revertDuration: 50,zIndex: 6000 });
+	/* Disable Color picker for now
+	.focusin( function(){
+	  var slider = $(this).ColorPickerSliders({
+		  color: scope.color.hex,
+		  order: {
+			  preview:1,
+			  hsl: 2,
+			  opacity:3
+		  } ,
+		  onchange: function(container, color) {
+			//update scope variables double bindings
+			//tinycolor object is in color.tiny
+			 scope.color.hex = color.tiny.toHexString();
+			 scope.color.rgb = color.tiny.toRgbString();
+			 //scope.color.name = color.tiny.toName();
+			 scope.color.name = $.xcolor.nearestname(color.tiny.toHexString());
+			 scope.color.hsl = color.tiny.toHslString();
+			 //dynamically update fontcolor
+
+			if (color.cielch.l < 60) {
+				scope.color.fontColor = "white";
+			}
+			else {
+				scope.color.fontColor = "black";
+			}
+			 //fire DOM updates
+			 scope.$digest();
+		  }
+		});
+	  //force display
+	  $(this).trigger("colorpickersliders.showPopup");
+	});
+//*/
+}
+
 $(function() {
-//    $( document ).tooltip();
+
+initDroppable();
+
+$("input:text.form-control")
+	.filter("[data-var]")
+	.each( function(i,elt){
+	
+		var $this = $(elt);
+		//remove @ from key
+		var key = getVariableKey($this.attr("id"));
+
+		var value = $this.val().length > 0 ? $this.val():$this.attr("placeholder");
+		$this.val(value);
+		/*
+		$this.attr({
+			"id" : key
+		});
+		//*/
+
+		console.log(i+" - {"+key + "} = [ "+value+" ]");
+		LESS_VARIABLES [key] = {'default':value,'value':value };
+		//contains @
+		if(value && value.indexOf("@") >= 0){
+			addLESSVariablesRef(key,value);
+		}
+		
+	})
+	.filter(".color-input")
+	.each( function(i,elt){
+	
+		var $this = $(elt);
+		$this.before("<i class='icon-bullseye'></i>");
+		var key =  $this.attr("data-var");
+		var value =  $this.val();
+		$this.attr({
+			"data-color-format" : "hex",			
+		});
+		$this.css('background-color',value);
+
+	})	
+	.ColorPickerSliders({
+
+        order: {
+            preview:1,
+            hsl: 2,
+            opacity:3
+        } ,
+        onchange: function(container, color) {
+			var $this = $(this);
+          //update scope variables double bindings
+          //tinycolor object is in color.tiny
+           var colorHex = color.tiny.toHexString();
+           var colorRgb = color.tiny.toRgbString();
+
+           var colorName = $.xcolor.nearestname(colorHex);
+
+           //dynamically update fontcolor
+            var fontColor = "black";
+
+			if (color.cielch.l < 60) {
+                fontColor = "white";
+            }
+            else {
+                fontColor = "black";
+            }
+			
+			var $input = $(this.connectedinput);
+			$this.css("color", fontColor);
+			var key = $input.attr("data-var");
+			updateLESSVariables(key, colorHex);
+	
+        }
+		
+    })
+	.droppable({
+        drop: function( event, ui ) {
+          var newVal = ui.draggable.css('background-color');
+		  var colorHex = rgb2hex(newVal);
+		  var $this = $(this);
+		  $this.val(colorHex);
+ 
+		   var fontColor = "white";
+		   
+           if($.xcolor.readable("white",newVal)){
+                fontColor = "white";
+            } else {
+                fontColor = "black";
+            }
+			
+			$this.css( {'background-color' :colorHex, 'color' : fontColor} );
+			//*/
+
+			$this.trigger("colorpickersliders.updateColor",newVal);
+			//update variables
+			var key = $this.attr("data-var");
+			updateLESSVariables(key, colorHex);
+						
+        }
+		
+    });
+
 });
 

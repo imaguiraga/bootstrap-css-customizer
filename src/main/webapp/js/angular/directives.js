@@ -40,7 +40,7 @@ directiveModule.directive('dragSource',
           // The linking function will add behavior to the template
           link: function postLink(scope, element, attrs) {
             //make parent element draggable
-            element.draggable({ revert: "valid",helper: "clone",revertDuration: 50,zIndex: 3000 });
+            element.draggable({ revert: "valid",helper: "clone",revertDuration: 50,zIndex: 6000 });
           }
        };
 });
@@ -75,8 +75,9 @@ directiveModule.directive('colorPicker',
           link: function postLink(scope, element, attrs) {
 
           //make parent element draggable
-          element.draggable({ revert: "valid",/*cursor: "move" ,opacity: 0.9,*/ helper: "clone",revertDuration: 50,zIndex: 3000 });
-          element.focusin( function(){
+          element.draggable({ revert: "valid",cursor: "move" ,opacity: 0.9, helper: "clone",revertDuration: 50,zIndex: 6000 });
+		    /* Disable Color picker for now
+			.focusin( function(){
               var slider = $(this).ColorPickerSliders({
                   color: scope.color.hex,
                   order: {
@@ -93,12 +94,13 @@ directiveModule.directive('colorPicker',
                      scope.color.name = $.xcolor.nearestname(color.tiny.toHexString());
                      scope.color.hsl = color.tiny.toHslString();
                      //dynamically update fontcolor
-                     if($.xcolor.readable("black",scope.color.hex)){
-                         scope.color.fontColor = "black";
-                      } else {
-                         scope.color.fontColor = "white";
-                      }
 
+					if (color.cielch.l < 60) {
+						scope.color.fontColor = "white";
+					}
+					else {
+						scope.color.fontColor = "black";
+					}
                      //fire DOM updates
                      scope.$digest();
                   }
@@ -106,7 +108,7 @@ directiveModule.directive('colorPicker',
               //force display
               $(this).trigger("colorpickersliders.showPopup");
             });
-
+//*/
             element.blur( function(){
               //hide colorpicker
                //$(this).trigger("colorpickersliders.hidePopup");
@@ -115,7 +117,7 @@ directiveModule.directive('colorPicker',
                //tmp.ColorPickerSliders().empty();
                console.log("blured - "+scope.color.hex);
             });
-            //console.log(attrs+" - "+ element.attr('value')+" - "+scope.color.hex);
+
           }
       };
 });  //*/

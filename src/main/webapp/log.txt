@@ -1,0 +1,4 @@
+Configuration file: D:/workspace/SCM/bitbucket.org/colorpicker/docs/_config.yml
+            Source: D:/workspace/SCM/bitbucket.org/colorpicker/docs
+       Destination: D:/workspace/SCM/bitbucket.org/colorpicker/docs/_site
+      Generating... 

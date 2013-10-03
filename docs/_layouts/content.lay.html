@@ -61,6 +61,7 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 								Home
 							</a>
 						</li>
+						<!--
 						<li>
 							<a href="#edit">
 							<i class="icon-edit">
@@ -68,6 +69,7 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 								Edit
 							</a>
 						</li>
+						
 						<li>
 							<a href="preview1.html" target="_blank">
 							<i class="icon-eye-open">
@@ -75,6 +77,11 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 								Preview
 							</a>
 						</li>
+						-->
+						<li>							
+							<a id="preview" class="edit-view" href="#"><i class="icon-eye-open"></i>Preview</a>
+						</li>
+						
 						<li>
 							<a href="#download">
 							<i class="icon-download-alt">
@@ -97,7 +104,7 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								LESS variables
+								Components
 								<b class="caret">
 								</b>
 							</a>
@@ -184,18 +191,23 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
       <!--  1
 		<div class="container">
 
-       -->    <div class="row" style="padding:0px">
-				<div class="well col-lg-3 hidden-xs hidden-sm affix" style="margin-left:0px;margin-right:0px;">
+       -->  
+		   
+			<div class="row" style="padding:0px">
+				<div id="colortab" class="well col-lg-3 hidden-xs hidden-sm affix edit-view" style="margin-left:0px;margin-right:0px;">
       				  {% include colorView.compiled.inc.html %}
 				</div>
 				<!-- /col-lg-3 -->
 
-				<div class="col-lg-9 col-lg-offset-3">
+				<div id="variables" class="col-lg-9 col-lg-offset-3">
+				<div class="container">	
     				{% include lessVariables.inc.html %}
+				</div>	
 				</div>
 
 				<!-- /col-lg-9 -->
-                 </div>
+            
+		</div>
 		<!-- 1
 		/row
         </div> /container -->
@@ -205,7 +217,7 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 			</i>
 		</a>
 		<hr />
-		<footer>
+		<footer class="edit-view">
           {% include footer.inc.html %}
 		</footer>
         <!-- JS and analytics only. -->
