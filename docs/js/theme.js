@@ -23,9 +23,9 @@ $("#theme-selector").change(function(evt){
   var $link = document.getElementById("bootstrap:css");
   var $compiled = $(document.getElementById("compiled:css"));
 	
-  if( theme === "compiled" && COMPILED_LESS_CSS != null){	
-	$link.disabled = true;
+  if( theme === "compiled" && COMPILED_LESS_CSS != null){		
 	$compiled.append(COMPILED_LESS_CSS);
+	$link.disabled = true;
 	
   }else{
 	$link.disabled = false;

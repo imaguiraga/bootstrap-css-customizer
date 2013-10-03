@@ -395,10 +395,16 @@ function initDraggable(){
 }
 
 function initPreviewToggle(){
+	$("#compile").click(function (evt) {
+		evt.stopPropagation();
+		evt.preventDefault();
+		updateCompiledCSS();
+	});
+	
 	//init PreviewToggle
 	$("#preview").click(function (evt) {
-	evt.stopPropagation();
-	evt.preventDefault();
+		evt.stopPropagation();
+		evt.preventDefault();
 		var $this = $(this);
 		var $prev = $this.find("i");
 		if($this.hasClass("edit-view")){
