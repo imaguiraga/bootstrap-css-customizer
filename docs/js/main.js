@@ -559,24 +559,11 @@ $("input:text.form-control")
 
 
 function tooltipInit(){
-// tooltip demo
-    $('.tooltip-demo').tooltip({
-      selector: "[data-toggle=tooltip]",
-      container: "body"
-    });
-
-    $('.tooltip-test').tooltip();
-    $('.popover-test').popover();
-
-    $('.bs-docs-navbar').tooltip({
-      selector: "a[data-toggle=tooltip]",
-      container: ".bs-docs-navbar .nav"
-    });
+	// tooltip demo
+    $("[data-toggle=tooltip]").tooltip();
 
     // popover demo
-    $("[data-toggle=popover]")
-      .popover();
-
+    $("[data-toggle=popover]").popover();
 
     // carousel demo
     $('.bs-docs-carousel-example').carousel();
