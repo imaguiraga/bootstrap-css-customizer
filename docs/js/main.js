@@ -1,3 +1,5 @@
+ var cw = '/*!\n * Bootstrap v3.0.0\n *\n * Copyright 2013 Twitter, Inc\n * Licensed under the Apache License v2.0\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Designed and built with all the love in the world @twitter by @mdo and @fat.\n */\n\n';
+
 /**
  * Converts an HSL color value to RGB. Conversion formula
  * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
@@ -307,7 +309,10 @@ function compileCSS(){
 			return console.error(err);
 		}
 		try{
-		  css = tree.toCSS();
+		  css = {
+			'bootstrap.css':cw + tree.toCSS(),
+			'bootstrap.min.css':cw + tree.toCSS({ compress: true })
+		  };
 		} catch(e){
 		  console.error(e);
 		}		
@@ -395,40 +400,67 @@ function initDraggable(){
 }
 
 function initPreviewToggle(){
-	$("#compile").click(function (evt) {
+	$("#btn-compile").click(function (evt) {
 		evt.stopPropagation();
 		evt.preventDefault();
 		updateCompiledCSS();
 	});
 	
 	//init PreviewToggle
-	$("#preview").click(function (evt) {
+	$("#btn-preview").click(function (evt) {
 		evt.stopPropagation();
 		evt.preventDefault();
 		var $this = $(this);
 		var $prev = $this.find("i");
 		if($this.hasClass("edit-view")){
 			$this.attr("title","Click to Edit Variables");
-			$this.html("<i class='icon-edit'></i>Edit");
+			$this.html("<i class='icon-spinner icon-spin'></i>Edit");
+			
 			$this.removeClass("edit-view");
 			$(".edit-view").hide();
 			$("#variables").removeClass("col-lg-9 col-lg-offset-3").addClass("col-lg-12");
 			$("#colortab").removeClass("hidden-xs hidden-sm affix");
 			updateCompiledCSS();
+			$this.html("<i class='icon-edit'></i>Edit");
 			
 		}else{
 			$this.attr("title","Click to Compile and Preview stylesheet");
-			$this.html("<i class='icon-eye-open'></i>Preview");
+			$this.html("<i class='icon-spinner icon-spin'></i>Preview");
+			
 			$(".edit-view").show();
 			$this.addClass("edit-view");
 			$("#variables").removeClass("col-lg-12").addClass("col-lg-9 col-lg-offset-3");
 			$("#colortab").addClass("hidden-xs hidden-sm affix");
+			$this.html("<i class='icon-eye-open'></i>Preview");
 		}
 		
 	});
 
 }
 
+function generateZip(css,less) {
+	if (!css ) return;
+
+	var zip = new JSZip();
+
+	if (css) {
+	  var cssFolder = zip.folder('css');
+	  for (var fileName in css) {
+		cssFolder.file(fileName, css[fileName]);
+	  }
+	}
+	if (less) {
+	  var lessFolder = zip.folder('less');
+	  for (var fileName in less) {
+		lessFolder.file(fileName, less[fileName]);
+	  }
+	}
+
+	var content = zip.generate({type:"blob"});
+	return content;
+};
+  
+   
 function initColorPickers(){
 $("input:text.form-control")
 	.filter("[data-var]")
@@ -454,8 +486,8 @@ $("input:text.form-control")
 	
 		var $this = $(elt);
 		$this.before("<i class='icon-bullseye'></i>");
-		var key =  $this.attr("data-var");
-		var value =  $this.val();
+		var key = $this.attr("data-var");
+		var value = $this.val();
 		$this.attr({
 			"data-color-format" : "hex",			
 		});
@@ -525,7 +557,45 @@ $("input:text.form-control")
 
 }
 
+
+function tooltipInit(){
+// tooltip demo
+    $('.tooltip-demo').tooltip({
+      selector: "[data-toggle=tooltip]",
+      container: "body"
+    });
+
+    $('.tooltip-test').tooltip();
+    $('.popover-test').popover();
+
+    $('.bs-docs-navbar').tooltip({
+      selector: "a[data-toggle=tooltip]",
+      container: ".bs-docs-navbar .nav"
+    });
+
+    // popover demo
+    $("[data-toggle=popover]")
+      .popover();
+
+
+    // carousel demo
+    $('.bs-docs-carousel-example').carousel();
+}
+
 $(function() {
+
+  var $downloadBtn = $('#btn-download');
+
+  $downloadBtn.on('click', function (e) {
+    e.preventDefault();
+    $downloadBtn.attr('disabled', 'disabled');
+	$downloadBtn.html("<i class='icon-spinner icon-spin'></i>Download");
+    var zip = generateZip(compileCSS(),null);
+	saveAs(zip, "bootstrap.zip");
+	$downloadBtn.removeAttr('disabled');
+	$downloadBtn.html("<i class='icon-download-alt'></i>Download");
+  });
+  
 
 initPreviewToggle();
 
@@ -533,5 +603,6 @@ initDraggable();
 
 initColorPickers();
 
+tooltipInit();
 });
 

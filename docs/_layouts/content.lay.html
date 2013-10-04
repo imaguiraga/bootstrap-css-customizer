@@ -62,19 +62,16 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 							</a>
 						</li>
 						<li>
-							<a href="#" id="compile"><i class="icon-gears"></i>Compile</a>
+							<a href="#" id="btn-compile"><i class="icon-gear"></i>Compile</a>
 						</li>
 
 						<li>							
-							<a id="preview" class="edit-view" href="#"><i class="icon-eye-open"></i>Preview</a>
+							<a id="btn-preview" class="edit-view" href="#"><i class="icon-eye-open"></i>Preview</a>
 						</li>
 						
 						<li>
-							<a href="#download">
-							<i class="icon-download-alt">
-								</i>
-								Download
-							</a>
+							<a id="btn-download" href="#download">
+							<i class="icon-download-alt"></i>Download</a>
 						</li>
 						<li>
 							<a href="#about">
@@ -181,19 +178,19 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 
        -->  
 		   
-			<div class="row" style="padding:0px">
-				<div id="colortab" class="well col-lg-3 hidden-xs hidden-sm affix edit-view" style="margin-left:0px;margin-right:0px;">
-      				  {% include colorView.compiled.inc.html %}
-				</div>
-				<!-- /col-lg-3 -->
+		<div class="row" style="padding:0px">
+			<div id="colortab" class="well col-lg-3 hidden-xs hidden-sm affix edit-view" style="margin-left:0px;margin-right:0px;">
+				  {% include colorView.compiled.inc.html %}
+			</div>
+			<!-- /col-lg-3 -->
 
-				<div id="variables" class="col-lg-9 col-lg-offset-3">
+			<div id="variables" class="col-lg-9 col-lg-offset-3">
 				<div class="container">	
-    				{% include lessVariables.inc.html %}
+					{% include lessVariables.inc.html %}
 				</div>	
-				</div>
+			</div>
 
-				<!-- /col-lg-9 -->
+			<!-- /col-lg-9 -->
             
 		</div>
 		<!-- 1
@@ -205,7 +202,7 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 			</i>
 		</a>
 		<hr />
-		<footer class="edit-view">
+		<footer>
           {% include footer.inc.html %}
 		</footer>
         <!-- JS and analytics only. -->

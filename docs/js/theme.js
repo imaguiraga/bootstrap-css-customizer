@@ -24,7 +24,7 @@ $("#theme-selector").change(function(evt){
   var $compiled = $(document.getElementById("compiled:css"));
 	
   if( theme === "compiled" && COMPILED_LESS_CSS != null){		
-	$compiled.append(COMPILED_LESS_CSS);
+	$compiled.append(COMPILED_LESS_CSS['bootstrap.min.css']);
 	$link.disabled = true;
 	
   }else{
