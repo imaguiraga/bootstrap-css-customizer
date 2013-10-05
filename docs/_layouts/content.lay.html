@@ -146,8 +146,15 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 						  <span style="margin-left: 20px" class="label label-default">Theme</span>
 						</h4>
 						  <select id="theme-selector" ng-model="template" style="width:120px" class="form-control input-sm" title="Bootstrap theme selector">
-							  <option value="css/theme/default/bootstrap.min.css">default</option>
-							  <option value="compiled">compiled</option>
+							 
+							 <optgroup label="User">							 
+							 <option <option value="compiled">compiled</option>
+							 
+							 </optgroup>
+							<optgroup label="Bootstrap">							 
+							 <option value="css/theme/default/bootstrap.min.css">default</option>
+							 
+							 </optgroup> 
 							  <optgroup label="Bootswatch">
   							  <option value="{{ page.bootswacth_url }}/amelia/bootstrap.min.css">amelia</option>
   							  <option value="{{ page.bootswacth_url }}/cerulean/bootstrap.min.css">cerulean</option>

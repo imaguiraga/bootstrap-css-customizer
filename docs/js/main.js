@@ -1,5 +1,68 @@
  var cw = '/*!\n * Bootstrap v3.0.0\n *\n * Copyright 2013 Twitter, Inc\n * Licensed under the Apache License v2.0\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Designed and built with all the love in the world @twitter by @mdo and @fat.\n */\n\n';
 
+ 
+ 
+ //load initial data
+  function loadThemes(url) {
+  
+    $.ajax({
+      url: url,
+      type: 'GET',
+      dataType: 'json'
+    })
+    .success(function(result) {
+      var data = result;
+	  /*
+      if (data.js) {
+        $('#plugin-section input').each(function () {
+          $(this).prop('checked', ~$.inArray(this.value, data.js));
+        })
+      }
+      if (data.css) {
+        $('#less-section input').each(function () {
+          $(this).prop('checked', ~$.inArray(this.value, data.css));
+        })
+      }//*/
+      if (data.themes) {
+        for (var i in data.themes) {
+			//$('input[data-var="' + i + '"]').val(data.vars[i]);
+			loadThemeVariables(data.themes[i]);
+        }
+      }
+    })
+    .error(function(err) {
+      console.error(err);
+    })
+  }
+
+  function loadThemeVariables(theme) {
+	var = pattern =/@([a-zA-Z0-9\-]*):(.*);/m;
+    var variables = {};
+	var urls = theme.lessVariables;
+	if(!$.isArray(theme.lessVariables)){
+		urls = [urls];
+	}
+//loop through all the links
+	for(var i in urls){
+		var url = urls[i];
+		$.ajax({
+		  url: url,
+		  type: 'GET',
+		  dataType: 'text'
+		})
+		.success(function(result) {
+		//@([a-zA-Z0-9\-]*):(.*);/m
+		//convert @var :value; to "@var" : "value";
+		  var data = result;
+
+		})
+		.error(function(err) {
+		  console.error(err);
+		});
+	}
+	return variables;
+  }
+  
 /**
  * Converts an HSL color value to RGB. Conversion formula
  * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
