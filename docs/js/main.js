@@ -10,7 +10,7 @@
       type: 'GET',
       dataType: 'json'
     })
-    .success(function(result) {
+    .done(function(result) {
       var data = result;
 	  /*
       if (data.js) {
@@ -30,13 +30,13 @@
         }
       }
     })
-    .error(function(err) {
+    .fail(function(err) {
       console.error(err);
     })
   }
 
   function loadThemeVariables(theme) {
-	var = pattern =/@([a-zA-Z0-9\-]*):(.*);/m;
+	
     var variables = {};
 	var urls = theme.lessVariables;
 	if(!$.isArray(theme.lessVariables)){
@@ -45,23 +45,37 @@
 //loop through all the links
 	for(var i in urls){
 		var url = urls[i];
-		$.ajax({
+		loadLESSVariables(url,variables);
+	}
+	return variables;
+  }
+ 
+function loadLESSVariables(url,variables){
+	var pattern =/([^@]+):([^;]+)/gm;
+	$.ajax({
 		  url: url,
 		  type: 'GET',
 		  dataType: 'text'
 		})
-		.success(function(result) {
-		//@([a-zA-Z0-9\-]*):(.*);/m
+		.done(function(data) {
 		//convert @var :value; to "@var" : "value";
-		  var data = result;
+			var result = data.match(pattern);
+			for( var j in result){
+				var values = result[j].toString().split(":");
+				var key = values[0].trim();
+				var value = values[1].trim();
+				console.log(j+" - "+key+" = "+value);
+				if(typeof variables === "object"){
+					variables[key] = value;
+				}
+			}
 
 		})
-		.error(function(err) {
+		.fail(function(err) {
 		  console.error(err);
 		});
-	}
-	return variables;
-  }
+
+} 
   
 /**
  * Converts an HSL color value to RGB. Conversion formula
@@ -646,13 +660,14 @@ $(function() {
 	$downloadBtn.html("<i class='icon-download-alt'></i>Download");
   });
   
+	initPreviewToggle();
 
-initPreviewToggle();
+	initDraggable();
 
-initDraggable();
+	initColorPickers();
 
-initColorPickers();
-
-tooltipInit();
+	tooltipInit();
+	$("#loading").remove();
+	$("#content").css("visibility","visible");
 });
 

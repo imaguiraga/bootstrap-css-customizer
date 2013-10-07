@@ -184,8 +184,8 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 		<div class="container">
 
        -->  
-		   
-		<div class="row" style="padding:0px">
+		<div id="loading" style="width:100%;height:100%;text-align:center"><p style="margin-top:50px"><i class="icon-refresh icon-2x icon-spin" style="padding:4px"></i> Loading ....</p></div>  
+		<div id="content" style="visibility:hidden" class="row" style="padding:0px">
 			<div id="colortab" class="well col-lg-3 hidden-xs hidden-sm affix edit-view" style="margin-left:0px;margin-right:0px;">
 				  {% include colorView.compiled.inc.html %}
 			</div>
