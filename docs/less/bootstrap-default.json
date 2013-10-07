@@ -12,11 +12,9 @@
             "less": [
 				"less/bootstrap/mixins.less",
 
-				// Reset
 				"less/bootstrap/normalize.less",
 				"less/bootstrap/print.less",
 
-				// Core CSS
 				"less/bootstrap/scaffolding.less",
 				"less/bootstrap/type.less",
 				"less/bootstrap/code.less",
@@ -25,7 +23,6 @@
 				"less/bootstrap/forms.less",
 				"less/bootstrap/buttons.less",
 
-				// Components
 				"less/bootstrap/component-animations.less",
 				"less/bootstrap/glyphicons.less",
 				"less/bootstrap/dropdowns.less",
@@ -48,18 +45,16 @@
 				"less/bootstrap/wells.less",
 				"less/bootstrap/close.less",
 
-				// Components w/ JavaScript
 				"less/bootstrap/modals.less",
 				"less/bootstrap/tooltip.less",
 				"less/bootstrap/popovers.less",
 				"less/bootstrap/carousel.less",
 
-				// Utility classes
 				"less/bootstrap/utilities.less",
 				"less/bootstrap/responsive-utilities.less"
-				//"less/bootstrap/theme.less"
+
 			],
-            "lessVariables": "less/bootstrap/variables.less",
+            "lessVariables": "less/bootstrap/variables.less"
         }
     ]
 }
