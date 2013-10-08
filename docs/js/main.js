@@ -1,7 +1,7 @@
  var cw = '/*!\n * Bootstrap v3.0.0\n *\n * Copyright 2013 Twitter, Inc\n * Licensed under the Apache License v2.0\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Designed and built with all the love in the world @twitter by @mdo and @fat.\n */\n\n';
 
  var THEMES = {};
- 
+ var CURRENT_THEME = null;
  //load initial data
   function loadThemes(url) {
   
@@ -162,7 +162,7 @@ function addLESSVariablesRef(key,value){
 	(@popover-arrow-width 1) 
 	//*/
 	var pattern =/@(\D*)\s?/gm;
-	pattern =/@([a-zA-Z0-9\-])*/gm;
+	pattern =/@([a-zA-Z0-9\-])*[^;,\)]/gm;
 	//find reference
 	var result = value.replace(","," ").trim().match(pattern);
 	if(result){
@@ -270,7 +270,16 @@ function updateLESSVariables(key, value){
 
 function collectLESSVariables(){
 	//add default variables
-	var variables = ["@import 'less/bootstrap/variables.less'"];
+	var variables = [];//["@import 'less/bootstrap/variables.less'"];
+	var lessVariables = CURRENT_THEME.lessVariables;
+	var less = CURRENT_THEME.less;
+	if($isArray(lessVariables)){
+		for(var i=0;i<lessVariables.length;i++){
+			variables.push("@import '"+lessVariables[i]+"'");
+		}
+	}else{
+		variables.push("@import '"+lessVariables+"'");
+	}
     //override default variables
 	$("input:text.form-control")
 		.filter("[data-var]")
@@ -280,6 +289,14 @@ function collectLESSVariables(){
 			variables.push("@"+id+": "+$this.val()+"");
 		});
 	//add import sections
+	if($isArray(less)){
+		for(var i=0;i<less.length;i++){
+			variables.push("@import '"+less[i]+"'");
+		}
+	}else{
+		variables.push("@import '"+less+"'");
+	}
+	/*
 	variables.push("@import 'less/bootstrap/mixins.less'");
 
 	// Reset
@@ -328,7 +345,7 @@ function collectLESSVariables(){
 	variables.push("@import 'less/bootstrap/utilities.less'");
 	variables.push("@import 'less/bootstrap/responsive-utilities.less'");
 	//variables.push("@import 'less/bootstrap/theme.less'");
-
+//*/
 	return variables.join(";\n")+";";
 }
 
@@ -361,7 +378,7 @@ function compileCSS(){
 function updateCompiledCSS(){
 	COMPILED_LESS_CSS = compileCSS();
 	if(COMPILED_LESS_CSS != null){
-		$("#theme-selector").trigger("change","compiled");
+		//$("#theme-selector").trigger("change","compiled");
 		//disable default CSS
 		//activate alternate CSS
 	}	
@@ -439,7 +456,10 @@ function initPreviewToggle(){
 	$("#btn-compile").click(function (evt) {
 		evt.stopPropagation();
 		evt.preventDefault();
+		var $this = $(this);
+		$this.html("<i class='icon-spinner icon-spin'></i>Compile");
 		updateCompiledCSS();
+		$this.html("<i class='icon-gear'></i>Compile");
 	});
 	
 	//init PreviewToggle
@@ -633,6 +653,7 @@ $(function() {
 	//display after download is complete
 	loadThemes("less/bootstrap-default.json");
 	loadThemes("less/bootswatch.json");
+	CURRENT_THEME = THEMES['default'];
 	//loadThemes("http://api.bootswatch.com/3/");
 	$("#loading").remove();
 	$("#content").css("visibility","visible");

@@ -15,6 +15,8 @@
  
 function loadLESSVariables(url,variables){
 	var pattern =/([^@]+):([^;]+)/gm;
+	pattern =/([^@]+):([^;(\/\/)]+)/gm;
+	
 	//var deferredReady = $.Deferred();
 	$.ajax({
 		  cache: true,
@@ -47,8 +49,8 @@ function loadLESSVariables(url,variables){
 
 function populateLESSVariables(theme){
   var variables = loadThemeVariables(theme);
-
-	  $("input[data-var]").each(function(i,elt){
+$("input:text.form-control")
+	.filter("[data-var]").each(function(i,elt){
 		var $elt = $(elt);
 		var id = $elt.attr("id");
 		if(id && variables[id]){
@@ -63,31 +65,34 @@ function populateLESSVariables(theme){
 					return;
 				}
 				try{
+					if(newVal.charAt(0) === '#'){
+					
+						var fontColor = "white";
+				   
+						if($.xcolor.readable("white",newVal)){
+							fontColor = "white";
+						} else {
+							fontColor = "black";
+						}
+						
+						$this.css( {'background-color' :colorHex, 'color' : fontColor} );
+						//*/
+
+						$this.trigger("colorpickersliders.updateColor",newVal);
+						//update variables
+						var key = $this.attr("data-var");
+						updateLESSVariables(key, colorHex);
+					
+					}else{
+						console.log($this.attr('id')+" = "+newVal);
+					}
 					if(newVal.charAt(0) !== '#'){
-						colorHex = rgb2hex(newVal);
+						//colorHex = rgb2hex(newVal);
 					}
 				}catch(err){
-					console.error(err.message);
-					return;
-				}
-
-	//			$this.val(colorHex);
-	 
-				var fontColor = "white";
-			   
-				if($.xcolor.readable("white",newVal)){
-					fontColor = "white";
-				} else {
-					fontColor = "black";
+					console.error($this.attr('id')+" = "+newVal+" - "+err.message);
 				}
 				
-				$this.css( {'background-color' :colorHex, 'color' : fontColor} );
-				//*/
-
-				$this.trigger("colorpickersliders.updateColor",newVal);
-				//update variables
-				var key = $this.attr("data-var");
-				updateLESSVariables(key, colorHex);
 			}
 	  });
 }
@@ -116,15 +121,15 @@ $("#theme-selector").change(function(evt){
   var $link = document.getElementById("bootstrap:css");
   var $compiled = $(document.getElementById("compiled:css"));
 	
-  var theme = THEMES[selection];
+  CURRENT_THEME = THEMES[selection];
   if( selection === "compiled" && COMPILED_LESS_CSS != null){		
 	$compiled.append(COMPILED_LESS_CSS['bootstrap.min.css']);
 	$link.disabled = true;
 	
   }else{
 	$link.disabled = false;
-	$link.href = theme.cssMin;
-	populateLESSVariables(theme);
+	$link.href = CURRENT_THEME.cssMin;
+	populateLESSVariables(CURRENT_THEME);
 	$compiled.empty();
   }
 });
