@@ -1,5 +1,52 @@
  var cw = '/*!\n * Bootstrap v3.0.0\n *\n * Copyright 2013 Twitter, Inc\n * Licensed under the Apache License v2.0\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Designed and built with all the love in the world @twitter by @mdo and @fat.\n */\n\n';
 
+ var COMMON_LESS = {"less": [
+				"less/bootstrap/mixins.less",
+
+				"less/bootstrap/normalize.less",
+				"less/bootstrap/print.less",
+
+				"less/bootstrap/scaffolding.less",
+				"less/bootstrap/type.less",
+				"less/bootstrap/code.less",
+				"less/bootstrap/grid.less",
+				"less/bootstrap/tables.less",
+				"less/bootstrap/forms.less",
+				"less/bootstrap/buttons.less",
+
+				"less/bootstrap/component-animations.less",
+				"less/bootstrap/glyphicons.less",
+				"less/bootstrap/dropdowns.less",
+				"less/bootstrap/button-groups.less",
+				"less/bootstrap/input-groups.less",
+				"less/bootstrap/navs.less",
+				"less/bootstrap/navbar.less",
+				"less/bootstrap/breadcrumbs.less",
+				"less/bootstrap/pagination.less",
+				"less/bootstrap/pager.less",
+				"less/bootstrap/labels.less",
+				"less/bootstrap/badges.less",
+				"less/bootstrap/jumbotron.less",
+				"less/bootstrap/thumbnails.less",
+				"less/bootstrap/alerts.less",
+				"less/bootstrap/progress-bars.less",
+				"less/bootstrap/media.less",
+				"less/bootstrap/list-group.less",
+				"less/bootstrap/panels.less",
+				"less/bootstrap/wells.less",
+				"less/bootstrap/close.less",
+
+				"less/bootstrap/modals.less",
+				"less/bootstrap/tooltip.less",
+				"less/bootstrap/popovers.less",
+				"less/bootstrap/carousel.less",
+
+				"less/bootstrap/utilities.less",
+				"less/bootstrap/responsive-utilities.less"
+
+			],
+            "lessVariables": ["less/bootstrap/variables.less"]
+        };
  var THEMES = {};
  var CURRENT_THEME = null;
  //load initial data
@@ -34,6 +81,17 @@
 			"compiledLessVariables": null,
 			"compiledCssMin": null
 			//*/
+			//urls are overrides
+			if($.isArray(theme.lessVariables)){
+				theme.lessVariables = COMMON_LESS.lessVariables.concat(theme.lessVariables);
+			}else{
+				theme.lessVariables = COMMON_LESS.lessVariables.concat([theme.lessVariables]);
+			}
+			if($.isArray(theme.less)){
+				theme.less = theme.less.concat(COMMON_LESS.less);
+			}else{
+				theme.less = [theme.less].concat(COMMON_LESS.less);
+			}
 			theme.compiled = false;
 			theme.compiledCssMin = null;
 			theme.compiledLessVariables = null;
@@ -391,12 +449,14 @@ function updateCompiledCSS(){
 	COMPILED_LESS_CSS = compileCSS();
 
 	if(COMPILED_LESS_CSS != null){
+	//TODO clone  compiled from currently slected theme
 		var theme= THEMES['compiled'];
+		theme.less = CURRENT_THEME.less;
+		theme.lessVariables = CURRENT_THEME.lessVariables;
 		theme.compiled = true;
 		theme.compiledLessVariables = COMPILED_LESS_CSS.variables; 
 		theme.compiledCssMin = COMPILED_LESS_CSS['bootstrap.min.css'];
-		         
-		//$("#theme-selector").trigger("change","compiled");
+
 		//disable default CSS
 		//activate alternate CSS
 	}	

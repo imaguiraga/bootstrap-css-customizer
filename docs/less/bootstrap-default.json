@@ -9,52 +9,8 @@
             "css": "css/theme/default/bootstrap.css",
             "cssMin": "css/theme/default/bootstrap.min.css",
             "cssCdn": null,
-            "less": [
-				"less/bootstrap/mixins.less",
-
-				"less/bootstrap/normalize.less",
-				"less/bootstrap/print.less",
-
-				"less/bootstrap/scaffolding.less",
-				"less/bootstrap/type.less",
-				"less/bootstrap/code.less",
-				"less/bootstrap/grid.less",
-				"less/bootstrap/tables.less",
-				"less/bootstrap/forms.less",
-				"less/bootstrap/buttons.less",
-
-				"less/bootstrap/component-animations.less",
-				"less/bootstrap/glyphicons.less",
-				"less/bootstrap/dropdowns.less",
-				"less/bootstrap/button-groups.less",
-				"less/bootstrap/input-groups.less",
-				"less/bootstrap/navs.less",
-				"less/bootstrap/navbar.less",
-				"less/bootstrap/breadcrumbs.less",
-				"less/bootstrap/pagination.less",
-				"less/bootstrap/pager.less",
-				"less/bootstrap/labels.less",
-				"less/bootstrap/badges.less",
-				"less/bootstrap/jumbotron.less",
-				"less/bootstrap/thumbnails.less",
-				"less/bootstrap/alerts.less",
-				"less/bootstrap/progress-bars.less",
-				"less/bootstrap/media.less",
-				"less/bootstrap/list-group.less",
-				"less/bootstrap/panels.less",
-				"less/bootstrap/wells.less",
-				"less/bootstrap/close.less",
-
-				"less/bootstrap/modals.less",
-				"less/bootstrap/tooltip.less",
-				"less/bootstrap/popovers.less",
-				"less/bootstrap/carousel.less",
-
-				"less/bootstrap/utilities.less",
-				"less/bootstrap/responsive-utilities.less"
-
-			],
-            "lessVariables": "less/bootstrap/variables.less"
+            "less": [],
+            "lessVariables": []
         },
         {
             "name": "Default",
@@ -64,52 +20,8 @@
             "css": "css/theme/default/bootstrap.css",
             "cssMin": "css/theme/default/bootstrap.min.css",
             "cssCdn": null,
-            "less": [
-				"less/bootstrap/mixins.less",
-
-				"less/bootstrap/normalize.less",
-				"less/bootstrap/print.less",
-
-				"less/bootstrap/scaffolding.less",
-				"less/bootstrap/type.less",
-				"less/bootstrap/code.less",
-				"less/bootstrap/grid.less",
-				"less/bootstrap/tables.less",
-				"less/bootstrap/forms.less",
-				"less/bootstrap/buttons.less",
-
-				"less/bootstrap/component-animations.less",
-				"less/bootstrap/glyphicons.less",
-				"less/bootstrap/dropdowns.less",
-				"less/bootstrap/button-groups.less",
-				"less/bootstrap/input-groups.less",
-				"less/bootstrap/navs.less",
-				"less/bootstrap/navbar.less",
-				"less/bootstrap/breadcrumbs.less",
-				"less/bootstrap/pagination.less",
-				"less/bootstrap/pager.less",
-				"less/bootstrap/labels.less",
-				"less/bootstrap/badges.less",
-				"less/bootstrap/jumbotron.less",
-				"less/bootstrap/thumbnails.less",
-				"less/bootstrap/alerts.less",
-				"less/bootstrap/progress-bars.less",
-				"less/bootstrap/media.less",
-				"less/bootstrap/list-group.less",
-				"less/bootstrap/panels.less",
-				"less/bootstrap/wells.less",
-				"less/bootstrap/close.less",
-
-				"less/bootstrap/modals.less",
-				"less/bootstrap/tooltip.less",
-				"less/bootstrap/popovers.less",
-				"less/bootstrap/carousel.less",
-
-				"less/bootstrap/utilities.less",
-				"less/bootstrap/responsive-utilities.less"
-
-			],
-            "lessVariables": "less/bootstrap/variables.less"
+            "less": [],
+            "lessVariables": []
         }
     ]
 }
