@@ -26,6 +26,17 @@
       if (data.themes) {
         for (var i in data.themes) {
 			var theme = data.themes[i];
+			//adding new properties
+			/*
+			,
+			"compiled" : true,
+            "lessVariables": "less/bootstrap/variables.less",
+			"compiledLessVariables": null,
+			"compiledCssMin": null
+			//*/
+			theme.compiled = false;
+			theme.compiledCssMin = null;
+			theme.compiledLessVariables = null;
 			THEMES[theme.name.toLowerCase()] = theme;
         }
       }
@@ -268,12 +279,12 @@ function updateLESSVariables(key, value){
 	
 }
 
-function collectLESSVariables(){
+function collectLESSVariables(theme){
 	//add default variables
 	var variables = [];//["@import 'less/bootstrap/variables.less'"];
-	var lessVariables = CURRENT_THEME.lessVariables;
-	var less = CURRENT_THEME.less;
-	if($isArray(lessVariables)){
+	var lessVariables = theme.lessVariables;
+	var less = theme.less;
+	if($.isArray(lessVariables)){
 		for(var i=0;i<lessVariables.length;i++){
 			variables.push("@import '"+lessVariables[i]+"'");
 		}
@@ -289,7 +300,7 @@ function collectLESSVariables(){
 			variables.push("@"+id+": "+$this.val()+"");
 		});
 	//add import sections
-	if($isArray(less)){
+	if($.isArray(less)){
 		for(var i=0;i<less.length;i++){
 			variables.push("@import '"+less[i]+"'");
 		}
@@ -353,7 +364,7 @@ function compileCSS(){
 	var startTime, endTime;
     startTime = endTime = new(Date);
 	var css = null;
-	var lessInput = collectLESSVariables();
+	var lessInput = collectLESSVariables(CURRENT_THEME);
 	var parser = new(less.Parser);
 
 	parser.parse(lessInput, function (err, tree) {
@@ -364,7 +375,8 @@ function compileCSS(){
 		try{
 		  css = {
 			'bootstrap.css':cw + tree.toCSS(),
-			'bootstrap.min.css':cw + tree.toCSS({ compress: true })
+			'bootstrap.min.css':cw + tree.toCSS({ compress: true }),
+			'variables': lessInput
 		  };
 		} catch(e){
 		  console.error(e);
@@ -377,7 +389,13 @@ function compileCSS(){
 
 function updateCompiledCSS(){
 	COMPILED_LESS_CSS = compileCSS();
+
 	if(COMPILED_LESS_CSS != null){
+		var theme= THEMES['compiled'];
+		theme.compiled = true;
+		theme.compiledLessVariables = COMPILED_LESS_CSS.variables; 
+		theme.compiledCssMin = COMPILED_LESS_CSS['bootstrap.min.css'];
+		         
 		//$("#theme-selector").trigger("change","compiled");
 		//disable default CSS
 		//activate alternate CSS
@@ -460,6 +478,8 @@ function initPreviewToggle(){
 		$this.html("<i class='icon-spinner icon-spin'></i>Compile");
 		updateCompiledCSS();
 		$this.html("<i class='icon-gear'></i>Compile");
+		$("#theme-selector").val("compiled").trigger("change");
+		//$("#theme-selector").val("compiled");
 	});
 	
 	//init PreviewToggle
@@ -468,7 +488,7 @@ function initPreviewToggle(){
 		evt.preventDefault();
 		var $this = $(this);
 		var $prev = $this.find("i");
-		if($this.hasClass("edit-view")){
+		if($this.hasClass("edit-view")){//setting Preview mode
 			$this.attr("title","Click to Edit Variables");
 			$this.html("<i class='icon-spinner icon-spin'></i>Edit");
 			
@@ -476,10 +496,11 @@ function initPreviewToggle(){
 			$(".edit-view").hide();
 			$("#variables").removeClass("col-lg-9 col-lg-offset-3").addClass("col-lg-12");
 			$("#colortab").removeClass("hidden-xs hidden-sm affix");
-			updateCompiledCSS();
+			//updateCompiledCSS();
 			$this.html("<i class='icon-edit'></i>Edit");
+			$("#content").removeClass("theme-edit");
 			
-		}else{
+		}else{//setting edit mode
 			$this.attr("title","Click to Compile and Preview stylesheet");
 			$this.html("<i class='icon-spinner icon-spin'></i>Preview");
 			
@@ -488,6 +509,8 @@ function initPreviewToggle(){
 			$("#variables").removeClass("col-lg-12").addClass("col-lg-9 col-lg-offset-3");
 			$("#colortab").addClass("hidden-xs hidden-sm affix");
 			$this.html("<i class='icon-eye-open'></i>Preview");
+			//use theme edit to keep a consistent edit UI
+			$("#content").addClass("theme-edit");
 		}
 		
 	});
@@ -585,6 +608,7 @@ $("input:text.form-control")
     })
 	.droppable({
         drop: function( event, ui ) {
+		  event.stopPropagation();
           var newVal = ui.draggable.css('background-color');
 		  var colorHex = rgb2hex(newVal);
 		  var $this = $(this);
@@ -602,9 +626,9 @@ $("input:text.form-control")
 			//*/
 
 			$this.trigger("colorpickersliders.updateColor",newVal);
-			//update variables
-			var key = $this.attr("data-var");
-			updateLESSVariables(key, colorHex);
+			//update variables duplicate
+			//var key = $this.attr("data-var");
+			//updateLESSVariables(key, colorHex);
 						
         }
 		
@@ -625,7 +649,7 @@ function tooltipInit(){
 }
 
 
-function initDownlaodButton(){
+function initDownloadButton(){
   var $downloadBtn = $('#btn-download');
 
   $downloadBtn.on('click', function (e) {
@@ -640,7 +664,7 @@ function initDownlaodButton(){
 }
 $(function() {
 
-	initDownlaodButton();
+	initDownloadButton();
 
 	initPreviewToggle();
 
@@ -655,7 +679,7 @@ $(function() {
 	loadThemes("less/bootswatch.json");
 	CURRENT_THEME = THEMES['default'];
 	//loadThemes("http://api.bootswatch.com/3/");
-	$("#loading").remove();
+	$("#loading").hide();
 	$("#content").css("visibility","visible");
 });
 

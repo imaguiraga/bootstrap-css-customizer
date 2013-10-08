@@ -1,21 +1,37 @@
   function loadThemeVariables(theme) {
 	
     var variables = {};
-	var urls = theme.lessVariables;
-	if(!$.isArray(theme.lessVariables)){
-		urls = [urls];
-	}
-//loop through all the links
-	for(var i in urls){
-		var url = urls[i];
-		loadLESSVariables(url,variables);
+	if(theme.compiled){
+	//load from theme.compiledLessVariables less content
+		var pattern =/([^@]+):([^;]+)/gm;
+		var result = theme.compiledLessVariables.match(pattern);
+		for( var j in result){
+			var values = result[j].toString().split(":");
+			var key = values[0].trim();
+			var value = values[1].replace(/\/\/.+/gm,"").trim();
+			
+			if(typeof variables === "object"){
+				console.log(j+" - "+key+" = "+value);
+				variables[key] = value;
+			}
+		}
+	}else{
+		var urls = theme.lessVariables;
+		if(!$.isArray(theme.lessVariables)){
+			urls = [urls];
+		}
+	//loop through all the links
+		for(var i in urls){
+			var url = urls[i];
+			loadLESSVariables(url,variables);
+		}
 	}
 	return variables;
   }
  
 function loadLESSVariables(url,variables){
 	var pattern =/([^@]+):([^;]+)/gm;
-	pattern =/([^@]+):([^;(\/\/)]+)/gm;
+	pattern =/([^@]+):([^;]+)/gm;
 	
 	//var deferredReady = $.Deferred();
 	$.ajax({
@@ -31,7 +47,7 @@ function loadLESSVariables(url,variables){
 			for( var j in result){
 				var values = result[j].toString().split(":");
 				var key = values[0].trim();
-				var value = values[1].trim();
+				var value = values[1].replace(/\/\/.+/gm,"").trim();
 				
 				if(typeof variables === "object"){
 					console.log(j+" - "+key+" = "+value);
@@ -116,21 +132,28 @@ function switch_style ( css_title )
 
 //update theme when selection changes
 $("#theme-selector").change(function(evt){ 
+	evt.stopPropagation();
   var selection = $(this).val();
   console.log(selection);
   var $link = document.getElementById("bootstrap:css");
   var $compiled = $(document.getElementById("compiled:css"));
 	
+	$("#loading").show();
+	$("#content").css("visibility","hidden");	
   CURRENT_THEME = THEMES[selection];
-  if( selection === "compiled" && COMPILED_LESS_CSS != null){		
-	$compiled.append(COMPILED_LESS_CSS['bootstrap.min.css']);
+ // if( selection === "compiled" && COMPILED_LESS_CSS != null){	
+ if( CURRENT_THEME != null && CURRENT_THEME.compiled == true){		  
+	$compiled.append(CURRENT_THEME.compiledCssMin);
 	$link.disabled = true;
 	
   }else{
 	$link.disabled = false;
 	$link.href = CURRENT_THEME.cssMin;
-	populateLESSVariables(CURRENT_THEME);
 	$compiled.empty();
+	
   }
+  populateLESSVariables(CURRENT_THEME);
+  $("#loading").hide();
+  $("#content").css("visibility","visible");	
 });
 //*/
