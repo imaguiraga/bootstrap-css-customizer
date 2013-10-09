@@ -82,20 +82,23 @@
 			"compiledCssMin": null
 			//*/
 			//urls are overrides
-			if($.isArray(theme.lessVariables)){
-				theme.lessVariables = COMMON_LESS.lessVariables.concat(theme.lessVariables);
-			}else{
-				theme.lessVariables = COMMON_LESS.lessVariables.concat([theme.lessVariables]);
+			//theme not already initialized
+			if(!THEMES[theme.name.toLowerCase()]){
+				if($.isArray(theme.lessVariables)){
+					theme.lessVariables = COMMON_LESS.lessVariables.concat(theme.lessVariables);
+				}else{
+					theme.lessVariables = COMMON_LESS.lessVariables.concat([theme.lessVariables]);
+				}
+				if($.isArray(theme.less)){
+					theme.less = theme.less.concat(COMMON_LESS.less);
+				}else{
+					theme.less = [theme.less].concat(COMMON_LESS.less);
+				}
+				theme.compiled = false;
+				theme.compiledCssMin = null;
+				theme.compiledLessVariables = null;
+				THEMES[theme.name.toLowerCase()] = theme;
 			}
-			if($.isArray(theme.less)){
-				theme.less = theme.less.concat(COMMON_LESS.less);
-			}else{
-				theme.less = [theme.less].concat(COMMON_LESS.less);
-			}
-			theme.compiled = false;
-			theme.compiledCssMin = null;
-			theme.compiledLessVariables = null;
-			THEMES[theme.name.toLowerCase()] = theme;
         }
       }
     })
@@ -458,6 +461,8 @@ function updateCompiledCSS(){
 		theme.compiledCssMin = COMPILED_LESS_CSS['bootstrap.min.css'];
 
 		//disable default CSS
+		//store in localstorage
+		window.localStorage.setItem('compiled', JSON.stringify(theme));
 		//activate alternate CSS
 	}	
 }
@@ -723,7 +728,12 @@ function initDownloadButton(){
   });
 }
 $(function() {
-
+	//load stored compiled theme from cache
+	if (window.localStorage.getItem('compiled')) {
+		var theme = JSON.parse(window.localStorage.getItem('compiled'))
+		THEMES['compiled'] = theme;
+	}
+	
 	initDownloadButton();
 
 	initPreviewToggle();
@@ -738,6 +748,7 @@ $(function() {
 	loadThemes("less/bootstrap-default.json");
 	loadThemes("less/bootswatch.json");
 	CURRENT_THEME = THEMES['default'];
+	
 	//loadThemes("http://api.bootswatch.com/3/");
 	$("#loading").hide();
 	$("#content").css("visibility","visible");
