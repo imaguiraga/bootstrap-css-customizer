@@ -118,7 +118,7 @@ var DEBUG = false;
 //update less variables
 
 
-function addLESSVariablesRef(key,value){
+function updateLESSVariablesRef(key,value,$input){
 	if( typeof key === "undefined"){
 		return;
 	}
@@ -146,7 +146,28 @@ function addLESSVariablesRef(key,value){
 				LESS_VARIABLES_REF[reference] = [];	
 			}
 			
+			var ref = $input.data("ref");
+			//remove old reference
+			if((typeof ref !== "undefined") && (ref !== reference)){
+				var arr = LESS_VARIABLES_REF[ref];
+				if($.isArray(arr)){
+					var len = arr.length;
+					//find position
+					for(var i = 0;i < len; i++){
+						if(arr[i].key === key){						
+							arr.splice(i,1);
+							if(DEBUG){
+								console.log("ref from {"+ref+ "} -> {"+reference+"}");
+							}
+							break;
+						}
+					}
+
+				}
+			}
+			//add new reference
 			LESS_VARIABLES_REF[reference].push({'key' : key, 'value' :value});
+			$input.data("ref",reference);
 		}
 	}
 
@@ -200,7 +221,7 @@ function updateLESSVariables(key, value){
 				 								
 			}else{
 				//generate CSS and parse it for content
-				var $css = "@"+current.key+":"+current.value+"; #"+target.key+" {background-color:"+target.value+";color:"+fontColor+";}";
+				var $css = "@"+current.key+":"+current.value+"; #"+target.key+" {background-color:"+$target.val()/*target.value*/+";color:"+fontColor+";}";
 				parser.parse($css, function (err, tree) {
 					var startTime1 = new(Date);
 					if (err) { return console.error(err) ;}
@@ -528,7 +549,7 @@ $("input:text.form-control")
 		LESS_VARIABLES [key] = {'default':value,'value':value };
 		//contains @
 		if(value && value.indexOf("@") >= 0){
-			addLESSVariablesRef(key,value);
+			updateLESSVariablesRef(key,value,$this);
 		}
 		
 	})
@@ -718,10 +739,12 @@ function populateLESSVariables(theme){
 		var $this = $(elt);
 		var id = $this.attr("id");
 		if(id && variables[id]){
+			updateLESSVariablesRef(id,variables[id],$this);
 			$this.val(variables[id]);
+			
 		}
-	  //}).each(function(i,elt){
-			//var $this = $(elt);
+	// }).each(function(i,elt){
+	//		var $this = $(elt);
 			if($this.hasClass("color-input")){
 				var newVal = $this.val();
 				var colorHex = newVal;
