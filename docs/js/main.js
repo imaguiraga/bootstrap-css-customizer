@@ -1,54 +1,62 @@
  var cw = '/*!\n * Bootstrap v3.0.0\n *\n * Copyright 2013 Twitter, Inc\n * Licensed under the Apache License v2.0\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Designed and built with all the love in the world @twitter by @mdo and @fat.\n */\n\n';
 
- var COMMON_LESS = {"less": [
-				"less/bootstrap/mixins.less",
 
-				"less/bootstrap/normalize.less",
-				"less/bootstrap/print.less",
+var THEMES = {};
+var CURRENT_THEME = null;
+var COMPILED_LESS_CSS = null;
+var LESS_VARIABLES = {};
+var LESS_VARIABLES_REF = {};
+var parser = new less.Parser(new less.tree.parseEnv(less));
+var DEBUG = false;
 
-				"less/bootstrap/scaffolding.less",
-				"less/bootstrap/type.less",
-				"less/bootstrap/code.less",
-				"less/bootstrap/grid.less",
-				"less/bootstrap/tables.less",
-				"less/bootstrap/forms.less",
-				"less/bootstrap/buttons.less",
+ var COMMON_LESS = {"less": 
+	[
+		"less/bootstrap/mixins.less",
 
-				"less/bootstrap/component-animations.less",
-				"less/bootstrap/glyphicons.less",
-				"less/bootstrap/dropdowns.less",
-				"less/bootstrap/button-groups.less",
-				"less/bootstrap/input-groups.less",
-				"less/bootstrap/navs.less",
-				"less/bootstrap/navbar.less",
-				"less/bootstrap/breadcrumbs.less",
-				"less/bootstrap/pagination.less",
-				"less/bootstrap/pager.less",
-				"less/bootstrap/labels.less",
-				"less/bootstrap/badges.less",
-				"less/bootstrap/jumbotron.less",
-				"less/bootstrap/thumbnails.less",
-				"less/bootstrap/alerts.less",
-				"less/bootstrap/progress-bars.less",
-				"less/bootstrap/media.less",
-				"less/bootstrap/list-group.less",
-				"less/bootstrap/panels.less",
-				"less/bootstrap/wells.less",
-				"less/bootstrap/close.less",
+		"less/bootstrap/normalize.less",
+		"less/bootstrap/print.less",
 
-				"less/bootstrap/modals.less",
-				"less/bootstrap/tooltip.less",
-				"less/bootstrap/popovers.less",
-				"less/bootstrap/carousel.less",
+		"less/bootstrap/scaffolding.less",
+		"less/bootstrap/type.less",
+		"less/bootstrap/code.less",
+		"less/bootstrap/grid.less",
+		"less/bootstrap/tables.less",
+		"less/bootstrap/forms.less",
+		"less/bootstrap/buttons.less",
 
-				"less/bootstrap/utilities.less",
-				"less/bootstrap/responsive-utilities.less"
+		"less/bootstrap/component-animations.less",
+		"less/bootstrap/glyphicons.less",
+		"less/bootstrap/dropdowns.less",
+		"less/bootstrap/button-groups.less",
+		"less/bootstrap/input-groups.less",
+		"less/bootstrap/navs.less",
+		"less/bootstrap/navbar.less",
+		"less/bootstrap/breadcrumbs.less",
+		"less/bootstrap/pagination.less",
+		"less/bootstrap/pager.less",
+		"less/bootstrap/labels.less",
+		"less/bootstrap/badges.less",
+		"less/bootstrap/jumbotron.less",
+		"less/bootstrap/thumbnails.less",
+		"less/bootstrap/alerts.less",
+		"less/bootstrap/progress-bars.less",
+		"less/bootstrap/media.less",
+		"less/bootstrap/list-group.less",
+		"less/bootstrap/panels.less",
+		"less/bootstrap/wells.less",
+		"less/bootstrap/close.less",
 
-			],
-            "lessVariables": ["less/bootstrap/variables.less"]
-        };
- var THEMES = {};
- var CURRENT_THEME = null;
+		"less/bootstrap/modals.less",
+		"less/bootstrap/tooltip.less",
+		"less/bootstrap/popovers.less",
+		"less/bootstrap/carousel.less",
+
+		"less/bootstrap/utilities.less",
+		"less/bootstrap/responsive-utilities.less"
+
+	],
+	"lessVariables": ["less/bootstrap/variables.less"]
+};
  //load initial data
   function loadThemes(url) {
   
@@ -107,118 +115,8 @@
     })
   }
 
-
-/**
- * Converts an HSL color value to RGB. Conversion formula
- * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
- * Assumes h, s, and l are contained in the set [0, 1] and
- * returns r, g, and b in the set [0, 255].
- *
- * @param   Number  h       The hue
- * @param   Number  s       The saturation
- * @param   Number  l       The lightness
- * @return  Array           The RGB representation
- */
-function hslToRgb(h, s, l){
-    var r, g, b;
-
-    if(s == 0){
-        r = g = b = l; // achromatic
-    }else{
-        function hue2rgb(p, q, t){
-            if(t < 0) t += 1;
-            if(t > 1) t -= 1;
-            if(t < 1/6) return p + (q - p) * 6 * t;
-            if(t < 1/2) return q;
-            if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-            return p;
-        }
-
-        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-        var p = 2 * l - q;
-        r = hue2rgb(p, q, h + 1/3);
-        g = hue2rgb(p, q, h);
-        b = hue2rgb(p, q, h - 1/3);
-    }
-
-    return [r * 255, g * 255, b * 255];
-};
-
-/**
- * Converts an RGB color value to HSL. Conversion formula
- * adapted from http://en.wikipedia.org/wiki/HSL_color_space.
- * Assumes r, g, and b are contained in the set [0, 255] and
- * returns h, s, and l in the set [0, 1].
- *
- * @param   Number  r       The red color value
- * @param   Number  g       The green color value
- * @param   Number  b       The blue color value
- * @return  Array           The HSL representation
- */
-function rgbToHsl(r, g, b){
-    r /= 255, g /= 255, b /= 255;
-    var max = Math.max(r, g, b), min = Math.min(r, g, b);
-    var h, s, l = (max + min) / 2;
-
-    if(max == min){
-        h = s = 0; // achromatic
-    }else{
-        var d = max - min;
-        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-        switch(max){
-            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-            case g: h = (b - r) / d + 2; break;
-            case b: h = (r - g) / d + 4; break;
-        }
-        h /= 6;
-    }
-
-    return [h, s, l];
-}
-
-function ColorLuminance(hex, lum) {
-
-	// validate hex string
-	hex = String(hex).replace(/[^0-9a-f]/gi, '');
-	if (hex.length < 6) {
-		hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-	}
-	lum = lum || 0;
-
-	// convert to decimal and change luminosity
-	var rgb = "#", c, i;
-	for (i = 0; i < 3; i++) {
-		c = parseInt(hex.substr(i*2,2), 16);
-		c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-		rgb += ("00"+c).substr(c.length);
-	}
-
-	return rgb;
-}
-
-function hexToRgbString(hex) {
-   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-   var tmp = {
-       r: parseInt(result[1], 16),
-       g: parseInt(result[2], 16),
-       b: parseInt(result[3], 16)
-   };
-   return 'rgb('+tmp.r+','+tmp.g+','+tmp.b+')';
-}
-
-function rgb2hex(rgb) {
-	rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-	function hex(x) {
-		return ("0" + parseInt(x).toString(16)).slice(-2);
-	}
-	return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
-}
-
 //update less variables
-var COMPILED_LESS_CSS = null;
-var LESS_VARIABLES = {};
-var LESS_VARIABLES_REF = {};
-var parser = new less.Parser(new less.tree.parseEnv(less));
+
 
 function addLESSVariablesRef(key,value){
 	if( typeof key === "undefined"){
@@ -241,8 +139,9 @@ function addLESSVariablesRef(key,value){
 		var reference = result[0];
 		if( typeof reference === "string"){
 			reference = getVariableKey(reference.trim());
-
-			console.log("{"+key+ "} -> {"+reference+"}");
+			if(DEBUG){
+				console.log("{"+key+ "} -> {"+reference+"}");
+			}
 			if(typeof LESS_VARIABLES_REF[reference] === "undefined"){
 				LESS_VARIABLES_REF[reference] = [];	
 			}
@@ -254,6 +153,7 @@ function addLESSVariablesRef(key,value){
 }
 
 function updateLESSVariables(key, value){	
+	var startTime = new(Date);
     var variables = null;//variables that changed
 	if( typeof key !== "undefined"){
 		if(key.charAt(0) === "@" && value != null){	
@@ -262,8 +162,9 @@ function updateLESSVariables(key, value){
 		}
 		key = getVariableKey(key);
 		LESS_VARIABLES [key].value = value; 
-		
-		console.log("{"+key + "} = [ "+value+" ]");
+		if(DEBUG){
+			console.log("{"+key + "} = [ "+value+" ]");
+		}
 		
 	}else{
 		return;
@@ -279,7 +180,7 @@ function updateLESSVariables(key, value){
 		var ref = LESS_VARIABLES_REF[current.key];
 		var regex = /\{(.*)\}/;
 		regex =/background-color:(.*);color:(.*);?/;
-		
+		//console.log("1.-> updateLESSVariables "+ current.key+" - "+JSON.stringify(ref));
 		for(var i in ref){
 			var target = ref[i];
 			var depKey = target.key;
@@ -301,6 +202,7 @@ function updateLESSVariables(key, value){
 				//generate CSS and parse it for content
 				var $css = "@"+current.key+":"+current.value+"; #"+target.key+" {background-color:"+target.value+";color:"+fontColor+";}";
 				parser.parse($css, function (err, tree) {
+					var startTime1 = new(Date);
 					if (err) { return console.error(err) ;}
 					var rule = tree.toCSS({'compress':true}).match(regex);
 					if(rule.length == 3){
@@ -318,6 +220,7 @@ function updateLESSVariables(key, value){
 							"color": fontColor
 						});
 					}
+					//console.log("parseLESSVariables "+ id+" - "+ (new(Date) - startTime1) + "ms");
 				});//*/
 			}
 			
@@ -326,11 +229,14 @@ function updateLESSVariables(key, value){
 			if( (typeof deps) !== "undefined" && deps.length > 0){
 				//put newly computed value on the stack
 				stack.push({'key':depKey,'value':backgroundColor});
-				console.log("next = "+depKey);
+				if(DEBUG){
+					console.log("next = "+depKey);
+				}
 			}
 		
 		}
 	}
+	//console.log("2.-> updateLESSVariables "+ key+" - t="+ (new(Date) - startTime) + "ms");
 	//refresh less variables
 	if(variables != null){
 		if((typeof less) !== "undefined"){
@@ -616,8 +522,9 @@ $("input:text.form-control")
 
 		var value = $this.val().length > 0 ? $this.val():$this.attr("placeholder");
 		$this.val(value);
-
-		console.log(i+" - {"+key + "} = [ "+value+" ]");
+		if(DEBUG){
+			console.log(i+" - {"+key + "} = [ "+value+" ]");
+		}
 		LESS_VARIABLES [key] = {'default':value,'value':value };
 		//contains @
 		if(value && value.indexOf("@") >= 0){
@@ -636,68 +543,69 @@ $("input:text.form-control")
 			"data-color-format" : "hex",			
 		});
 		$this.css('background-color',value);
-
-	})	
-	.ColorPickerSliders({
-        order: {
-            preview:1,
-            hsl: 2,
-            opacity:3
-        } ,
-        onchange: function(container, color) {
-			var $this = $(this);
-          //update scope variables double bindings
-          //tinycolor object is in color.tiny
-           var colorHex = color.tiny.toHexString();
-           var colorRgb = color.tiny.toRgbString();
-
-           var colorName = $.xcolor.nearestname(colorHex);
-
-           //dynamically update fontcolor
-            var fontColor = "black";
-
-			if (color.cielch.l < 60) {
-                fontColor = "white";
-            }
-            else {
-                fontColor = "black";
-            }
-			
-			var $input = $(this.connectedinput);
-			$this.css("color", fontColor);
-			var key = $input.attr("data-var");
-			updateLESSVariables(key, colorHex);
 	
-        }
-		
-    })
-	.droppable({
-        drop: function( event, ui ) {
-		  event.stopPropagation();
-          var newVal = ui.draggable.css('background-color');
-		  var colorHex = rgb2hex(newVal);
-		  var $this = $(this);
-		  $this.val(colorHex);
- 
-		   var fontColor = "white";
-		   
-           if($.xcolor.readable("white",newVal)){
-                fontColor = "white";
-            } else {
-                fontColor = "black";
-            }
-			
-			$this.css( {'background-color' :colorHex, 'color' : fontColor} );
-			//*/
+		$this.ColorPickerSliders({
+			order: {
+				preview:1,
+				hsl: 2,
+				opacity:3
+			} ,
+			onchange: function(container, color) {
+			  
+				var $this = $(this);
+			  //update scope variables double bindings
+			  //tinycolor object is in color.tiny
+			   var colorHex = color.tiny.toHexString();
+			   var colorRgb = color.tiny.toRgbString();
 
-			$this.trigger("colorpickersliders.updateColor",newVal);
-			//update variables duplicate
-			//var key = $this.attr("data-var");
-			//updateLESSVariables(key, colorHex);
-						
-        }
+			   var colorName = $.xcolor.nearestname(colorHex);
+
+			   //dynamically update fontcolor
+				var fontColor = "black";
+
+				if (color.cielch.l < 60) {
+					fontColor = "white";
+				}
+				else {
+					fontColor = "black";
+				}
+				
+				var $input = $(this.connectedinput);
+				$this.css("color", fontColor);
+				var key = $input.attr("data-var");
+				if(DEBUG){
+					console.log("onchange - updateLESSVariables "+ key);
+				}
+				updateLESSVariables(key, colorHex);
 		
-    });
+			}
+			
+		})
+		.droppable({
+			drop: function( event, ui ) {
+			  event.stopPropagation();
+			  var newVal = ui.draggable.css('background-color');
+			  var colorHex = rgb2hex(newVal);
+			  var $this = $(this);
+			  $this.val(colorHex);
+	 
+			   var fontColor = "white";
+			   
+			   if($.xcolor.readable("white",newVal)){
+					fontColor = "white";
+				} else {
+					fontColor = "black";
+				}
+				
+				$this.css( {'background-color' :colorHex, 'color' : fontColor} );
+				//*/
+
+				$this.trigger("colorpickersliders.updateColor",newVal);
+
+			}
+			
+		});
+	});	
 
 }
 
@@ -727,6 +635,166 @@ function initDownloadButton(){
 	$downloadBtn.html("<i class='icon-download-alt'></i>Download");
   });
 }
+
+  function loadThemeVariables(theme) {
+	var startTime = new(Date) ;
+    var variables = {};
+	if(theme.compiled){
+	//load from theme.compiledLessVariables less content
+		var pattern =/([^@]+):([^;]+)/gm;
+		var result = theme.compiledLessVariables.match(pattern);
+		for( var j in result){
+			var values = result[j].toString().split(":");
+			var key = values[0].trim();
+			var value = values[1].replace(/\/\/.+/gm,"").trim();
+			
+			if(typeof variables === "object"){
+				if(DEBUG){
+					console.log(j+" - "+key+" = "+value);
+				}
+				variables[key] = value;
+			}
+		}
+	}else{
+		var urls = theme.lessVariables;
+		if(!$.isArray(theme.lessVariables)){
+			urls = [urls];
+		}
+	//loop through all the links
+		for(var i in urls){
+			var url = urls[i];
+			loadLESSVariables(url,variables);
+		}
+		
+	}
+	console.log("loadThemeVariables "+ (new(Date) - startTime) + "ms");
+	return variables;
+  }
+ 
+function loadLESSVariables(url,variables){
+	var pattern =/([^@]+):([^;]+)/gm;
+	pattern =/([^@]+):([^;]+)/gm;
+	
+	//var deferredReady = $.Deferred();
+	$.ajax({
+		  cache: true,
+		  url: url,
+		  async : false,
+		  type: 'GET',
+		  dataType: 'text'
+		})
+		.done(function(data) {
+		//convert @var :value; to "@var" : "value";
+			var startTime = new(Date);
+			var result = data.match(pattern);
+			for( var j in result){
+				var values = result[j].toString().split(":");
+				var key = values[0].trim();
+				var value = values[1].replace(/\/\/.+/gm,"").trim();
+				
+				if(typeof variables === "object"){
+					if(DEBUG){
+						console.log(j+" - "+key+" = "+value);
+					}
+					variables[key] = value;
+				}
+			}
+			//deferredReady.resolve(variables);
+			console.log("loadLESSVariables "+ (new(Date) - startTime) + "ms");
+		})
+		.fail(function(jqXHR, textStatus) {
+		  console.error(textStatus);
+		});
+	//return deferredReady.promise();
+} 
+
+var $dataVar = $("input:text.form-control").filter("[data-var]");
+function populateLESSVariables(theme){
+  var variables = loadThemeVariables(theme);
+  var startTime = new(Date);
+/*$("input:text.form-control")
+	.filter("[data-var]")//*/
+	$dataVar.each(function(i,elt){
+		var $this = $(elt);
+		var id = $this.attr("id");
+		if(id && variables[id]){
+			$this.val(variables[id]);
+		}
+	  //}).each(function(i,elt){
+			//var $this = $(elt);
+			if($this.hasClass("color-input")){
+				var newVal = $this.val();
+				var colorHex = newVal;
+				if(newVal == null){
+					return;
+				}
+				try{
+					if(newVal.charAt(0) === '#'){
+					
+						var fontColor = "white";
+				   
+						if($.xcolor.readable("white",newVal)){
+							fontColor = "white";
+						} else {
+							fontColor = "black";
+						}
+						
+						$this.css( {'background-color' :colorHex, 'color' : fontColor} );
+						//*/
+
+						$this.trigger("colorpickersliders.updateColor",newVal);
+						//update variables if not color-input since onchange colorpickerwill do so
+						//var key = $this.attr("data-var");
+						//updateLESSVariables(key, colorHex);
+					
+					}else{
+						if(DEBUG){
+							console.log($this.attr('id')+" = "+newVal);
+						}
+					}
+					if(newVal.charAt(0) !== '#'){
+						//colorHex = rgb2hex(newVal);
+					}
+				}catch(err){
+					console.error($this.attr('id')+" = "+newVal+" - "+err.message);
+				}
+				
+			}
+	  });
+	  
+	  console.log("populateLESSVariables "+ (new(Date) - startTime) + "ms");
+}
+
+//update theme when selection changes
+$("#theme-selector").change(function(evt){ 
+	evt.stopPropagation();
+	var selection = $(this).val();
+	if(DEBUG){
+		console.log(selection);
+	}
+	var $link = document.getElementById("bootstrap:css");
+	var $compiled = $(document.getElementById("compiled:css"));
+	
+	//$("#loading").show();
+	$("#content").css("visibility","hidden");	
+	CURRENT_THEME = THEMES[selection];
+
+	if( CURRENT_THEME != null && CURRENT_THEME.compiled == true){		  
+		$compiled.append(CURRENT_THEME.compiledCssMin);
+		$link.disabled = true;
+		
+	}else{
+		$link.href = CURRENT_THEME.cssMin;
+		$compiled.empty();
+		$link.disabled = false;
+
+	}
+	populateLESSVariables(CURRENT_THEME);
+	//$("#loading").hide();
+	$("#content").css("visibility","visible");	
+});
+//*/
+
 $(function() {
 	//load stored compiled theme from cache
 	if (window.localStorage.getItem('compiled')) {
@@ -753,190 +821,3 @@ $(function() {
 	$("#loading").hide();
 	$("#content").css("visibility","visible");
 });
-
-/**
-*
-*  Javascript color conversion
-*  http://www.webtoolkit.info/
-*
-**/
- 
-function HSV(h, s, v) {
-	if (h <= 0) { h = 0; }
-	if (s <= 0) { s = 0; }
-	if (v <= 0) { v = 0; }
- 
-	if (h > 360) { h = 360; }
-	if (s > 100) { s = 100; }
-	if (v > 100) { v = 100; }
- 
-	this.h = h;
-	this.s = s;
-	this.v = v;
-}
- 
-function RGB(r, g, b) {
-	if (r <= 0) { r = 0; }
-	if (g <= 0) { g = 0; }
-	if (b <= 0) { b = 0; }
- 
-	if (r > 255) { r = 255; }
-	if (g > 255) { g = 255; }
-	if (b > 255) { b = 255; }
- 
-	this.r = r;
-	this.g = g;
-	this.b = b;
-}
- 
-function CMYK(c, m, y, k) {
-	if (c <= 0) { c = 0; }
-	if (m <= 0) { m = 0; }
-	if (y <= 0) { y = 0; }
-	if (k <= 0) { k = 0; }
- 
-	if (c > 100) { c = 100; }
-	if (m > 100) { m = 100; }
-	if (y > 100) { y = 100; }
-	if (k > 100) { k = 100; }
- 
-	this.c = c;
-	this.m = m;
-	this.y = y;
-	this.k = k;
-}
- 
-var ColorConverter = {
- 
-	_RGBtoHSV : function  (RGB) {
-		var result = new HSV(0, 0, 0);
- 
-		r = RGB.r / 255;
-		g = RGB.g / 255;
-		b = RGB.b / 255;
- 
-		var minVal = Math.min(r, g, b);
-		var maxVal = Math.max(r, g, b);
-		var delta = maxVal - minVal;
- 
-		result.v = maxVal;
- 
-		if (delta == 0) {
-			result.h = 0;
-			result.s = 0;
-		} else {
-			result.s = delta / maxVal;
-			var del_R = (((maxVal - r) / 6) + (delta / 2)) / delta;
-			var del_G = (((maxVal - g) / 6) + (delta / 2)) / delta;
-			var del_B = (((maxVal - b) / 6) + (delta / 2)) / delta;
- 
-			if (r == maxVal) { result.h = del_B - del_G; }
-			else if (g == maxVal) { result.h = (1 / 3) + del_R - del_B; }
-			else if (b == maxVal) { result.h = (2 / 3) + del_G - del_R; }
- 
-			if (result.h < 0) { result.h += 1; }
-			if (result.h > 1) { result.h -= 1; }
-		}
- 
-		result.h = Math.round(result.h * 360);
-		result.s = Math.round(result.s * 100);
-		result.v = Math.round(result.v * 100);
- 
-		return result;
-	},
- 
-	_HSVtoRGB : function  (HSV) {
-		var result = new RGB(0, 0, 0);
- 
-		var h = HSV.h / 360;
-		var s = HSV.s / 100;
-		var v = HSV.v / 100;
- 
-		if (s == 0) {
-			result.r = v * 255;
-			result.g = v * 255;
-			result.v = v * 255;
-		} else {
-			var_h = h * 6;
-			var_i = Math.floor(var_h);
-			var_1 = v * (1 - s);
-			var_2 = v * (1 - s * (var_h - var_i));
-			var_3 = v * (1 - s * (1 - (var_h - var_i)));
- 
-			if (var_i == 0) {var_r = v; var_g = var_3; var_b = var_1}
-			else if (var_i == 1) {var_r = var_2; var_g = v; var_b = var_1}
-			else if (var_i == 2) {var_r = var_1; var_g = v; var_b = var_3}
-			else if (var_i == 3) {var_r = var_1; var_g = var_2; var_b = v}
-			else if (var_i == 4) {var_r = var_3; var_g = var_1; var_b = v}
-			else {var_r = v; var_g = var_1; var_b = var_2};
- 
-			result.r = var_r * 255;
-			result.g = var_g * 255;
-			result.b = var_b * 255;
- 
-			result.r = Math.round(result.r);
-			result.g = Math.round(result.g);
-			result.b = Math.round(result.b);
-		}
- 
-		return result;
-	},
- 
-	_CMYKtoRGB : function (CMYK){
-		var result = new RGB(0, 0, 0);
- 
-		c = CMYK.c / 100;
-		m = CMYK.m / 100;
-		y = CMYK.y / 100;
-		k = CMYK.k / 100;
- 
-		result.r = 1 - Math.min( 1, c * ( 1 - k ) + k );
-		result.g = 1 - Math.min( 1, m * ( 1 - k ) + k );
-		result.b = 1 - Math.min( 1, y * ( 1 - k ) + k );
- 
-		result.r = Math.round( result.r * 255 );
-		result.g = Math.round( result.g * 255 );
-		result.b = Math.round( result.b * 255 );
- 
-		return result;
-	},
- 
-	_RGBtoCMYK : function (RGB){
-		var result = new CMYK(0, 0, 0, 0);
- 
-		r = RGB.r / 255;
-		g = RGB.g / 255;
-		b = RGB.b / 255;
- 
-		result.k = Math.min( 1 - r, 1 - g, 1 - b );
-		result.c = ( 1 - r - result.k ) / ( 1 - result.k );
-		result.m = ( 1 - g - result.k ) / ( 1 - result.k );
-		result.y = ( 1 - b - result.k ) / ( 1 - result.k );
- 
-		result.c = Math.round( result.c * 100 );
-		result.m = Math.round( result.m * 100 );
-		result.y = Math.round( result.y * 100 );
-		result.k = Math.round( result.k * 100 );
- 
-		return result;
-	},
- 
-	toRGB : function (o) {
-		if (o instanceof RGB) { return o; }
-		if (o instanceof HSV) {	return this._HSVtoRGB(o); }
-		if (o instanceof CMYK) { return this._CMYKtoRGB(o); }
-	},
- 
-	toHSV : function (o) {
-		if (o instanceof HSV) { return o; }
-		if (o instanceof RGB) { return this._RGBtoHSV(o); }
-		if (o instanceof CMYK) { return this._RGBtoHSV(this._CMYKtoRGB(o)); }
-	},
- 
-	toCMYK : function (o) {
-		if (o instanceof CMYK) { return o; }
-		if (o instanceof RGB) { return this._RGBtoCMYK(o); }
-		if (o instanceof HSV) { return this._RGBtoCMYK(this._HSVtoRGB(o)); }
-	}
- 
-}

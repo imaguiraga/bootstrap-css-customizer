@@ -4,8 +4,9 @@ window.onload = function () { // wait for load in a dumb way because B-0
   function getCustomizerData() {
     var vars = {};
 
+	//creates array with values of inputs
     var data = {
-      vars: vars,
+      vars: vars,	  
       css: $('#less-section input:checked').map(function () { return this.value }).toArray(),
       js:  $('#plugin-section input:checked').map(function () { return this.value }).toArray()
     };
@@ -30,6 +31,7 @@ window.onload = function () { // wait for load in a dumb way because B-0
         })
       }
       if (data.css) {
+	  //set checked property to is value is in Array
         $('#less-section input').each(function () {
           $(this).prop('checked', ~$.inArray(this.value, data.css));
         })
