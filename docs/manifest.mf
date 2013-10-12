@@ -1,6 +1,1 @@
-CACHE MANIFEST
-# 2013-10-11:v1
 
-# Explicitly cached entries
-index.html
-css/style.css

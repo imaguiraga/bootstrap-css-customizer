@@ -421,6 +421,7 @@ function initDraggable(){
 			$this.addClass("color-box-small");
 			$this.removeClass("color-box-full");
 		});
+		
 	});
 
 
