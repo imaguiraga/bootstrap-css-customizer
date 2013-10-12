@@ -190,18 +190,21 @@ function updateLESSVariables(key, value){
 	}else{
 		return;
 	}
-	
+	if(DEBUG){
+	console.log("start {"+key + "} = [ "+value+" ] - "+ (new(Date) - startTime) + "ms");
+	}
     var stack = [{'key':key,'value':value}];
-		
+
     while(stack.length > 0){
 		var current = stack.shift();
 		//find references and update their values 
 		var id = "#"+current.key;
 		var $source = $(id);
 		var ref = LESS_VARIABLES_REF[current.key];
-		var regex = /\{(.*)\}/;
-		regex =/background-color:(.*);color:(.*);?/;
+		var regex = /background-color:(.*);color:(.*);?/;
+		
 		//console.log("1.-> updateLESSVariables "+ current.key+" - "+JSON.stringify(ref));
+		var startTime2 = new(Date);
 		for(var i in ref){
 			var target = ref[i];
 			var depKey = target.key;
@@ -214,11 +217,12 @@ function updateLESSVariables(key, value){
 			//no need to compute the value for direct assignment
 			//@link-color
 			if(target.value.charAt(0) === "@"){
+			var startTime1 = new(Date);
 				$target.css({
 					"background-color": backgroundColor,
 					"color": fontColor
 				});
-				 								
+				if(DEBUG){console.log("@1. -> parseLESSVariables "+ id+" - "+ (new(Date) - startTime1) + "ms"); }								
 			}else{
 				//generate CSS and parse it for content
 				var $css = "@"+current.key+":"+current.value+"; #"+target.key+" {background-color:"+target.value+";color:"+fontColor+";}";//$target.val()/*
@@ -235,13 +239,14 @@ function updateLESSVariables(key, value){
 						} else {
 							fontColor = "black";
 						}
-								
+						if(DEBUG){console.log("1.0 -> parseLESSVariables "+ id+" - "+ (new(Date) - startTime1) + "ms");}		
 						$target.css({
 							"background-color": backgroundColor,
 							"color": fontColor
 						});
+						
 					}
-					//console.log("parseLESSVariables "+ id+" - "+ (new(Date) - startTime1) + "ms");
+					if(DEBUG){console.log("1. -> parseLESSVariables "+ id+" - "+ (new(Date) - startTime1) + "ms");}
 				});//*/
 			}
 			
@@ -256,8 +261,9 @@ function updateLESSVariables(key, value){
 			}
 		
 		}
+		if(DEBUG){console.log("end-1. -> updateLESSVariables "+ key+" - t="+ (new(Date) - startTime2) + "ms");}
 	}
-	//console.log("2.-> updateLESSVariables "+ key+" - t="+ (new(Date) - startTime) + "ms");
+	if(DEBUG){console.log("end-2. -> updateLESSVariables "+ key+" - t="+ (new(Date) - startTime) + "ms");}
 	//refresh less variables
 	if(variables != null){
 		if((typeof less) !== "undefined"){
@@ -482,25 +488,25 @@ function initPreviewToggle(){
 		var $prev = $this.find("i");
 		if($this.hasClass("edit-view")){//setting Preview mode
 			$this.attr("title","Click to Edit Variables");
-			$this.html("<i class='icon-spinner icon-spin'></i>Edit");
+			$this.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Edit");
 			
 			$this.removeClass("edit-view");
 			$(".edit-view").hide();
 			$("#variables").removeClass("col-lg-9 col-lg-offset-3").addClass("col-lg-12");
 			$("#colortab").removeClass("hidden-xs hidden-sm affix");
 			//updateCompiledCSS();
-			$this.html("<i class='icon-edit'></i>Edit");
+			$this.html("<i class='icon-fixed-width icon-edit'></i>Edit");
 			$("#content").removeClass("theme-edit");
 			
 		}else{//setting edit mode
 			$this.attr("title","Click to Compile and Preview stylesheet");
-			$this.html("<i class='icon-spinner icon-spin'></i>Preview");
+			$this.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Preview");
 			
 			$(".edit-view").show();
 			$this.addClass("edit-view");
 			$("#variables").removeClass("col-lg-12").addClass("col-lg-9 col-lg-offset-3");
 			$("#colortab").addClass("hidden-xs hidden-sm affix");
-			$this.html("<i class='icon-eye-open'></i>Preview");
+			$this.html("<i class='icon-fixed-width icon-eye-open'></i>Preview");
 			//use theme edit to keep a consistent edit UI
 			$("#content").addClass("theme-edit");
 		}
@@ -570,15 +576,20 @@ $lessVariablesInput.each( function(i,elt){
 				opacity:3
 			} ,
 			onchange: function(container, color) {
-			  
+			   var startTime1 = new(Date);
 				var $this = $(this);
 			  //update scope variables double bindings
 			  //tinycolor object is in color.tiny
 			   var colorHex = color.tiny.toHexString();
 			   var colorRgb = color.tiny.toRgbString();
 
-			   var colorName = $.xcolor.nearestname(colorHex);
-
+				var $input = $(this.connectedinput);
+				var key = $input.attr("data-var");
+				//slow process
+			   //var colorName = $.xcolor.nearestname(colorHex);
+				if(DEBUG){
+					console.log(key+" 0.c - change "+ (new(Date) - startTime1) + "ms");
+				}
 			   //dynamically update fontcolor
 				var fontColor = "black";
 
@@ -589,12 +600,13 @@ $lessVariablesInput.each( function(i,elt){
 					fontColor = "black";
 				}
 				
-				var $input = $(this.connectedinput);
 				$this.css("color", fontColor);
-				var key = $input.attr("data-var");
+				
 				if(DEBUG){
 					console.log("onchange - updateLESSVariables "+ key);
+					console.log(key+" 1.c - change "+ (new(Date) - startTime1) + "ms");
 				}
+				
 				updateLESSVariables(key, colorHex);
 		
 			}
@@ -647,11 +659,11 @@ function initDownloadButton(){
   $downloadBtn.on('click', function (e) {
     e.preventDefault();
     $downloadBtn.attr('disabled', 'disabled');
-	$downloadBtn.html("<i class='icon-spinner icon-spin'></i>Download");
+	$downloadBtn.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Download");
     var zip = generateZip(compileCSS(),null);
 	saveAs(zip, "bootstrap.zip");
 	$downloadBtn.removeAttr('disabled');
-	$downloadBtn.html("<i class='icon-download-alt'></i>Download");
+	$downloadBtn.html("<i class='icon-fixed-width icon-download-alt'></i>Download");
   });
 }
 
@@ -729,6 +741,15 @@ function loadLESSVariables(url,variables){
 
 function populateLESSVariables(theme){
   var variables = loadThemeVariables(theme);
+  //reset the new references for all loaded variables
+  /*for(var id in variables){
+	var value = variables[id];
+	var $input = $("#"+id);
+	updateLESSVariablesRef(id,value,$input);
+  }
+  //*/
+  LESS_VARIABLES_REF = null;
+  LESS_VARIABLES_REF = [];
   var startTime = new(Date);
 /*$("input:text.form-control")
 	.filter("[data-var]")//*/
@@ -738,9 +759,19 @@ function populateLESSVariables(theme){
 		var value = variables[id];
 		if(id && value){
 			updateLESSVariablesRef(id,value,$this);
+		}
+	}).each(function(i,elt){
+		var startTime1 = new(Date);
+		var $this = $(elt);
+		var id = $this.attr("id");
+		var value = variables[id];
+
+		/*
+		if(id && value){
+			//updateLESSVariablesRef(id,value,$this);
 			$this.val(value);
 			
-		}
+		}//*/
 	// }).each(function(i,elt){
 	//		var $this = $(elt);
 			if($this.hasClass("color-input")){
@@ -760,15 +791,18 @@ function populateLESSVariables(theme){
 							fontColor = "black";
 						}
 						
-						$this.css( {'background-color' :colorHex, 'color' : fontColor} );
+						$this.css( {'background-color' :colorHex, 'color' : fontColor} );						
 						//*/
 						//onchange colorpicker update variables
-						$this.trigger("colorpickersliders.updateColor",newVal);					
-					
+						$this.trigger("colorpickersliders.updateColor",newVal);	
+						if(DEBUG){						
+							console.log(id+" 2.c - pop "+ (new(Date) - startTime1) + "ms");
+						}
 					}else{
 						if(DEBUG){
 							console.log($this.attr('id')+" = "+newVal);
 						}
+						$this.val(value);
 					}
 					if(newVal.charAt(0) !== '#'){
 						//colorHex = rgb2hex(newVal);
@@ -777,6 +811,14 @@ function populateLESSVariables(theme){
 					console.error($this.attr('id')+" = "+newVal+" - "+err.message);
 				}
 				
+			}else{
+				if(id && value){
+					$this.val(value);					
+				}
+			}
+			var time = (new(Date) - startTime1);
+			if(time > 0){
+				if(DEBUG){console.log(id+" - pop "+ time + "ms");}
 			}
 	  });
 	  
