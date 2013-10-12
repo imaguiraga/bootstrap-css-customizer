@@ -476,7 +476,9 @@ function initPreviewToggle(){
 		$this.html("<i class='icon-spinner icon-spin'></i>Compile");
 		updateCompiledCSS();
 		$this.html("<i class='icon-gear'></i>Compile");
-		$("#theme-selector").val("compiled").trigger("change");
+		//$("#theme-selector").val("compiled").trigger("change");
+		$("#theme-selector").val("compiled");
+		updateCSS(THEMES['compiled']);
 		//$("#theme-selector").val("compiled");
 	});
 	
@@ -832,28 +834,35 @@ $("#theme-selector").change(function(evt){
 	if(DEBUG){
 		console.log(selection);
 	}
-	var $link = document.getElementById("bootstrap:css");
-	var $compiled = $(document.getElementById("compiled:css"));
-	
+
 	//$("#loading").show();
 	$("#content").css("visibility","hidden");	
 	CURRENT_THEME = THEMES[selection];
-
-	if( CURRENT_THEME != null && CURRENT_THEME.compiled == true){		  
-		$compiled.append(CURRENT_THEME.compiledCssMin);
-		$link.disabled = true;
-		
-	}else{
-		$link.href = CURRENT_THEME.cssMin;
-		$compiled.empty();
-		$link.disabled = false;
-
-	}
+	updateCSS(CURRENT_THEME);
 	populateLESSVariables(CURRENT_THEME);
+	
 	//$("#loading").hide();
 	$("#content").css("visibility","visible");	
 });
 //*/
+
+function updateCSS(theme){
+
+	var $link = document.getElementById("bootstrap:css");
+	var $compiled = $(document.getElementById("compiled:css"));
+	
+	if( theme != null && theme.compiled == true){		  
+		$compiled.append(theme.compiledCssMin);
+		$link.disabled = true;
+		
+	}else{
+		$link.href = theme.cssMin;
+		$compiled.empty();
+		$link.disabled = false;
+		
+	}
+}
+
 
 $(function() {
 	//load stored compiled theme from cache
