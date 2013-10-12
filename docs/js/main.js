@@ -889,4 +889,6 @@ $(function() {
 	//loadThemes("http://api.bootswatch.com/3/");
 	$("#loading").hide();
 	$("#content").css("visibility","visible");
+	$("#theme-selector").val("default");
+	//updateCSS(THEMES['compiled']);
 });
