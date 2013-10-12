@@ -131,8 +131,7 @@ function updateLESSVariablesRef(key,value,$input){
 	@brand-primary
 	(@popover-arrow-width 1) 
 	//*/
-	var pattern =/@(\D*)\s?/gm;
-	pattern =/@([a-zA-Z0-9\-])*[^;,\)]/gm;
+	var pattern = /@([a-zA-Z0-9\-])*[^;,\)]/gm;
 	//find reference
 	var result = value.replace(","," ").trim().match(pattern);
 	if(result){
@@ -182,7 +181,8 @@ function updateLESSVariables(key, value){
 			variables[key] = value;
 		}
 		key = getVariableKey(key);
-		LESS_VARIABLES [key].value = value; 
+		//update variables registry
+		LESS_VARIABLES[key].value = value; 
 		if(DEBUG){
 			console.log("{"+key + "} = [ "+value+" ]");
 		}
@@ -221,7 +221,7 @@ function updateLESSVariables(key, value){
 				 								
 			}else{
 				//generate CSS and parse it for content
-				var $css = "@"+current.key+":"+current.value+"; #"+target.key+" {background-color:"+$target.val()/*target.value*/+";color:"+fontColor+";}";
+				var $css = "@"+current.key+":"+current.value+"; #"+target.key+" {background-color:"+target.value+";color:"+fontColor+";}";//$target.val()/*
 				parser.parse($css, function (err, tree) {
 					var startTime1 = new(Date);
 					if (err) { return console.error(err) ;}
@@ -267,6 +267,7 @@ function updateLESSVariables(key, value){
 	
 }
 
+var $lessVariablesInput = $("input:text.form-control").filter("[data-var]");
 function collectLESSVariables(theme){
 	//add default variables
 	var variables = [];//["@import 'less/bootstrap/variables.less'"];
@@ -280,9 +281,7 @@ function collectLESSVariables(theme){
 		variables.push("@import '"+lessVariables+"'");
 	}
     //override default variables
-	$("input:text.form-control")
-		.filter("[data-var]")
-		.each( function(i,elt){	
+	$lessVariablesInput.each( function(i,elt){	
 			var $this = $(elt);
 			var id = $this.attr("id");
 			variables.push("@"+id+": "+$this.val()+"");
@@ -533,9 +532,7 @@ function generateZip(css,less) {
   
    
 function initColorPickers(){
-$("input:text.form-control")
-	.filter("[data-var]")
-	.each( function(i,elt){
+$lessVariablesInput.each( function(i,elt){
 	
 		var $this = $(elt);
 		//remove @ from key
@@ -546,7 +543,7 @@ $("input:text.form-control")
 		if(DEBUG){
 			console.log(i+" - {"+key + "} = [ "+value+" ]");
 		}
-		LESS_VARIABLES [key] = {'default':value,'value':value };
+		LESS_VARIABLES[key] = {'default':value,'value':value };
 		//contains @
 		if(value && value.indexOf("@") >= 0){
 			updateLESSVariablesRef(key,value,$this);
@@ -729,24 +726,24 @@ function loadLESSVariables(url,variables){
 	//return deferredReady.promise();
 } 
 
-var $dataVar = $("input:text.form-control").filter("[data-var]");
 function populateLESSVariables(theme){
   var variables = loadThemeVariables(theme);
   var startTime = new(Date);
 /*$("input:text.form-control")
 	.filter("[data-var]")//*/
-	$dataVar.each(function(i,elt){
+	$lessVariablesInput.each(function(i,elt){
 		var $this = $(elt);
 		var id = $this.attr("id");
-		if(id && variables[id]){
-			updateLESSVariablesRef(id,variables[id],$this);
-			$this.val(variables[id]);
+		var value = variables[id];
+		if(id && value){
+			updateLESSVariablesRef(id,value,$this);
+			$this.val(value);
 			
 		}
 	// }).each(function(i,elt){
 	//		var $this = $(elt);
 			if($this.hasClass("color-input")){
-				var newVal = $this.val();
+				var newVal = value;//$this.val();
 				var colorHex = newVal;
 				if(newVal == null){
 					return;
@@ -764,11 +761,8 @@ function populateLESSVariables(theme){
 						
 						$this.css( {'background-color' :colorHex, 'color' : fontColor} );
 						//*/
-
-						$this.trigger("colorpickersliders.updateColor",newVal);
-						//update variables if not color-input since onchange colorpickerwill do so
-						//var key = $this.attr("data-var");
-						//updateLESSVariables(key, colorHex);
+						//onchange colorpicker update variables
+						$this.trigger("colorpickersliders.updateColor",newVal);					
 					
 					}else{
 						if(DEBUG){
