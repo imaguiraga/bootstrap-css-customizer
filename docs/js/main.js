@@ -473,9 +473,9 @@ function initPreviewToggle(){
 		evt.stopPropagation();
 		evt.preventDefault();
 		var $this = $(this);
-		$this.html("<i class='icon-spinner icon-spin'></i>Compile");
+		$this.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Compile");
 		updateCompiledCSS();
-		$this.html("<i class='icon-gear'></i>Compile");
+		$this.html("<i class='icon-fixed-width icon-gear'></i>Compile");
 		//$("#theme-selector").val("compiled").trigger("change");
 		$("#theme-selector").val("compiled");
 		updateCSS(THEMES['compiled']);
