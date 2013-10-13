@@ -476,10 +476,9 @@ function initPreviewToggle(){
 		$this.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Compile");
 		updateCompiledCSS();
 		$this.html("<i class='icon-fixed-width icon-gear'></i>Compile");
-		//$("#theme-selector").val("compiled").trigger("change");
 		$("#theme-selector").val("compiled");
 		updateCSS(THEMES['compiled']);
-		//$("#theme-selector").val("compiled");
+
 	});
 	
 	//init PreviewToggle
@@ -893,5 +892,5 @@ $(function() {
 	$("#loading").hide();
 	$("#content").css("visibility","visible");
 	$("#theme-selector").val("default");
-	//updateCSS(THEMES['compiled']);
+	//updateCSS(CURRENT_THEME);//?
 });
