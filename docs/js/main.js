@@ -11,51 +11,51 @@ var DEBUG = false;
 
  var COMMON_LESS = {"less": 
 	[
-		"less/bootstrap/mixins.less",
+		"bootstrap/mixins.less",
 
-		"less/bootstrap/normalize.less",
-		"less/bootstrap/print.less",
+		"bootstrap/normalize.less",
+		"bootstrap/print.less",
 
-		"less/bootstrap/scaffolding.less",
-		"less/bootstrap/type.less",
-		"less/bootstrap/code.less",
-		"less/bootstrap/grid.less",
-		"less/bootstrap/tables.less",
-		"less/bootstrap/forms.less",
-		"less/bootstrap/buttons.less",
+		"bootstrap/scaffolding.less",
+		"bootstrap/type.less",
+		"bootstrap/code.less",
+		"bootstrap/grid.less",
+		"bootstrap/tables.less",
+		"bootstrap/forms.less",
+		"bootstrap/buttons.less",
 
-		"less/bootstrap/component-animations.less",
-		"less/bootstrap/glyphicons.less",
-		"less/bootstrap/dropdowns.less",
-		"less/bootstrap/button-groups.less",
-		"less/bootstrap/input-groups.less",
-		"less/bootstrap/navs.less",
-		"less/bootstrap/navbar.less",
-		"less/bootstrap/breadcrumbs.less",
-		"less/bootstrap/pagination.less",
-		"less/bootstrap/pager.less",
-		"less/bootstrap/labels.less",
-		"less/bootstrap/badges.less",
-		"less/bootstrap/jumbotron.less",
-		"less/bootstrap/thumbnails.less",
-		"less/bootstrap/alerts.less",
-		"less/bootstrap/progress-bars.less",
-		"less/bootstrap/media.less",
-		"less/bootstrap/list-group.less",
-		"less/bootstrap/panels.less",
-		"less/bootstrap/wells.less",
-		"less/bootstrap/close.less",
+		"bootstrap/component-animations.less",
+		"bootstrap/glyphicons.less",
+		"bootstrap/dropdowns.less",
+		"bootstrap/button-groups.less",
+		"bootstrap/input-groups.less",
+		"bootstrap/navs.less",
+		"bootstrap/navbar.less",
+		"bootstrap/breadcrumbs.less",
+		"bootstrap/pagination.less",
+		"bootstrap/pager.less",
+		"bootstrap/labels.less",
+		"bootstrap/badges.less",
+		"bootstrap/jumbotron.less",
+		"bootstrap/thumbnails.less",
+		"bootstrap/alerts.less",
+		"bootstrap/progress-bars.less",
+		"bootstrap/media.less",
+		"bootstrap/list-group.less",
+		"bootstrap/panels.less",
+		"bootstrap/wells.less",
+		"bootstrap/close.less",
 
-		"less/bootstrap/modals.less",
-		"less/bootstrap/tooltip.less",
-		"less/bootstrap/popovers.less",
-		"less/bootstrap/carousel.less",
+		"bootstrap/modals.less",
+		"bootstrap/tooltip.less",
+		"bootstrap/popovers.less",
+		"bootstrap/carousel.less",
 
-		"less/bootstrap/utilities.less",
-		"less/bootstrap/responsive-utilities.less"
+		"bootstrap/utilities.less",
+		"bootstrap/responsive-utilities.less"
 
 	],
-	"lessVariables": ["less/bootstrap/variables.less"]
+	"lessVariables": ["bootstrap/variables.less"]
 };
  //load initial data
   function loadThemes(url) {
@@ -85,7 +85,7 @@ var DEBUG = false;
 			/*
 			,
 			"compiled" : true,
-            "lessVariables": "less/bootstrap/variables.less",
+            "lessVariables": "bootstrap/variables.less",
 			"compiledLessVariables": null,
 			"compiledCssMin": null
 			//*/
@@ -276,7 +276,7 @@ function updateLESSVariables(key, value){
 var $lessVariablesInput = $("input:text.form-control").filter("[data-var]");
 function collectLESSVariables(theme){
 	//add default variables
-	var variables = [];//["@import 'less/bootstrap/variables.less'"];
+	var variables = [];//["@import 'bootstrap/variables.less'"];
 	var lessVariables = theme.lessVariables;
 	var less = theme.less;
 	if($.isArray(lessVariables)){
@@ -301,54 +301,54 @@ function collectLESSVariables(theme){
 		variables.push("@import '"+less+"'");
 	}
 	/*
-	variables.push("@import 'less/bootstrap/mixins.less'");
+	variables.push("@import 'bootstrap/mixins.less'");
 
 	// Reset
-	variables.push("@import 'less/bootstrap/normalize.less'");
-	variables.push("@import 'less/bootstrap/print.less'");
+	variables.push("@import 'bootstrap/normalize.less'");
+	variables.push("@import 'bootstrap/print.less'");
 
 	// Core CSS
-	variables.push("@import 'less/bootstrap/scaffolding.less'");
-	variables.push("@import 'less/bootstrap/type.less'");
-	variables.push("@import 'less/bootstrap/code.less'");
-	variables.push("@import 'less/bootstrap/grid.less'");
-	variables.push("@import 'less/bootstrap/tables.less'");
-	variables.push("@import 'less/bootstrap/forms.less'");
-	variables.push("@import 'less/bootstrap/buttons.less'");
+	variables.push("@import 'bootstrap/scaffolding.less'");
+	variables.push("@import 'bootstrap/type.less'");
+	variables.push("@import 'bootstrap/code.less'");
+	variables.push("@import 'bootstrap/grid.less'");
+	variables.push("@import 'bootstrap/tables.less'");
+	variables.push("@import 'bootstrap/forms.less'");
+	variables.push("@import 'bootstrap/buttons.less'");
 
 	// Components
-	variables.push("@import 'less/bootstrap/component-animations.less'");
-	variables.push("@import 'less/bootstrap/glyphicons.less'");
-	variables.push("@import 'less/bootstrap/dropdowns.less'");
-	variables.push("@import 'less/bootstrap/button-groups.less'");
-	variables.push("@import 'less/bootstrap/input-groups.less'");
-	variables.push("@import 'less/bootstrap/navs.less'");
-	variables.push("@import 'less/bootstrap/navbar.less'");
-	variables.push("@import 'less/bootstrap/breadcrumbs.less'");
-	variables.push("@import 'less/bootstrap/pagination.less'");
-	variables.push("@import 'less/bootstrap/pager.less'");
-	variables.push("@import 'less/bootstrap/labels.less'");
-	variables.push("@import 'less/bootstrap/badges.less'");
-	variables.push("@import 'less/bootstrap/jumbotron.less'");
-	variables.push("@import 'less/bootstrap/thumbnails.less'");
-	variables.push("@import 'less/bootstrap/alerts.less'");
-	variables.push("@import 'less/bootstrap/progress-bars.less'");
-	variables.push("@import 'less/bootstrap/media.less'");
-	variables.push("@import 'less/bootstrap/list-group.less'");
-	variables.push("@import 'less/bootstrap/panels.less'");
-	variables.push("@import 'less/bootstrap/wells.less'");
-	variables.push("@import 'less/bootstrap/close.less'");
+	variables.push("@import 'bootstrap/component-animations.less'");
+	variables.push("@import 'bootstrap/glyphicons.less'");
+	variables.push("@import 'bootstrap/dropdowns.less'");
+	variables.push("@import 'bootstrap/button-groups.less'");
+	variables.push("@import 'bootstrap/input-groups.less'");
+	variables.push("@import 'bootstrap/navs.less'");
+	variables.push("@import 'bootstrap/navbar.less'");
+	variables.push("@import 'bootstrap/breadcrumbs.less'");
+	variables.push("@import 'bootstrap/pagination.less'");
+	variables.push("@import 'bootstrap/pager.less'");
+	variables.push("@import 'bootstrap/labels.less'");
+	variables.push("@import 'bootstrap/badges.less'");
+	variables.push("@import 'bootstrap/jumbotron.less'");
+	variables.push("@import 'bootstrap/thumbnails.less'");
+	variables.push("@import 'bootstrap/alerts.less'");
+	variables.push("@import 'bootstrap/progress-bars.less'");
+	variables.push("@import 'bootstrap/media.less'");
+	variables.push("@import 'bootstrap/list-group.less'");
+	variables.push("@import 'bootstrap/panels.less'");
+	variables.push("@import 'bootstrap/wells.less'");
+	variables.push("@import 'bootstrap/close.less'");
 
 	// Components w/ JavaScript
-	variables.push("@import 'less/bootstrap/modals.less'");
-	variables.push("@import 'less/bootstrap/tooltip.less'");
-	variables.push("@import 'less/bootstrap/popovers.less'");
-	variables.push("@import 'less/bootstrap/carousel.less'");
+	variables.push("@import 'bootstrap/modals.less'");
+	variables.push("@import 'bootstrap/tooltip.less'");
+	variables.push("@import 'bootstrap/popovers.less'");
+	variables.push("@import 'bootstrap/carousel.less'");
 
 	// Utility classes
-	variables.push("@import 'less/bootstrap/utilities.less'");
-	variables.push("@import 'less/bootstrap/responsive-utilities.less'");
-	//variables.push("@import 'less/bootstrap/theme.less'");
+	variables.push("@import 'bootstrap/utilities.less'");
+	variables.push("@import 'bootstrap/responsive-utilities.less'");
+	//variables.push("@import 'bootstrap/theme.less'");
 //*/
 	return variables.join(";\n")+";";
 }
@@ -518,7 +518,9 @@ function initPreviewToggle(){
 }
 
 function generateZip(css,less) {
-	if (!css ) return;
+	if (!css ){
+		return;
+	}
 
 	var zip = new JSZip();
 
@@ -558,10 +560,10 @@ $lessVariablesInput.each( function(i,elt){
 			updateLESSVariablesRef(key,value,$this);
 		}
 		
-	})
-	.filter(".color-input")
-	.each( function(i,elt){
-	
+	//})
+	//.filter(".color-input")
+	//.each( function(i,elt){
+	if($this.hasClass("color-input")){
 		var $this = $(elt);
 		$this.before("<i class='icon-bullseye'></i>");
 		var key = $this.attr("data-var");
@@ -638,6 +640,7 @@ $lessVariablesInput.each( function(i,elt){
 			}
 			
 		});
+	}
 	});	
 
 }
