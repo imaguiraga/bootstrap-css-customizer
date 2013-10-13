@@ -369,7 +369,7 @@ function compileCSS(){
 		  css = {
 			'bootstrap.css':cw + tree.toCSS(),
 			'bootstrap.min.css':cw + tree.toCSS({ compress: true }),
-			'variables': lessInput
+			'variables.less': lessInput
 		  };
 		} catch(e){
 		  console.error(e);
