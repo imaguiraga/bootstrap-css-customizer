@@ -1,65 +1,74 @@
- var cw = '/*!\n * Bootstrap v3.0.0\n *\n * Copyright 2013 Twitter, Inc\n * Licensed under the Apache License v2.0\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Designed and built with all the love in the world @twitter by @mdo and @fat.\n */\n\n';
+var _DEBUG = false;
+	
+function Controller(){
 
+	this._CW = '/*!\n * Bootstrap v3.0.0\n *\n * Copyright 2013 Twitter, Inc\n * Licensed under the Apache License v2.0\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Designed and built with all the love in the world @twitter by @mdo and @fat.\n */\n\n';
 
-var THEMES = {};
-var CURRENT_THEME = null;
-var COMPILED_LESS_CSS = null;
-var LESS_VARIABLES = {};
-var LESS_VARIABLES_REF = {};
-var parser = new less.Parser(new less.tree.parseEnv(less));
-var DEBUG = false;
+	this._THEMES = {};
+	this._CURRENT_THEME = null;
+	this._COMPILED_LESS_CSS = null;
+	this._LESS_VARIABLES = {};
+	this._LESS_VARIABLES_REF = {};
+	this._parser = new(less.Parser);//new less.Parser(new less.tree.parseEnv(less));
+	this._COMMON_LESS = {"less": 
+		[
+			"bootstrap/mixins.less",
 
- var COMMON_LESS = {"less": 
-	[
-		"bootstrap/mixins.less",
+			"bootstrap/normalize.less",
+			"bootstrap/print.less",
 
-		"bootstrap/normalize.less",
-		"bootstrap/print.less",
+			"bootstrap/scaffolding.less",
+			"bootstrap/type.less",
+			"bootstrap/code.less",
+			"bootstrap/grid.less",
+			"bootstrap/tables.less",
+			"bootstrap/forms.less",
+			"bootstrap/buttons.less",
 
-		"bootstrap/scaffolding.less",
-		"bootstrap/type.less",
-		"bootstrap/code.less",
-		"bootstrap/grid.less",
-		"bootstrap/tables.less",
-		"bootstrap/forms.less",
-		"bootstrap/buttons.less",
+			"bootstrap/component-animations.less",
+			"bootstrap/glyphicons.less",
+			"bootstrap/dropdowns.less",
+			"bootstrap/button-groups.less",
+			"bootstrap/input-groups.less",
+			"bootstrap/navs.less",
+			"bootstrap/navbar.less",
+			"bootstrap/breadcrumbs.less",
+			"bootstrap/pagination.less",
+			"bootstrap/pager.less",
+			"bootstrap/labels.less",
+			"bootstrap/badges.less",
+			"bootstrap/jumbotron.less",
+			"bootstrap/thumbnails.less",
+			"bootstrap/alerts.less",
+			"bootstrap/progress-bars.less",
+			"bootstrap/media.less",
+			"bootstrap/list-group.less",
+			"bootstrap/panels.less",
+			"bootstrap/wells.less",
+			"bootstrap/close.less",
 
-		"bootstrap/component-animations.less",
-		"bootstrap/glyphicons.less",
-		"bootstrap/dropdowns.less",
-		"bootstrap/button-groups.less",
-		"bootstrap/input-groups.less",
-		"bootstrap/navs.less",
-		"bootstrap/navbar.less",
-		"bootstrap/breadcrumbs.less",
-		"bootstrap/pagination.less",
-		"bootstrap/pager.less",
-		"bootstrap/labels.less",
-		"bootstrap/badges.less",
-		"bootstrap/jumbotron.less",
-		"bootstrap/thumbnails.less",
-		"bootstrap/alerts.less",
-		"bootstrap/progress-bars.less",
-		"bootstrap/media.less",
-		"bootstrap/list-group.less",
-		"bootstrap/panels.less",
-		"bootstrap/wells.less",
-		"bootstrap/close.less",
+			"bootstrap/modals.less",
+			"bootstrap/tooltip.less",
+			"bootstrap/popovers.less",
+			"bootstrap/carousel.less",
 
-		"bootstrap/modals.less",
-		"bootstrap/tooltip.less",
-		"bootstrap/popovers.less",
-		"bootstrap/carousel.less",
+			"bootstrap/utilities.less",
+			"bootstrap/responsive-utilities.less"
 
-		"bootstrap/utilities.less",
-		"bootstrap/responsive-utilities.less"
-
-	],
-	"lessVariables": ["bootstrap/variables.less"]
-};
+		],
+		"lessVariables": ["bootstrap/variables.less"]
+	};
+}
  //load initial data
-  function loadThemes(url) {
-  
+ Controller.prototype.getThemes = function getThemes() {
+	return this._THEMES;
+ };
+  //load initial data
+ Controller.prototype.getTheme = function getTheme(key) {
+	return this._THEMES[key];
+ };
+Controller.prototype.loadThemes = function loadThemes(url) {
+    var controller = this;
     $.ajax({
       url: url,
       type: 'GET',
@@ -91,21 +100,21 @@ var DEBUG = false;
 			//*/
 			//urls are overrides
 			//theme not already initialized
-			if(!THEMES[theme.name.toLowerCase()]){
+			if(!controller._THEMES[theme.name.toLowerCase()]){
 				if($.isArray(theme.lessVariables)){
-					theme.lessVariables = COMMON_LESS.lessVariables.concat(theme.lessVariables);
+					theme.lessVariables = controller._COMMON_LESS.lessVariables.concat(theme.lessVariables);
 				}else{
-					theme.lessVariables = COMMON_LESS.lessVariables.concat([theme.lessVariables]);
+					theme.lessVariables = controller._COMMON_LESS.lessVariables.concat([theme.lessVariables]);
 				}
 				if($.isArray(theme.less)){
-					theme.less = theme.less.concat(COMMON_LESS.less);
+					theme.less = theme.less.concat(controller._COMMON_LESS.less);
 				}else{
-					theme.less = [theme.less].concat(COMMON_LESS.less);
+					theme.less = [theme.less].concat(controller._COMMON_LESS.less);
 				}
 				theme.compiled = false;
 				theme.compiledCssMin = null;
 				theme.compiledLessVariables = null;
-				THEMES[theme.name.toLowerCase()] = theme;
+				controller._THEMES[theme.name.toLowerCase()] = theme;
 			}
         }
       }
@@ -113,17 +122,17 @@ var DEBUG = false;
     .fail(function(jqXHR, textStatus) {
       console.error(textStatus);
     })
-  }
+  };
 
 //update less variables
 
 
-function updateLESSVariablesRef(key,value,$input){
+Controller.prototype.updateLESSVariablesRef = function updateLESSVariablesRef(key,value,$input){
 	if( typeof key === "undefined"){
 		return;
 	}
 	
-	key = getVariableKey(key); 
+	key = this.getVariableKey(key); 
 	
 	/*
 	darken(@link-color, 15%)
@@ -137,25 +146,25 @@ function updateLESSVariablesRef(key,value,$input){
 	if(result){
 		var reference = result[0];
 		if( typeof reference === "string"){
-			reference = getVariableKey(reference.trim());
-			if(DEBUG){
+			reference = this.getVariableKey(reference.trim());
+			if(_DEBUG){
 				console.log("{"+key+ "} -> {"+reference+"}");
 			}
-			if(typeof LESS_VARIABLES_REF[reference] === "undefined"){
-				LESS_VARIABLES_REF[reference] = [];	
+			if(typeof this._LESS_VARIABLES_REF[reference] === "undefined"){
+				this._LESS_VARIABLES_REF[reference] = [];	
 			}
 			
 			var ref = $input.data("ref");
 			//remove old reference
 			if((typeof ref !== "undefined") && (ref !== reference)){
-				var arr = LESS_VARIABLES_REF[ref];
+				var arr = this._LESS_VARIABLES_REF[ref];
 				if($.isArray(arr)){
 					var len = arr.length;
 					//find position
 					for(var i = 0;i < len; i++){
 						if(arr[i].key === key){						
 							arr.splice(i,1);
-							if(DEBUG){
+							if(_DEBUG){
 								console.log("ref from {"+ref+ "} -> {"+reference+"}");
 							}
 							break;
@@ -165,14 +174,14 @@ function updateLESSVariablesRef(key,value,$input){
 				}
 			}
 			//add new reference
-			LESS_VARIABLES_REF[reference].push({'key' : key, 'value' :value});
+			this._LESS_VARIABLES_REF[reference].push({'key' : key, 'value' :value});
 			$input.data("ref",reference);
 		}
 	}
 
-}
+};
 
-function updateLESSVariables(key, value){	
+Controller.prototype.updateLESSVariables = function updateLESSVariables(key, value){	
 	var startTime = new(Date);
     var variables = null;//variables that changed
 	if( typeof key !== "undefined"){
@@ -180,17 +189,17 @@ function updateLESSVariables(key, value){
 			variables = {};
 			variables[key] = value;
 		}
-		key = getVariableKey(key);
+		key = this.getVariableKey(key);
 		//update variables registry
-		LESS_VARIABLES[key].value = value; 
-		if(DEBUG){
+		this._LESS_VARIABLES[key].value = value; 
+		if(_DEBUG){
 			console.log("{"+key + "} = [ "+value+" ]");
 		}
 		
 	}else{
 		return;
 	}
-	if(DEBUG){
+	if(_DEBUG){
 	console.log("start {"+key + "} = [ "+value+" ] - "+ (new(Date) - startTime) + "ms");
 	}
     var stack = [{'key':key,'value':value}];
@@ -200,7 +209,7 @@ function updateLESSVariables(key, value){
 		//find references and update their values 
 		var id = "#"+current.key;
 		var $source = $(id);
-		var ref = LESS_VARIABLES_REF[current.key];
+		var ref = this._LESS_VARIABLES_REF[current.key];
 		var regex = /background-color:(.*);color:(.*);?/;
 		
 		//console.log("1.-> updateLESSVariables "+ current.key+" - "+JSON.stringify(ref));
@@ -222,11 +231,11 @@ function updateLESSVariables(key, value){
 					"background-color": backgroundColor,
 					"color": fontColor
 				});
-				if(DEBUG){console.log("@1. -> parseLESSVariables "+ id+" - "+ (new(Date) - startTime1) + "ms"); }								
+				if(_DEBUG){console.log("@1. -> parseLESSVariables "+ id+" - "+ (new(Date) - startTime1) + "ms"); }								
 			}else{
 				//generate CSS and parse it for content
 				var $css = "@"+current.key+":"+current.value+"; #"+target.key+" {background-color:"+target.value+";color:"+fontColor+";}";//$target.val()/*
-				parser.parse($css, function (err, tree) {
+				this._parser.parse($css, function (err, tree) {
 					var startTime1 = new(Date);
 					if (err) { return console.error(err) ;}
 					var rule = tree.toCSS({'compress':true}).match(regex);
@@ -239,31 +248,31 @@ function updateLESSVariables(key, value){
 						} else {
 							fontColor = "black";
 						}
-						if(DEBUG){console.log("1.0 -> parseLESSVariables "+ id+" - "+ (new(Date) - startTime1) + "ms");}		
+						if(_DEBUG){console.log("1.0 -> parseLESSVariables "+ id+" - "+ (new(Date) - startTime1) + "ms");}		
 						$target.css({
 							"background-color": backgroundColor,
 							"color": fontColor
 						});
 						
 					}
-					if(DEBUG){console.log("1. -> parseLESSVariables "+ id+" - "+ (new(Date) - startTime1) + "ms");}
+					if(_DEBUG){console.log("1. -> parseLESSVariables "+ id+" - "+ (new(Date) - startTime1) + "ms");}
 				});//*/
 			}
 			
 			//check if there are dependencies
-			var deps = LESS_VARIABLES_REF[depKey];
+			var deps = this._LESS_VARIABLES_REF[depKey];
 			if( (typeof deps) !== "undefined" && deps.length > 0){
 				//put newly computed value on the stack
 				stack.push({'key':depKey,'value':backgroundColor});
-				if(DEBUG){
+				if(_DEBUG){
 					console.log("next = "+depKey);
 				}
 			}
 		
 		}
-		if(DEBUG){console.log("end-1. -> updateLESSVariables "+ key+" - t="+ (new(Date) - startTime2) + "ms");}
+		if(_DEBUG){console.log("end-1. -> updateLESSVariables "+ key+" - t="+ (new(Date) - startTime2) + "ms");}
 	}
-	if(DEBUG){console.log("end-2. -> updateLESSVariables "+ key+" - t="+ (new(Date) - startTime) + "ms");}
+	if(_DEBUG){console.log("end-2. -> updateLESSVariables "+ key+" - t="+ (new(Date) - startTime) + "ms");}
 	//refresh less variables
 	if(variables != null){
 		if((typeof less) !== "undefined"){
@@ -271,10 +280,12 @@ function updateLESSVariables(key, value){
 		}
 	}
 	
-}
+};
 
 var $lessVariablesInput = $("input:text.form-control").filter("[data-var]");
 function collectLESSVariables(theme){
+	var startTime, endTime;
+    startTime = endTime = new(Date);
 	//add default variables
 	var variables = [];//["@import 'bootstrap/variables.less'"];
 	var lessVariables = theme.lessVariables;
@@ -300,75 +311,27 @@ function collectLESSVariables(theme){
 	}else{
 		variables.push("@import '"+less+"'");
 	}
-	/*
-	variables.push("@import 'bootstrap/mixins.less'");
 
-	// Reset
-	variables.push("@import 'bootstrap/normalize.less'");
-	variables.push("@import 'bootstrap/print.less'");
-
-	// Core CSS
-	variables.push("@import 'bootstrap/scaffolding.less'");
-	variables.push("@import 'bootstrap/type.less'");
-	variables.push("@import 'bootstrap/code.less'");
-	variables.push("@import 'bootstrap/grid.less'");
-	variables.push("@import 'bootstrap/tables.less'");
-	variables.push("@import 'bootstrap/forms.less'");
-	variables.push("@import 'bootstrap/buttons.less'");
-
-	// Components
-	variables.push("@import 'bootstrap/component-animations.less'");
-	variables.push("@import 'bootstrap/glyphicons.less'");
-	variables.push("@import 'bootstrap/dropdowns.less'");
-	variables.push("@import 'bootstrap/button-groups.less'");
-	variables.push("@import 'bootstrap/input-groups.less'");
-	variables.push("@import 'bootstrap/navs.less'");
-	variables.push("@import 'bootstrap/navbar.less'");
-	variables.push("@import 'bootstrap/breadcrumbs.less'");
-	variables.push("@import 'bootstrap/pagination.less'");
-	variables.push("@import 'bootstrap/pager.less'");
-	variables.push("@import 'bootstrap/labels.less'");
-	variables.push("@import 'bootstrap/badges.less'");
-	variables.push("@import 'bootstrap/jumbotron.less'");
-	variables.push("@import 'bootstrap/thumbnails.less'");
-	variables.push("@import 'bootstrap/alerts.less'");
-	variables.push("@import 'bootstrap/progress-bars.less'");
-	variables.push("@import 'bootstrap/media.less'");
-	variables.push("@import 'bootstrap/list-group.less'");
-	variables.push("@import 'bootstrap/panels.less'");
-	variables.push("@import 'bootstrap/wells.less'");
-	variables.push("@import 'bootstrap/close.less'");
-
-	// Components w/ JavaScript
-	variables.push("@import 'bootstrap/modals.less'");
-	variables.push("@import 'bootstrap/tooltip.less'");
-	variables.push("@import 'bootstrap/popovers.less'");
-	variables.push("@import 'bootstrap/carousel.less'");
-
-	// Utility classes
-	variables.push("@import 'bootstrap/utilities.less'");
-	variables.push("@import 'bootstrap/responsive-utilities.less'");
-	//variables.push("@import 'bootstrap/theme.less'");
-//*/
 	return variables.join(";\n")+";";
 }
 
-function compileCSS(){
+Controller.prototype.compileCSS = function compileCSS(){
 	var startTime, endTime;
     startTime = endTime = new(Date);
 	var css = null;
-	var lessInput = collectLESSVariables(CURRENT_THEME);
-	var parser = new(less.Parser);
+	var lessInput = collectLESSVariables(this._CURRENT_THEME);
+	//var this._parser = new(less.Parser);
+	var controller = this;
 
-	parser.parse(lessInput, function (err, tree) {
+	this._parser.parse(lessInput, function (err, tree) {
 		if (err) { 
 			//console.log(lessInput);
 			return console.error(err);
 		}
 		try{
 		  css = {
-			'bootstrap.css':cw + tree.toCSS(),
-			'bootstrap.min.css':cw + tree.toCSS({ compress: true }),
+			'bootstrap.css':controller._CW + tree.toCSS(),
+			'bootstrap.min.css':controller._CW + tree.toCSS({ compress: true }),
 			'variables.less': lessInput
 		  };
 		} catch(e){
@@ -378,36 +341,39 @@ function compileCSS(){
 	});
 	console.log("css compiled in "+ (new(Date) - endTime) + "ms");
 	return css;
-}
+};
 
-function updateCompiledCSS(){
-	COMPILED_LESS_CSS = compileCSS();
+Controller.prototype.updateCompiledCSS = function updateCompiledCSS(){
+	
+	var theme = null;
+	this._COMPILED_LESS_CSS = this.compileCSS();
 
-	if(COMPILED_LESS_CSS != null){
-	//TODO clone  compiled from currently slected theme
-		var theme= THEMES['compiled'];
-		theme.less = CURRENT_THEME.less;
-		theme.lessVariables = CURRENT_THEME.lessVariables;
+	if(this._COMPILED_LESS_CSS != null){
+	//clone compiled from currently selected theme
+		theme = this._THEMES['compiled'];
+		theme.less = this._CURRENT_THEME.less;
+		theme.lessVariables = this._CURRENT_THEME.lessVariables;
 		theme.compiled = true;
-		theme.compiledLessVariables = COMPILED_LESS_CSS.variables; 
-		theme.compiledCssMin = COMPILED_LESS_CSS['bootstrap.min.css'];
+		theme.compiledLessVariables = this._COMPILED_LESS_CSS['variables.less'] || {}; 
+		theme.compiledCssMin = this._COMPILED_LESS_CSS['bootstrap.min.css'];
 
 		//disable default CSS
 		//store in localstorage
-		window.localStorage.setItem('compiled', JSON.stringify(theme));
+		
 		//activate alternate CSS
 	}	
-}
 
-function getVariableKey(key){
+};
+
+Controller.prototype.getVariableKey = function getVariableKey(key){
 	if(key.charAt(0) === "@"){
 		return key.slice(1); 
 	}else{
 		return key;
 	}
-}
+};
 
-function initDraggable(){
+function initDraggable(/*@{Controller}*/controller){
 
 	$(".icon-resize-full").next("input").click(function (evt){
 		evt.stopPropagation();
@@ -433,51 +399,21 @@ function initDraggable(){
 
 //make parent element draggable
   $(".color-picker").draggable({ revert: "valid",cursor: "move" ,opacity: 0.9, helper: "clone",revertDuration: 50,zIndex: 6000 });
-	/* Disable Color picker for now
-	.focusin( function(){
-	  var slider = $(this).ColorPickerSliders({
-		  color: scope.color.hex,
-		  order: {
-			  preview:1,
-			  hsl: 2,
-			  opacity:3
-		  } ,
-		  onchange: function(container, color) {
-			//update scope variables double bindings
-			//tinycolor object is in color.tiny
-			 scope.color.hex = color.tiny.toHexString();
-			 scope.color.rgb = color.tiny.toRgbString();
-			 //scope.color.name = color.tiny.toName();
-			 scope.color.name = $.xcolor.nearestname(color.tiny.toHexString());
-			 scope.color.hsl = color.tiny.toHslString();
-			 //dynamically update fontcolor
 
-			if (color.cielch.l < 60) {
-				scope.color.fontColor = "white";
-			}
-			else {
-				scope.color.fontColor = "black";
-			}
-			 //fire DOM updates
-			 scope.$digest();
-		  }
-		});
-	  //force display
-	  $(this).trigger("colorpickersliders.showPopup");
-	});
-//*/
 }
 
-function initPreviewToggle(){
+function initPreviewToggle(/*@{Controller}*/controller){
 	$("#btn-compile").click(function (evt) {
 		evt.stopPropagation();
 		evt.preventDefault();
 		var $this = $(this);
 		$this.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Compile");
-		updateCompiledCSS();
+		controller.updateCompiledCSS();
+		var theme = controller.getTheme('compiled');
+		window.localStorage.setItem('compiled', JSON.stringify(theme));
 		$this.html("<i class='icon-fixed-width icon-gear'></i>Compile");
 		$("#theme-selector").val("compiled");
-		updateCSS(THEMES['compiled']);
+		updateCSS(theme);
 
 	});
 	
@@ -495,7 +431,7 @@ function initPreviewToggle(){
 			$(".edit-view").hide();
 			$("#variables").removeClass("col-lg-9 col-lg-offset-3").addClass("col-lg-12");
 			$("#colortab").removeClass("hidden-xs hidden-sm affix");
-			//updateCompiledCSS();
+
 			$this.html("<i class='icon-fixed-width icon-edit'></i>Edit");
 			$("#content").removeClass("theme-edit");
 			
@@ -516,7 +452,7 @@ function initPreviewToggle(){
 
 }
 
-function generateZip(css,less) {
+Controller.prototype.generateZip = function generateZip(css,less) {
 	if (!css ){
 		return;
 	}
@@ -540,23 +476,26 @@ function generateZip(css,less) {
 	return content;
 };
   
-   
-function initColorPickers(){
+Controller.prototype.setVariable = function(key, value){
+	this._LESS_VARIABLES[key] = {'default':value,'value':value };
+};
+
+function initColorPickers(/*@{Controller}*/controller){
 $lessVariablesInput.each( function(i,elt){
 	
 		var $this = $(elt);
 		//remove @ from key
-		var key = getVariableKey($this.attr("id"));
+		var key = controller.getVariableKey($this.attr("id"));
 
 		var value = $this.val().length > 0 ? $this.val():$this.attr("placeholder");
 		$this.val(value);
-		if(DEBUG){
+		if(_DEBUG){
 			console.log(i+" - {"+key + "} = [ "+value+" ]");
 		}
-		LESS_VARIABLES[key] = {'default':value,'value':value };
+		controller.setVariable(key,{'default':value,'value':value });
 		//contains @
 		if(value && value.indexOf("@") >= 0){
-			updateLESSVariablesRef(key,value,$this);
+			controller.updateLESSVariablesRef(key,value,$this);
 		}
 		
 	//})
@@ -590,7 +529,7 @@ $lessVariablesInput.each( function(i,elt){
 				var key = $input.attr("data-var");
 				//slow process
 			   //var colorName = $.xcolor.nearestname(colorHex);
-				if(DEBUG){
+				if(_DEBUG){
 					console.log(key+" 0.c - change "+ (new(Date) - startTime1) + "ms");
 				}
 			   //dynamically update fontcolor
@@ -605,12 +544,12 @@ $lessVariablesInput.each( function(i,elt){
 				
 				$this.css("color", fontColor);
 				
-				if(DEBUG){
+				if(_DEBUG){
 					console.log("onchange - updateLESSVariables "+ key);
 					console.log(key+" 1.c - change "+ (new(Date) - startTime1) + "ms");
 				}
 				
-				updateLESSVariables(key, colorHex);
+				controller.updateLESSVariables(key, colorHex);
 		
 			}
 			
@@ -657,21 +596,21 @@ function tooltipInit(){
 }
 
 
-function initDownloadButton(){
+function initDownloadButton(/*@{Controller}*/controller){
   var $downloadBtn = $('#btn-download');
 
   $downloadBtn.on('click', function (e) {
     e.preventDefault();
     $downloadBtn.attr('disabled', 'disabled');
 	$downloadBtn.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Download");
-    var zip = generateZip(compileCSS(),null);
+    var zip = controller.generateZip(controller.compileCSS(),null);
 	saveAs(zip, "bootstrap.zip");
 	$downloadBtn.removeAttr('disabled');
 	$downloadBtn.html("<i class='icon-fixed-width icon-download-alt'></i>Download");
   });
 }
 
-  function loadThemeVariables(theme) {
+Controller.prototype.loadThemeVariables = function loadThemeVariables(theme) {
 	var startTime = new(Date) ;
     var variables = {};
 	if(theme.compiled){
@@ -684,7 +623,7 @@ function initDownloadButton(){
 			var value = values[1].replace(/\/\/.+/gm,"").trim();
 			
 			if(typeof variables === "object"){
-				if(DEBUG){
+				if(_DEBUG){
 					console.log(j+" - "+key+" = "+value);
 				}
 				variables[key] = value;
@@ -698,15 +637,15 @@ function initDownloadButton(){
 	//loop through all the links
 		for(var i in urls){
 			var url = urls[i];
-			loadLESSVariables(url,variables);
+			this.loadLESSVariables(url,variables);
 		}
 		
 	}
 	console.log("loadThemeVariables "+ (new(Date) - startTime) + "ms");
 	return variables;
-  }
+  };
  
-function loadLESSVariables(url,variables){
+Controller.prototype.loadLESSVariables = function loadLESSVariables(url,variables){
 	var pattern =/([^@]+):([^;]+)/gm;
 	pattern =/([^@]+):([^;]+)/gm;
 	
@@ -728,7 +667,7 @@ function loadLESSVariables(url,variables){
 				var value = values[1].replace(/\/\/.+/gm,"").trim();
 				
 				if(typeof variables === "object"){
-					if(DEBUG){
+					if(_DEBUG){
 						console.log(j+" - "+key+" = "+value);
 					}
 					variables[key] = value;
@@ -741,10 +680,10 @@ function loadLESSVariables(url,variables){
 		  console.error(textStatus);
 		});
 	//return deferredReady.promise();
-} 
+} ;
 
-function populateLESSVariables(theme){
-  var variables = loadThemeVariables(theme);
+Controller.prototype.populateLESSVariables = function populateLESSVariables(theme){
+  var variables = this.loadThemeVariables(theme);
   //reset the new references for all loaded variables
   /*for(var id in variables){
 	var value = variables[id];
@@ -752,9 +691,10 @@ function populateLESSVariables(theme){
 	updateLESSVariablesRef(id,value,$input);
   }
   //*/
-  LESS_VARIABLES_REF = null;
-  LESS_VARIABLES_REF = [];
+  this._LESS_VARIABLES_REF = null;
+  this._LESS_VARIABLES_REF = [];
   var startTime = new(Date);
+  var controller = this;
 /*$("input:text.form-control")
 	.filter("[data-var]")//*/
 	$lessVariablesInput.each(function(i,elt){
@@ -762,7 +702,7 @@ function populateLESSVariables(theme){
 		var id = $this.attr("id");
 		var value = variables[id];
 		if(id && value){
-			updateLESSVariablesRef(id,value,$this);
+			controller.updateLESSVariablesRef(id,value,$this);
 		}
 	}).each(function(i,elt){
 		var startTime1 = new(Date);
@@ -799,11 +739,11 @@ function populateLESSVariables(theme){
 						//*/
 						//onchange colorpicker update variables
 						$this.trigger("colorpickersliders.updateColor",newVal);	
-						if(DEBUG){						
+						if(_DEBUG){						
 							console.log(id+" 2.c - pop "+ (new(Date) - startTime1) + "ms");
 						}
 					}else{
-						if(DEBUG){
+						if(_DEBUG){
 							console.log($this.attr('id')+" = "+newVal);
 						}
 						$this.val(value);
@@ -822,31 +762,37 @@ function populateLESSVariables(theme){
 			}
 			var time = (new(Date) - startTime1);
 			if(time > 0){
-				if(DEBUG){console.log(id+" - pop "+ time + "ms");}
+				if(_DEBUG){console.log(id+" - pop "+ time + "ms");}
 			}
 	  });
 	  
 	  console.log("populateLESSVariables "+ (new(Date) - startTime) + "ms");
-}
+};
 
-//update theme when selection changes
-$("#theme-selector").change(function(evt){ 
-	evt.stopPropagation();
-	var selection = $(this).val();
-	if(DEBUG){
-		console.log(selection);
-	}
 
-	//$("#loading").show();
-	$("#content").css("visibility","hidden");	
-	CURRENT_THEME = THEMES[selection];
-	updateCSS(CURRENT_THEME);
-	populateLESSVariables(CURRENT_THEME);
-	
-	//$("#loading").hide();
-	$("#content").css("visibility","visible");	
-});
+
+function initThemeSelector(/*@{Controller}*/controller){
+	//update theme when selection changes
+	$("#theme-selector").change(function(evt){ 
+		evt.stopPropagation();
+		var selection = $(this).val();
+		if(_DEBUG){
+			console.log(selection);
+		}
+
+		//$("#loading").show();
+		$("#content").css("visibility","hidden");
+		controller.setCurrentTheme(selection);	
+		var theme = controller.getCurrentTheme();
+		updateCSS(theme);
+		controller.populateLESSVariables(theme);
+		
+		//$("#loading").hide();
+		$("#content").css("visibility","visible");	
+	});
+
 //*/
+}
 
 function updateCSS(theme){
 
@@ -865,32 +811,44 @@ function updateCSS(theme){
 	}
 }
 
+Controller.prototype.setCurrentTheme = function(key){
+	this._CURRENT_THEME = this._THEMES[key];
+};
+Controller.prototype.getCurrentTheme = function(){
+	return this._CURRENT_THEME;
+};
+Controller.prototype.setTheme = function(key,theme){
+	this._THEMES[key] = theme;
+};
 
 $(function() {
+
+	var /*@{Controller}*/ controller = new Controller();
+	
 	//load stored compiled theme from cache
 	if (window.localStorage.getItem('compiled')) {
 		var theme = JSON.parse(window.localStorage.getItem('compiled'))
-		THEMES['compiled'] = theme;
+		controller.setTheme('compiled',theme);
 	}
-	
-	initDownloadButton();
+	initThemeSelector(controller)
+	initDownloadButton(controller);
 
-	initPreviewToggle();
+	initPreviewToggle(controller);
 
-	initDraggable();
+	initDraggable(controller);
 
-	initColorPickers();
+	initColorPickers(controller);
 
 	tooltipInit();
 	
 	//display after download is complete
-	loadThemes("less/bootstrap-default.json");
-	loadThemes("less/bootswatch.json");
-	CURRENT_THEME = THEMES['default'];
+	controller.loadThemes("less/bootstrap-default.json");
+	controller.loadThemes("less/bootswatch.json");
+	controller.setCurrentTheme('default');
 	
 	//loadThemes("http://api.bootswatch.com/3/");
 	$("#loading").hide();
 	$("#content").css("visibility","visible");
 	$("#theme-selector").val("default");
-	//updateCSS(CURRENT_THEME);//?
+	//updateCSS(this._CURRENT_THEME);//?
 });
