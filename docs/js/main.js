@@ -408,6 +408,7 @@ function initPreviewToggle(/*@{Controller}*/controller){
 		evt.preventDefault();
 		var $this = $(this);
 		$this.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Compile");
+		controller.setCurrentTheme($("#theme-selector").val());
 		controller.updateCompiledCSS();
 		var theme = controller.getTheme('compiled');
 		window.localStorage.setItem('compiled', JSON.stringify(theme));
