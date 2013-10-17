@@ -51,8 +51,17 @@ function CMYK(c, m, y, k) {
 	this.k = k;
 }
  
+/**
+ * [ColorConverter description]
+ * @type {Object}
+ */
 var ColorConverter = {
  
+ 	/**
+ 	 * [_RGBtoHSV description]
+ 	 * @param  {[type]} RGB [description]
+ 	 * @return {[type]}     [description]
+ 	 */
 	_RGBtoHSV : function  (RGB) {
 		var result = new HSV(0, 0, 0);
  
@@ -89,7 +98,11 @@ var ColorConverter = {
  
 		return result;
 	},
- 
+ 	/**
+ 	 * [_HSVtoRGB description]
+ 	 * @param  {[type]} HSV [description]
+ 	 * @return {[type]}     [description]
+ 	 */
 	_HSVtoRGB : function  (HSV) {
 		var result = new RGB(0, 0, 0);
  
@@ -126,7 +139,11 @@ var ColorConverter = {
  
 		return result;
 	},
- 
+ 	/**
+ 	 * [_CMYKtoRGB description]
+ 	 * @param  {[type]} CMYK [description]
+ 	 * @return {[type]}      [description]
+ 	 */
 	_CMYKtoRGB : function (CMYK){
 		var result = new RGB(0, 0, 0);
  
@@ -145,7 +162,11 @@ var ColorConverter = {
  
 		return result;
 	},
- 
+ 	/**
+ 	 * [_RGBtoCMYK description]
+ 	 * @param  {[type]} RGB [description]
+ 	 * @return {[type]}     [description]
+ 	 */
 	_RGBtoCMYK : function (RGB){
 		var result = new CMYK(0, 0, 0, 0);
  
@@ -165,19 +186,31 @@ var ColorConverter = {
  
 		return result;
 	},
- 
+ 	/**
+ 	 * [toRGB description]
+ 	 * @param  {[type]} o [description]
+ 	 * @return {[type]}   [description]
+ 	 */
 	toRGB : function (o) {
 		if (o instanceof RGB) { return o; }
 		if (o instanceof HSV) {	return this._HSVtoRGB(o); }
 		if (o instanceof CMYK) { return this._CMYKtoRGB(o); }
 	},
- 
+ 	/**
+ 	 * [toHSV description]
+ 	 * @param  {[type]} o [description]
+ 	 * @return {[type]}   [description]
+ 	 */
 	toHSV : function (o) {
 		if (o instanceof HSV) { return o; }
 		if (o instanceof RGB) { return this._RGBtoHSV(o); }
 		if (o instanceof CMYK) { return this._RGBtoHSV(this._CMYKtoRGB(o)); }
 	},
- 
+ 	/**
+ 	 * [toCMYK description]
+ 	 * @param  {[type]} o [description]
+ 	 * @return {[type]}   [description]
+ 	 */
 	toCMYK : function (o) {
 		if (o instanceof CMYK) { return o; }
 		if (o instanceof RGB) { return this._RGBtoCMYK(o); }
@@ -254,6 +287,11 @@ function rgbToHsl(r, g, b){
     return [h, s, l];
 }
 
+/**
+ * [ColorLuminance description]
+ * @param {[type]} hex [description]
+ * @param {[type]} lum [description]
+ */
 function ColorLuminance(hex, lum) {
 
 	// validate hex string
@@ -274,6 +312,11 @@ function ColorLuminance(hex, lum) {
 	return rgb;
 }
 
+/**
+ * [hexToRgbString description]
+ * @param  {[type]} hex [description]
+ * @return {[type]}     [description]
+ */
 function hexToRgbString(hex) {
    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
    var tmp = {
@@ -284,6 +327,11 @@ function hexToRgbString(hex) {
    return 'rgb('+tmp.r+','+tmp.g+','+tmp.b+')';
 }
 
+/**
+ * [rgb2hex description]
+ * @param  {[type]} rgb [description]
+ * @return {[type]}     [description]
+ */
 function rgb2hex(rgb) {
 	rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
 	function hex(x) {
@@ -292,9 +340,12 @@ function rgb2hex(rgb) {
 	return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
 }
 
-  
-function switch_style ( css_title )
-{
+/**
+ * [switch_style description]
+ * @param  {[type]} css_title [description]
+ * @return {[type]}           [description]
+ */
+function switch_style ( css_title ){
 // You may use this script on your site free of charge provided
 // you do not remove this notice or the URL below. Script from
 // http://www.thesitewizard.com/javascripts/change-style-sheets.shtml

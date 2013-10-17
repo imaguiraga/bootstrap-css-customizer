@@ -1,15 +1,48 @@
 var _DEBUG = false;
-	
+/**
+ * [Controller description]
+ */
 function Controller(){
 
+	/**
+	 * [_CW bootstrap copyright]
+	 * @type {String}
+	 */
 	this._CW = '/*!\n * Bootstrap v3.0.0\n *\n * Copyright 2013 Twitter, Inc\n * Licensed under the Apache License v2.0\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Designed and built with all the love in the world @twitter by @mdo and @fat.\n */\n\n';
-
+	/**
+	 * [_THEMES description]
+	 * @type {Object}
+	 */
 	this._THEMES = {};
+	/**
+	 * [_CURRENT_THEME description]
+	 * @type {Object}
+	 */
 	this._CURRENT_THEME = null;
+	/**
+	 * [_COMPILED_LESS_CSS description]
+	 * @type {Object}
+	 */
 	this._COMPILED_LESS_CSS = null;
+	/**
+	 * [_LESS_VARIABLES description]
+	 * @type {Object}
+	 */
 	this._LESS_VARIABLES = {};
+	/**
+	 * [_LESS_VARIABLES_REF description]
+	 * @type {Array}
+	 */
 	this._LESS_VARIABLES_REF = {};
-	this._parser = new(less.Parser);//new less.Parser(new less.tree.parseEnv(less));
+	/**
+	 * [_parser description]
+	 * @type {less.Parser}
+	 */
+	this._parser = new less.Parser();//new less.Parser(new less.tree.parseEnv(less));
+	/**
+	 * [_COMMON_LESS description]
+	 * @type {Object}
+	 */
 	this._COMMON_LESS = {"less": 
 		[
 			"bootstrap/mixins.less",
@@ -59,21 +92,37 @@ function Controller(){
 		"lessVariables": ["bootstrap/variables.less"]
 	};
 }
- //load initial data
+
+ /**
+  * [getThemes description]
+  * @return {Object} [description]
+  */
  Controller.prototype.getThemes = function getThemes() {
 	return this._THEMES;
  };
-  //load initial data
+
+  /**
+   * [getTheme description]
+   * @param  {String} key [description]
+   * @return {Object}    [description]
+   */
  Controller.prototype.getTheme = function getTheme(key) {
 	return this._THEMES[key];
  };
+
+ /**
+  * [loadThemes description]
+  * @param  {String} url
+  * @return {Void}
+  */
 Controller.prototype.loadThemes = function loadThemes(url) {
-    var controller = this;
+
+    var /*@{Controller}*/ controller = this;
     $.ajax({
       url: url,
       type: 'GET',
       dataType: 'json'
-    })
+    })//*
     .done(function(result) {
       var data = result;
 	  /*
@@ -126,7 +175,13 @@ Controller.prototype.loadThemes = function loadThemes(url) {
 
 //update less variables
 
-
+/**
+ * [updateLESSVariablesRef description]
+ * @param  {String} key
+ * @param  {String} value
+ * @param  {Object} $input
+ * @return {Void}
+ */
 Controller.prototype.updateLESSVariablesRef = function updateLESSVariablesRef(key,value,$input){
 	if( typeof key === "undefined"){
 		return;
@@ -140,6 +195,7 @@ Controller.prototype.updateLESSVariablesRef = function updateLESSVariablesRef(ke
 	@brand-primary
 	(@popover-arrow-width 1) 
 	//*/
+	/** @type {RegExp} [description] */
 	var pattern = /@([a-zA-Z0-9\-])*[^;,\)]/gm;
 	//find reference
 	var result = value.replace(","," ").trim().match(pattern);
@@ -181,8 +237,15 @@ Controller.prototype.updateLESSVariablesRef = function updateLESSVariablesRef(ke
 
 };
 
+/**
+ * [updateLESSVariables description]
+ * @param  {String} key   [description]
+ * @param  {String} value [description]
+ * @return {Void}       [description]
+ */
 Controller.prototype.updateLESSVariables = function updateLESSVariables(key, value){	
-	var startTime = new(Date);
+/** @type {Date} [description] */
+	var startTime = new Date();
     var variables = null;//variables that changed
 	if( typeof key !== "undefined"){
 		if(key.charAt(0) === "@" && value != null){	
@@ -202,6 +265,7 @@ Controller.prototype.updateLESSVariables = function updateLESSVariables(key, val
 	if(_DEBUG){
 	console.log("start {"+key + "} = [ "+value+" ] - "+ (new(Date) - startTime) + "ms");
 	}
+	/** @type {Array} [description] */
     var stack = [{'key':key,'value':value}];
 
     while(stack.length > 0){
@@ -282,7 +346,18 @@ Controller.prototype.updateLESSVariables = function updateLESSVariables(key, val
 	
 };
 
+
+/**
+ * [$lessVariablesInput description]
+ * @type {List<Input>}
+ */
 var $lessVariablesInput = $("input:text.form-control").filter("[data-var]");
+
+/**
+ * [collectLESSVariables description]
+ * @param  {Object} theme [description]
+ * @return {String}       [description]
+ */
 function collectLESSVariables(theme){
 	var startTime, endTime;
     startTime = endTime = new(Date);
@@ -315,6 +390,10 @@ function collectLESSVariables(theme){
 	return variables.join(";\n")+";";
 }
 
+/**
+ * [compileCSS description]
+ * @return {Object} [description]
+ */
 Controller.prototype.compileCSS = function compileCSS(){
 	var startTime, endTime;
     startTime = endTime = new(Date);
@@ -343,6 +422,10 @@ Controller.prototype.compileCSS = function compileCSS(){
 	return css;
 };
 
+/**
+ * [updateCompiledCSS description]
+ * @return {Void} [description]
+ */
 Controller.prototype.updateCompiledCSS = function updateCompiledCSS(){
 	
 	var theme = null;
@@ -365,6 +448,11 @@ Controller.prototype.updateCompiledCSS = function updateCompiledCSS(){
 
 };
 
+/**
+ * [getVariableKey description]
+ * @param  {String} key [description]
+ * @return {String}     [description]
+ */
 Controller.prototype.getVariableKey = function getVariableKey(key){
 	if(key.charAt(0) === "@"){
 		return key.slice(1); 
@@ -373,7 +461,12 @@ Controller.prototype.getVariableKey = function getVariableKey(key){
 	}
 };
 
-function initDraggable(/*@{Controller}*/controller){
+/**
+ * [initDraggable description]
+ * @param  {Controller} controller [description]
+ * @return {Void}            [description]
+ */
+function initDraggable(/*@type {Controller}*/ controller){
 
 	$(".icon-resize-full").next("input").click(function (evt){
 		evt.stopPropagation();
@@ -402,8 +495,13 @@ function initDraggable(/*@{Controller}*/controller){
 
 }
 
-function initPreviewToggle(/*@{Controller}*/controller){
-	$("#btn-compile").click(function (evt) {
+/**
+ * [initPreviewToggle description]
+ * @param  {Controller} controller [description]
+ * @return {Void}            [description]
+ */
+function initPreviewToggle(/*@type {Controller}*/ controller){
+	$("#btn-compile").click(function (/*@type {Event}*/ evt) {
 		evt.stopPropagation();
 		evt.preventDefault();
 		var $this = $(this);
@@ -419,7 +517,7 @@ function initPreviewToggle(/*@{Controller}*/controller){
 	});
 	
 	//init PreviewToggle
-	$("#btn-preview").click(function (evt) {
+	$("#btn-preview").click(function (/*@type {Event}*/ evt) {
 		evt.stopPropagation();
 		evt.preventDefault();
 		var $this = $(this);
@@ -453,6 +551,12 @@ function initPreviewToggle(/*@{Controller}*/controller){
 
 }
 
+/**
+ * [generateZip description]
+ * @param  {[Object]} css  [description]
+ * @param  {[Object]} less [description]
+ * @return {Object}      [description]
+ */
 Controller.prototype.generateZip = function generateZip(css,less) {
 	if (!css ){
 		return;
@@ -477,12 +581,22 @@ Controller.prototype.generateZip = function generateZip(css,less) {
 	return content;
 };
   
+/**
+ * [setVariable description]
+ * @param {String} key   [description]
+ * @param {String} value [description]
+ */
 Controller.prototype.setVariable = function(key, value){
 	this._LESS_VARIABLES[key] = {'default':value,'value':value };
 };
 
-function initColorPickers(/*@{Controller}*/controller){
-$lessVariablesInput.each( function(i,elt){
+/**
+ * [initColorPickers description]
+ * @param  {Controller} controller [description]
+ * @return {Void}            [description]
+ */
+function initColorPickers(/*@type {Controller}*/ controller){
+	$lessVariablesInput.each( function(i,elt){
 	
 		var $this = $(elt);
 		//remove @ from key
@@ -499,92 +613,95 @@ $lessVariablesInput.each( function(i,elt){
 			controller.updateLESSVariablesRef(key,value,$this);
 		}
 		
-	//})
-	//.filter(".color-input")
-	//.each( function(i,elt){
-	if($this.hasClass("color-input")){
-		var $this = $(elt);
-		$this.before("<i class='icon-bullseye'></i>");
-		var key = $this.attr("data-var");
-		var value = $this.val();
-		$this.attr({
-			"data-color-format" : "hex",			
-		});
-		$this.css('background-color',value);
-	
-		$this.ColorPickerSliders({
-			order: {
-				preview:1,
-				hsl: 2,
-				opacity:3
-			} ,
-			onchange: function(container, color) {
-			   var startTime1 = new(Date);
-				var $this = $(this);
-			  //update scope variables double bindings
-			  //tinycolor object is in color.tiny
-			   var colorHex = color.tiny.toHexString();
-			   var colorRgb = color.tiny.toRgbString();
-
-				var $input = $(this.connectedinput);
-				var key = $input.attr("data-var");
-				//slow process
-			   //var colorName = $.xcolor.nearestname(colorHex);
-				if(_DEBUG){
-					console.log(key+" 0.c - change "+ (new(Date) - startTime1) + "ms");
-				}
-			   //dynamically update fontcolor
-				var fontColor = "black";
-
-				if (color.cielch.l < 60) {
-					fontColor = "white";
-				}
-				else {
-					fontColor = "black";
-				}
-				
-				$this.css("color", fontColor);
-				
-				if(_DEBUG){
-					console.log("onchange - updateLESSVariables "+ key);
-					console.log(key+" 1.c - change "+ (new(Date) - startTime1) + "ms");
-				}
-				
-				controller.updateLESSVariables(key, colorHex);
+		//})
+		//.filter(".color-input")
+		//.each( function(i,elt){
+		if($this.hasClass("color-input")){
+			var $this = $(elt);
+			$this.before("<i class='icon-bullseye'></i>");
+			var key = $this.attr("data-var");
+			var value = $this.val();
+			$this.attr({
+				"data-color-format" : "hex",			
+			});
+			$this.css('background-color',value);
 		
-			}
+			$this.ColorPickerSliders({
+				order: {
+					preview:1,
+					hsl: 2,
+					opacity:3
+				} ,
+				onchange: function(container, color) {
+				   var startTime1 = new(Date);
+					var $this = $(this);
+				  //update scope variables double bindings
+				  //tinycolor object is in color.tiny
+				   var colorHex = color.tiny.toHexString();
+				   var colorRgb = color.tiny.toRgbString();
+
+					var $input = $(this.connectedinput);
+					var key = $input.attr("data-var");
+					//slow process
+				   //var colorName = $.xcolor.nearestname(colorHex);
+					if(_DEBUG){
+						console.log(key+" 0.c - change "+ (new(Date) - startTime1) + "ms");
+					}
+				   //dynamically update fontcolor
+					var fontColor = "black";
+
+					if (color.cielch.l < 60) {
+						fontColor = "white";
+					}
+					else {
+						fontColor = "black";
+					}
+					
+					$this.css("color", fontColor);
+					
+					if(_DEBUG){
+						console.log("onchange - updateLESSVariables "+ key);
+						console.log(key+" 1.c - change "+ (new(Date) - startTime1) + "ms");
+					}
+					
+					controller.updateLESSVariables(key, colorHex);
 			
-		})
-		.droppable({
-			drop: function( event, ui ) {
-			  event.stopPropagation();
-			  var newVal = ui.draggable.css('background-color');
-			  var colorHex = rgb2hex(newVal);
-			  var $this = $(this);
-			  $this.val(colorHex);
-	 
-			   var fontColor = "white";
-			   
-			   if($.xcolor.readable("white",newVal)){
-					fontColor = "white";
-				} else {
-					fontColor = "black";
 				}
 				
-				$this.css( {'background-color' :colorHex, 'color' : fontColor} );
-				//*/
+			})
+			.droppable({
+				drop: function( event, ui ) {
+				  event.stopPropagation();
+				  var newVal = ui.draggable.css('background-color');
+				  var colorHex = rgb2hex(newVal);
+				  var $this = $(this);
+				  $this.val(colorHex);
+		 
+				   var fontColor = "white";
+				   
+				   if($.xcolor.readable("white",newVal)){
+						fontColor = "white";
+					} else {
+						fontColor = "black";
+					}
+					
+					$this.css( {'background-color' :colorHex, 'color' : fontColor} );
+					//*/
 
-				$this.trigger("colorpickersliders.updateColor",newVal);
+					$this.trigger("colorpickersliders.updateColor",newVal);
 
-			}
-			
-		});
-	}
+				}
+				
+			});
+		}
 	});	
 
 }
 
-
+/**
+ * [tooltipInit description]
+ * @return {[void]} [description]
+ */
 function tooltipInit(){
 	// tooltip demo
     $("[data-toggle=tooltip]").tooltip();
@@ -596,7 +713,11 @@ function tooltipInit(){
     $('.bs-docs-carousel-example').carousel();
 }
 
-
+/**
+ * [initDownloadButton description]
+ * @param  {Controller} controller [description]
+ * @return {Void}            [description]
+ */
 function initDownloadButton(/*@{Controller}*/controller){
   var $downloadBtn = $('#btn-download');
 
@@ -611,6 +732,11 @@ function initDownloadButton(/*@{Controller}*/controller){
   });
 }
 
+/**
+ * [loadThemeVariables description]
+ * @param  {Object} theme [description]
+ * @return {Object}       [description]
+ */
 Controller.prototype.loadThemeVariables = function loadThemeVariables(theme) {
 	var startTime = new(Date) ;
     var variables = {};
@@ -645,7 +771,13 @@ Controller.prototype.loadThemeVariables = function loadThemeVariables(theme) {
 	console.log("loadThemeVariables "+ (new(Date) - startTime) + "ms");
 	return variables;
   };
- 
+
+/**
+ * [loadLESSVariables description]
+ * @param  {String} url       [description]
+ * @param  {Object} variables [description]
+ * @return {Void}           [description]
+ */
 Controller.prototype.loadLESSVariables = function loadLESSVariables(url,variables){
 	var pattern =/([^@]+):([^;]+)/gm;
 	pattern =/([^@]+):([^;]+)/gm;
@@ -683,6 +815,11 @@ Controller.prototype.loadLESSVariables = function loadLESSVariables(url,variable
 	//return deferredReady.promise();
 } ;
 
+/**
+ * [populateLESSVariables description]
+ * @param  {Object} theme [description]
+ * @return {[type]}       [description]
+ */
 Controller.prototype.populateLESSVariables = function populateLESSVariables(theme){
   var variables = this.loadThemeVariables(theme);
   //reset the new references for all loaded variables
@@ -692,8 +829,8 @@ Controller.prototype.populateLESSVariables = function populateLESSVariables(them
 	updateLESSVariablesRef(id,value,$input);
   }
   //*/
-  this._LESS_VARIABLES_REF = null;
-  this._LESS_VARIABLES_REF = [];
+
+  this._LESS_VARIABLES_REF = {};
   var startTime = new(Date);
   var controller = this;
 /*$("input:text.form-control")
@@ -770,9 +907,12 @@ Controller.prototype.populateLESSVariables = function populateLESSVariables(them
 	  console.log("populateLESSVariables "+ (new(Date) - startTime) + "ms");
 };
 
-
-
-function initThemeSelector(/*@{Controller}*/controller){
+/**
+ * [initThemeSelector description]
+ * @param  {Controller} controller [description]
+ * @return {Void}            [description]
+ */
+function initThemeSelector(/*@type {Controller}*/controller){
 	//update theme when selection changes
 	$("#theme-selector").change(function(evt){ 
 		evt.stopPropagation();
@@ -795,6 +935,11 @@ function initThemeSelector(/*@{Controller}*/controller){
 //*/
 }
 
+/**
+ * [updateCSS description]
+ * @param  {Object} theme [description]
+ * @return {Void}       [description]
+ */
 function updateCSS(theme){
 
 	var $link = document.getElementById("bootstrap:css");
@@ -812,26 +957,47 @@ function updateCSS(theme){
 	}
 }
 
+/**
+ * [setCurrentTheme description]
+ * @param {String} key [description]
+ */
 Controller.prototype.setCurrentTheme = function(key){
 	this._CURRENT_THEME = this._THEMES[key];
 };
+
+/**
+ * [getCurrentTheme description]
+ * @return {Object} [description]
+ */
 Controller.prototype.getCurrentTheme = function(){
 	return this._CURRENT_THEME;
 };
+
+/**
+ * [setTheme description]
+ * @param {String} key   [description]
+ * @param {Object} theme [description]
+ */
 Controller.prototype.setTheme = function(key,theme){
 	this._THEMES[key] = theme;
 };
 
-$(function() {
+/**
+ * [Anonymous startup function]
+ * @return {Void} [description]
+ */
+$(function main() {
 
-	var /*@{Controller}*/ controller = new Controller();
+	var /*@type {Controller}*/ controller = new Controller();
 	
 	//load stored compiled theme from cache
 	if (window.localStorage.getItem('compiled')) {
 		var theme = JSON.parse(window.localStorage.getItem('compiled'))
 		controller.setTheme('compiled',theme);
 	}
+
 	initThemeSelector(controller)
+	
 	initDownloadButton(controller);
 
 	initPreviewToggle(controller);
@@ -851,5 +1017,5 @@ $(function() {
 	$("#loading").hide();
 	$("#content").css("visibility","visible");
 	$("#theme-selector").val("default");
-	//updateCSS(this._CURRENT_THEME);//?
+
 });
