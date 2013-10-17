@@ -33,7 +33,7 @@ function Controller(){
 	 * [_LESS_VARIABLES_REF description]
 	 * @type {Array}
 	 */
-	this._LESS_VARIABLES_REF = [];
+	this._LESS_VARIABLES_REF = {};
 	/**
 	 * [_parser description]
 	 * @type {less.Parser}
@@ -118,7 +118,7 @@ function Controller(){
 Controller.prototype.loadThemes = function loadThemes(url) {
 
     var /*@{Controller}*/ controller = this;
-    return $.ajax({
+    $.ajax({
       url: url,
       type: 'GET',
       dataType: 'json'
@@ -170,7 +170,7 @@ Controller.prototype.loadThemes = function loadThemes(url) {
     })
     .fail(function(jqXHR, textStatus) {
       console.error(textStatus);
-    });
+    })
   };
 
 //update less variables
@@ -829,7 +829,7 @@ Controller.prototype.populateLESSVariables = function populateLESSVariables(them
 	updateLESSVariablesRef(id,value,$input);
   }
   //*/
-  //creates bug this._LESS_VARIABLES = variables;
+
   this._LESS_VARIABLES_REF = {};
   var startTime = new(Date);
   var controller = this;
@@ -915,7 +915,7 @@ Controller.prototype.populateLESSVariables = function populateLESSVariables(them
 function initThemeSelector(/*@type {Controller}*/controller){
 	//update theme when selection changes
 	$("#theme-selector").change(function(evt){ 
-		//evt.stopPropagation();
+		evt.stopPropagation();
 		var selection = $(this).val();
 		if(_DEBUG){
 			console.log(selection);
@@ -996,7 +996,7 @@ $(function main() {
 		controller.setTheme('compiled',theme);
 	}
 
-	initThemeSelector(controller);
+	initThemeSelector(controller)
 	
 	initDownloadButton(controller);
 
@@ -1007,26 +1007,15 @@ $(function main() {
 	initColorPickers(controller);
 
 	tooltipInit();
-
+	
 	//display after download is complete
-	/*
 	controller.loadThemes("less/bootstrap-default.json");
 	controller.loadThemes("less/bootswatch.json");
 	controller.setCurrentTheme('default');
-	 */
-	$.when(
-		controller.loadThemes("less/bootstrap-default.json"),
-		controller.loadThemes("less/bootswatch.json")
-	).done(function(){
-		controller.setCurrentTheme('default');
-	//async load 
-		controller.populateLESSVariables(controller.getCurrentTheme());
-	});
 	
-	//*/
 	//loadThemes("http://api.bootswatch.com/3/");
 	$("#loading").hide();
-	$("#content").css("visibility","visible");	
-	$("#theme-selector").val("default");//.trigger('change');
+	$("#content").css("visibility","visible");
+	$("#theme-selector").val("default");
 
 });

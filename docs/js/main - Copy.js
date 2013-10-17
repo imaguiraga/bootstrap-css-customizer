@@ -118,7 +118,7 @@ function Controller(){
 Controller.prototype.loadThemes = function loadThemes(url) {
 
     var /*@{Controller}*/ controller = this;
-    return $.ajax({
+    $.ajax({
       url: url,
       type: 'GET',
       dataType: 'json'
@@ -170,7 +170,7 @@ Controller.prototype.loadThemes = function loadThemes(url) {
     })
     .fail(function(jqXHR, textStatus) {
       console.error(textStatus);
-    });
+    })
   };
 
 //update less variables
@@ -829,7 +829,7 @@ Controller.prototype.populateLESSVariables = function populateLESSVariables(them
 	updateLESSVariablesRef(id,value,$input);
   }
   //*/
-  //creates bug this._LESS_VARIABLES = variables;
+  this._LESS_VARIABLES = variables;
   this._LESS_VARIABLES_REF = {};
   var startTime = new(Date);
   var controller = this;
@@ -1009,19 +1009,11 @@ $(function main() {
 	tooltipInit();
 
 	//display after download is complete
-	/*
+	
 	controller.loadThemes("less/bootstrap-default.json");
 	controller.loadThemes("less/bootswatch.json");
 	controller.setCurrentTheme('default');
-	 */
-	$.when(
-		controller.loadThemes("less/bootstrap-default.json"),
-		controller.loadThemes("less/bootswatch.json")
-	).done(function(){
-		controller.setCurrentTheme('default');
-	//async load 
-		controller.populateLESSVariables(controller.getCurrentTheme());
-	});
+	controller.populateLESSVariables(controller.getCurrentTheme());
 	
 	//*/
 	//loadThemes("http://api.bootswatch.com/3/");
