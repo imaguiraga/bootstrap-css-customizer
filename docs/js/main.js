@@ -1024,6 +1024,10 @@ $(function main() {
 	});
 	
 	//*/
+	$('#color-tab-content').slimScroll({
+        height: '600px'
+    });
+
 	//loadThemes("http://api.bootswatch.com/3/");
 	$("#loading").hide();
 	$("#content").css("visibility","visible");	
