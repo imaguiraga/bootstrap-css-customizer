@@ -84,7 +84,8 @@ var Controller = (function () {
                 "bootstrap/popovers.less",
                 "bootstrap/carousel.less",
                 "bootstrap/utilities.less",
-                "bootstrap/responsive-utilities.less"
+                "bootstrap/responsive-utilities.less",
+	    "bootstrap/theme-override.less"
             ],
             "lessVariables": ["bootstrap/variables.less"]
         };
