@@ -85,7 +85,7 @@ var Controller = (function () {
                 "bootstrap/carousel.less",
                 "bootstrap/utilities.less",
                 "bootstrap/responsive-utilities.less",
-	    "bootstrap/theme-override.less"
+	    "bootstrap/theme-gradients.less"
             ],
             "lessVariables": ["bootstrap/variables.less"]
         };
@@ -687,7 +687,7 @@ var Application = (function () {
     function (/*@type {Controller}*/ controller) {
         $(".icon-resize-full").next("input").click(function (evt) {
             evt.stopPropagation();
-            $(this).attr('checked', true);
+           // $(this).attr('checked', true);
             $(".color-picker").each(function (i, elt) {
                 var $this = $(this);
                 $this.addClass("color-box-full");
@@ -697,7 +697,7 @@ var Application = (function () {
 
         $(".icon-resize-small").next("input").click(function (evt) {
             evt.stopPropagation();
-            $(this).attr('checked', true);
+           // $(this).attr('checked', true);
             $(".color-picker").each(function (i, elt) {
                 var $this = $(this);
                 $this.addClass("color-box-small");
@@ -741,7 +741,7 @@ var Application = (function () {
 
                 $this.removeClass("edit-view");
                 $(".edit-view").hide();
-                $("#variables").removeClass("col-lg-9 col-lg-offset-3").addClass("col-lg-12");
+                $("#variables").removeClass("col-lg-10 col-lg-offset-2").addClass("col-lg-12");
                 $("#colortab").removeClass("hidden-xs hidden-sm affix");
 
                 $this.html("<i class='icon-fixed-width icon-edit'></i>Edit");
@@ -752,7 +752,7 @@ var Application = (function () {
 
                 $(".edit-view").show();
                 $this.addClass("edit-view");
-                $("#variables").removeClass("col-lg-12").addClass("col-lg-9 col-lg-offset-3");
+                $("#variables").removeClass("col-lg-12").addClass("col-lg-10 col-lg-offset-2");
                 $("#colortab").addClass("hidden-xs hidden-sm affix");
                 $this.html("<i class='icon-fixed-width icon-eye-open'></i>Preview");
 
@@ -971,7 +971,7 @@ var Application = (function () {
 
         //*/
         $('#color-tab-content').slimScroll({
-            height: '600px'
+            height: '90%'
         });
 
         //loadThemes("http://api.bootswatch.com/3/");

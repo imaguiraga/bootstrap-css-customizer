@@ -1,27 +1,19 @@
 {% raw %}
 <!-- ColorView -->
-	<ul class="nav nav-tabs" id="colorTab" style="margin-top:10px">
+<h5>Colors</h5>
+	<ul class="nav nav-tabs" id="colortab-nav" style="margin-top:10px">
 		<li class="active">
 			<a href="#htmlColors" data-toggle="tab">
-				HTML Colors
+				HTML
 			</a>
 		</li>
 		<li>
 			<a href="#webSafeColors" data-toggle="tab">
-				Web-Safe Colors
+				Web-Safe
 			</a>
 		</li>
 	</ul>
-	<div id="color-tab-content" class="tab-content" ng-init="nameChecked=false;boxSize='small'" style="height:600px;overflow:auto">
-		<div class="tab-pane active container" id="htmlColors" style="background-color:#2f2f2f!important">
-			<a id="htmlColorsLink">
-			</a>
-			<!--
-			<h3 style="color:white;display:inline-block">
-				HTML Colors
-			</h3>
-			-->
-			<!-- data-toggle="buttons" -->
+				<!-- data-toggle="buttons" -->
 			<div style="margin:5px;" class="btn-group" data-toggle="">
 				<label class="btn btn-primary btn-sm">
 					<input type="checkbox" ng-model="nameChecked" />
@@ -48,6 +40,16 @@
 			</div>
 			<!--  Toggle On/Off colornames -->
 			<input class="form-control" ng-hide="boxSize == 'small'" type="search" ng-model="hf" placeholder="Filter Html Colors ..." />
+	<div id="color-tab-content" class="tab-content" ng-init="nameChecked=false;boxSize='small'" style="height: 100%; overflow: hidden; width: auto;margin-bottom: 20px;">
+		<div class="tab-pane active container" id="htmlColors" style="background-color:#2f2f2f!important">
+			<a id="htmlColorsLink">
+			</a>
+			<!--
+			<h3 style="color:white;display:inline-block">
+				HTML Colors
+			</h3>
+			-->
+
 			<div ng-repeat="colorGroup in htmlColors">
 				<!-- -->
                 <h5 style="color:white">
@@ -84,32 +86,6 @@
 				Web-Safe Colors
 			</h3>
 			-->
-			<div style="margin:5px;" class="btn-group" data-toggle="">
-				<label class="btn btn-primary btn-sm">
-					<input type="checkbox" ng-model="nameChecked" />
-					Names
-				</label>
-<!--
-<label class="btn btn-primary">
-<i class="icon-resize-{{boxSize}}"></i> <input type="checkbox" ng-model="boxSize" ng-true-value="full" ng-false-value="small" tilte="resize {{boxSize}}" /> {{boxSize}}
-</label>
--->
-				<!--     -->
-				<label class="btn btn-primary btn-sm">
-					<i class="icon-resize-small">
-					</i>
-					<input type="radio" name="options2" ng-model="boxSize" value="small" tilte="resize small" />
-					Small
-				</label>
-				<label class="btn btn-primary btn-sm">
-					<i class="icon-resize-full">
-					</i>
-					<input type="radio" name="options2" ng-model="boxSize" value="full" tilte="resize full" />
-					Large
-				</label>
-			</div>
-			<!--  Toggle On/Off colornames -->
-			<input class="form-control" ng-hide="boxSize == 'small'" type="search" ng-model="wf" placeholder="Filter Web-Safe Colors ..." />
 			<div ng-repeat="colorGroup in webSafeColors">
 				<h5 style="color:white">
 					{{colorGroup.groupName}}

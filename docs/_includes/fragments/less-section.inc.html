@@ -61,12 +61,14 @@
 
       <div class="col-xs-6 col-sm-4">
         <div class="page-header"><h3>Components</h3></div>
+		<!--
         <div class="checkbox">
           <label>
             <input type="checkbox" checked value="glyphicons.less">
             Glyphicons
           </label>
         </div>
+		-->
         <div class="checkbox">
           <label>
             <input type="checkbox" checked value="button-groups.less" data-dependency="buttons.less">
@@ -209,7 +211,7 @@
             Carousel
           </label>
         </div>
-
+<!--
         <div class="page-header"><h3>Utilities</h3></div>
         <div class="checkbox">
           <label>
@@ -229,6 +231,13 @@
             Component animations (for JS)
           </label>
         </div>
+-->
       </div><!-- .col-xs-6 .col-sm-4 -->
     </div><!-- /.row -->
+	<div class="bs-callout bs-callout-info">
+      <div class="page-header"><h4>Produces two files</h4></div>
+      <p>All checked Components will be compiled into a readable <code>bootstrap.css</code> and a minified <code>bootstrap.min.css</code> in addition there will be <code>variables.less</code> . We recommend you use the minified version in production.</p>
+	  <p>If only one set of components (i.e button) is checked less be compiled into a readable <code>bootstrap_[component].css</code> and a minified <code>bootstrap_[component].min.css</code> in addition there will be <code>variables_[component].less</code> . We recommend you use the minified version in production.</p>
+
+    </div>
   </div>

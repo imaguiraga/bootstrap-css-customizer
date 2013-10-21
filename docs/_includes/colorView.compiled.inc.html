@@ -1,49 +1,43 @@
 <!-- ColorView -->
-	<ul class="nav nav-tabs" id="colorTab" style="margin-top:10px">
+<h5>Colors</h5>
+	<ul class="nav nav-tabs" id="colortab-nav" style="margin-top:10px">
 		<li class="active">
 			<a href="#htmlColors" data-toggle="tab">
-				HTML Colors
+				HTML
 			</a>
 		</li>
 		<li>
 			<a href="#webSafeColors" data-toggle="tab">
-				Web-Safe Colors
+				Web-Safe
 			</a>
 		</li>
 	</ul>
-	<div id="color-tab-content" class="tab-content" style="height:600px;">
+	<!--  Toggle On/Off colornames -->
+	<!-- data-toggle="buttons" -->
+	<div style="margin:5px;" class="btn-group" data-toggle="">
+		<label class="btn btn-primary btn-sm">
+			<input type="checkbox" >
+			Names
+		</label>
+		<!--     -->
+		<label class="btn btn-primary btn-sm">
+			<i class="icon-resize-small">
+			</i>
+			<input type="radio" name="options" value="small" checked tilte="resize small" >
+			Small
+		</label>
+		<label class="btn btn-primary btn-sm">
+			<i class="icon-resize-full">
+			</i>
+			<input type="radio" name="options" value="full" tilte="resize full" >
+			Large
+		</label>
+	</div>
+	<div id="color-tab-content" class="tab-content" style="height: 100%; overflow: hidden; width: auto;margin-bottom: 20px;">
 		<div class="tab-pane active container" id="htmlColors" style="background-color:#2f2f2f!important">
 			<a id="htmlColorsLink">
 			</a>
-			<!--
-			<h3 style="color:white;display:inline-block">
-				HTML Colors
-			</h3>
-			-->
-			<!-- data-toggle="buttons" -->
-			<div style="margin:5px;" class="btn-group" data-toggle="">
-				<label class="btn btn-primary btn-sm">
-					<input type="checkbox" >
-					Names
-				</label>
-				<!--     -->
-				<label class="btn btn-primary btn-sm">
-					<i class="icon-resize-small">
-					</i>
-					<input type="radio" name="options" value="small" checked tilte="resize small" >
-					Small
-				</label>
-				<label class="btn btn-primary btn-sm">
-					<i class="icon-resize-full">
-					</i>
-					<input type="radio" name="options" value="full" tilte="resize full" >
-					Large
-				</label>
-			</div>
-			<!--  Toggle On/Off colornames -->
-			<!--
-			<input class="form-control" type="search" placeholder="Filter Html Colors ...">
-			-->
+
 			<!-- ngRepeat: colorGroup in htmlColors --><div >
 				<!-- -->
                 <h5 style="color:white; display:none" >
@@ -1408,39 +1402,6 @@
 		<div class="tab-pane container" id="webSafeColors" style="background-color:#2f2f2f!important">
 			<a id="webSafeColorsLink">
 			</a>
-			<!--
-			<h3 style="color:white;display:inline-block">
-				Web-Safe Colors
-			</h3>
-			-->
-			<div style="margin:5px;" class="btn-group" data-toggle="">
-				<label class="btn btn-primary btn-sm">
-					<input type="checkbox" >
-					Names
-				</label>
-<!--
-<label class="btn btn-primary">
-<i class="icon-resize-{{boxSize}}"></i> <input type="checkbox" ng-true-value="full" ng-false-value="small" tilte="resize {{boxSize}}" /> {{boxSize}}
-</label>
--->
-				<!--     -->
-				<label class="btn btn-primary btn-sm">
-					<i class="icon-resize-small">
-					</i>
-					<input type="radio" name="options2" value="small" checked tilte="resize small" >
-					Small
-				</label>
-				<label class="btn btn-primary btn-sm">
-					<i class="icon-resize-full">
-					</i>
-					<input type="radio" name="options2" value="full" tilte="resize full" >
-					Large
-				</label>
-			</div>
-			<!--  Toggle On/Off colornames -->
-			<!--
-			<input class="form-control" type="search" placeholder="Filter Web-Safe Colors ...">
-			-->
 			<div>
 				<h5 style="color:white; display:none" >
 					Colors
