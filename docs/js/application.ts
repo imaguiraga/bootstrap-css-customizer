@@ -89,6 +89,7 @@ class Controller{
          */
         this._COMMON_LESS = {"less": 
             [
+			   /*
                 "bootstrap/mixins.less",
     
                 "bootstrap/normalize.less",
@@ -131,7 +132,9 @@ class Controller{
     
                 "bootstrap/utilities.less",
                 "bootstrap/responsive-utilities.less",
-				"bootstrap/theme-gradients.less"
+				//*/
+				"bootstrap/bootstrap-ibr.less",
+				"bootstrap/theme-gradients-ibr.less"
     
             ],
             "lessVariables": ["bootstrap/variables.less"]
@@ -400,7 +403,7 @@ class Controller{
         startTime = endTime = new(Date);
         var css = null;
         var lessInput = Application.collectLESSVariables(this._CURRENT_THEME);
-        //var this._parser = new(less.Parser);
+        //var this._parser = new less.Parser();
         var controller = this;
     
         this._parser.parse(lessInput, function (err, tree) {
@@ -720,8 +723,17 @@ class Application{
 		startTime = endTime = new(Date);
 		//add default variables
 		var variables = [];//["@import 'bootstrap/variables.less'"];
+		var checked = {  
+		  css: $('#less-section input:checked').map(function () { return this.value }).toArray()
+		};
+
+		if (!checked.css.length){
+			return;
+		}	
+		
 		var lessVariables = theme.lessVariables;
 		var less = theme.less;
+		
 		if($.isArray(lessVariables)){
 			for(var i=0;i<lessVariables.length;i++){
 				variables.push("@import '"+lessVariables[i]+"'");
@@ -792,12 +804,12 @@ class Application{
 			evt.stopPropagation();
 			evt.preventDefault();
 			var $this = $(this);
-			$this.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Compile");
+			$this.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Compile CSS");
 			controller.setCurrentTheme($("#theme-selector").val());
 			controller.updateCompiledCSS();
 			var theme = controller.getTheme('compiled');
 			window.localStorage.setItem('compiled', JSON.stringify(theme));
-			$this.html("<i class='icon-fixed-width icon-gear'></i>Compile");
+			$this.html("<i class='icon-fixed-width icon-gear'></i>Compile CSS");
 			$("#theme-selector").val("compiled");
 			Application.updateCSS(theme);
 
@@ -811,25 +823,25 @@ class Application{
 			var $prev = $this.find("i");
 			if($this.hasClass("edit-view")){//setting Preview mode
 				$this.attr("title","Click to Edit Variables");
-				$this.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Edit");
+				$this.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Edit CSS");
 				
 				$this.removeClass("edit-view");
 				$(".edit-view").hide();
 				$("#variables").removeClass("col-lg-10 col-lg-offset-2").addClass("col-lg-12");
 				$("#colortab").removeClass("hidden-xs hidden-sm affix");
 
-				$this.html("<i class='icon-fixed-width icon-edit'></i>Edit");
+				$this.html("<i class='icon-fixed-width icon-edit'></i>Edit CSS");
 				$("#content").removeClass("theme-edit");
 				
 			}else{//setting edit mode
 				$this.attr("title","Click to Compile and Preview stylesheet");
-				$this.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Preview");
+				$this.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Preview CSS");
 				
 				$(".edit-view").show();
 				$this.addClass("edit-view");
 				$("#variables").removeClass("col-lg-12").addClass("col-lg-10 col-lg-offset-2");
 				$("#colortab").addClass("hidden-xs hidden-sm affix");
-				$this.html("<i class='icon-fixed-width icon-eye-open'></i>Preview");
+				$this.html("<i class='icon-fixed-width icon-eye-open'></i>Preview CSS");
 				//use theme edit to keep a consistent edit UI
 				$("#content").addClass("theme-edit");
 			}
@@ -973,11 +985,11 @@ class Application{
 	  $downloadBtn.on('click', function (e) {
 		e.preventDefault();
 		$downloadBtn.attr('disabled', 'disabled');
-		$downloadBtn.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Download");
+		$downloadBtn.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Download CSS");
 		var zip = controller.generateZip(controller.compileCSS(),null);
 		saveAs(zip, "bootstrap.zip");
 		$downloadBtn.removeAttr('disabled');
-		$downloadBtn.html("<i class='icon-fixed-width icon-download-alt'></i>Download");
+		$downloadBtn.html("<i class='icon-fixed-width icon-download-alt'></i>Download CSS");
 	  });
 	}
 

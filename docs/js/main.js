@@ -87,7 +87,7 @@ function Controller(){
 
 			"bootstrap/utilities.less",
 			"bootstrap/responsive-utilities.less",
-			"bootstrap/theme-override.less"
+			"bootstrap/theme-ibr.less"
 
 		],
 		"lessVariables": ["bootstrap/variables.less"]
