@@ -228,6 +228,7 @@ class Controller{
 						}
 						theme.compiled = false;
 						theme.compiledCssMin = null;
+						theme.compiledGradientsCssMin = null;
 						theme.compiledLessVariables = null;
 						controller._THEMES[theme.name.toLowerCase()] = theme;
 					}
@@ -458,7 +459,7 @@ class Controller{
 			}		
 			
 		});
-		 msg  = "theme css compiled in "+ (new(Date) - endTime) + "ms";
+		 msg  = "theme gradients css compiled in "+ (new(Date) - endTime) + "ms";
 		console.log(msg);
 		Application.generateNote(msg,'success');
 		return css;
@@ -468,25 +469,28 @@ class Controller{
 	 * [updateCompiledCSS description]
 	 * @return {Void} [description]
 	 */
-	updateCompiledCSS(){		
-		var theme = null;
+	updateCompiledCSS(template){	
+//todo use reference to parent template instead of current template	
+		var  theme = null;
 		this._COMPILED_LESS_CSS = this.compileCSS();
 
 		if(this._COMPILED_LESS_CSS != null){
 		//clone compiled from currently selected theme
 			theme = this._THEMES['compiled'];
-			theme.less = this._CURRENT_THEME.less;
-			theme.lessVariables = this._CURRENT_THEME.lessVariables;
+			//theme.less = this._CURRENT_THEME.less;
+			//theme.lessVariables = this._CURRENT_THEME.lessVariables;
+			theme.less = template.less;
+			theme.lessVariables = template.lessVariables;
 			theme.compiled = true;
 			theme.compiledLessVariables = this._COMPILED_LESS_CSS['variables.less'] || {}; 
 			theme.compiledCssMin = this._COMPILED_LESS_CSS['bootstrap.min.css'];
-
+			theme.compiledGradientsCssMin = this._COMPILED_LESS_CSS['bootstrap-theme.min.css'];
 			//disable default CSS
 			//store in localstorage
 			
 			//activate alternate CSS
 		}	
-
+		return theme;
 	}
 
 	/**
@@ -705,6 +709,7 @@ class Controller{
 	 */
 	setCurrentTheme(key: string){
 		this._CURRENT_THEME = this._THEMES[key];
+		return this._CURRENT_THEME;
 	}
 
 	/**
@@ -843,12 +848,16 @@ class Application{
 			evt.preventDefault();
 			var $this = $(this);
 			$this.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Compile CSS");
-			controller.setCurrentTheme($("#theme-selector").val());
-			controller.updateCompiledCSS();
-			var theme = controller.getTheme('compiled');
+			//todo cause issue after first compilation
+			var theme = controller.setCurrentTheme($("#template-selector").val());
+			controller.updateCompiledCSS(theme);
+			
+			theme = controller.setCurrentTheme("compiled");
+			
 			window.localStorage.setItem('compiled', JSON.stringify(theme));
 			$this.html("<i class='icon-fixed-width icon-gear'></i>Compile CSS");
-			$("#theme-selector").val("compiled");
+			$("#template-selector").val("compiled");
+			
 			Application.updateCSS(theme);
 
 		});
@@ -1026,13 +1035,13 @@ class Application{
 	}
 
 	/**
-	 * [initThemeSelector description]
+	 * [initTemplateSelector description]
 	 * @param  {Controller} controller [description]
 	 * @return {Void}            [description]
 	 */
-	static initThemeSelector(/*@type {Controller}*/controller: Controller){
+	static initTemplateSelector(/*@type {Controller}*/controller: Controller){
 		//update theme when selection changes
-		$("#theme-selector").change(function(evt){ 
+		$("#template-selector").change(function(evt){ 
 			//evt.stopPropagation();
 			var selection = $(this).val();
 			if(_DEBUG){
@@ -1052,7 +1061,32 @@ class Application{
 
 	//*/
 	}
+/**
+	 * [initGradientsCheck description]
+	 * @param  {Controller} controller [description]
+	 * @return {Void}            [description]
+	 */
+	static initGradientsCheck(/*@type {Controller}*/controller: Controller){
+		//update theme when selection changes
+		$("#gradients-check").click(function(evt){ 
+			evt.stopPropagation();
+			var selection = $(this).val();
+			if(_DEBUG){
+				console.log(selection);
+			}
 
+			var theme = controller.getCurrentTheme();
+			var checked = $(this).prop('checked');
+			if(theme.compiledGradientsCssMin !=null){
+				Application.updateGradientsCSS(theme,checked);
+			}else{
+				$(this).prop('checked',false);
+			}
+			
+		});
+
+	//*/
+	}
 	/**
 	 * [updateCSS description]
 	 * @param  {Object} theme [description]
@@ -1075,6 +1109,27 @@ class Application{
 		}
 	}
 
+	/**
+	 * [updateGradientsCSS description]
+	 * @param  {Object} theme [description]
+	 * @return {Void}       [description]
+	 */
+	static updateGradientsCSS(theme: Object,checked:boolean){
+
+		var $compiled = $(document.getElementById("gradients:css"));
+		
+		if( theme != null && checked  == true){		  
+			$compiled.append(theme.compiledGradientsCssMin);
+			
+		}else{
+			$compiled.empty();
+			
+		}
+	}
+	
+          /**
+	* Main
+	*/
 	static main(){
 		var /*@type {Controller}*/ controller = new Controller();
 		
@@ -1084,7 +1139,9 @@ class Application{
 			controller.setTheme('compiled',theme);
 		}
 
-		Application.initThemeSelector(controller);
+		Application.initTemplateSelector(controller);
+		
+		Application.initGradientsCheck(controller);
 		
 		Application.initDownloadButton(controller);
 
@@ -1112,7 +1169,7 @@ class Application{
 
 		$("#loading").hide();
 		$("#content").css("visibility","visible");	
-		$("#theme-selector").val("default");//.trigger('change');
+		$("#template-selector").val("default");//.trigger('change');
 
 	}
 	static    generateNote(message,type) {

@@ -91,6 +91,7 @@ var Controller = (function () {
                         }
                         theme.compiled = false;
                         theme.compiledCssMin = null;
+                        theme.compiledGradientsCssMin = null;
                         theme.compiledLessVariables = null;
                         controller._THEMES[theme.name.toLowerCase()] = theme;
                     }
@@ -325,7 +326,7 @@ var Controller = (function () {
                 console.error(e);
             }
         });
-        msg = "theme css compiled in " + (new (Date)() - endTime) + "ms";
+        msg = "theme gradients css compiled in " + (new (Date)() - endTime) + "ms";
         console.log(msg);
         Application.generateNote(msg, 'success');
         return css;
@@ -335,22 +336,28 @@ var Controller = (function () {
     * [updateCompiledCSS description]
     * @return {Void} [description]
     */
-    Controller.prototype.updateCompiledCSS = function () {
+    Controller.prototype.updateCompiledCSS = function (template) {
+        //todo use reference to parent template instead of current template
         var theme = null;
         this._COMPILED_LESS_CSS = this.compileCSS();
 
         if (this._COMPILED_LESS_CSS != null) {
             //clone compiled from currently selected theme
             theme = this._THEMES['compiled'];
-            theme.less = this._CURRENT_THEME.less;
-            theme.lessVariables = this._CURRENT_THEME.lessVariables;
+
+            //theme.less = this._CURRENT_THEME.less;
+            //theme.lessVariables = this._CURRENT_THEME.lessVariables;
+            theme.less = template.less;
+            theme.lessVariables = template.lessVariables;
             theme.compiled = true;
             theme.compiledLessVariables = this._COMPILED_LESS_CSS['variables.less'] || {};
             theme.compiledCssMin = this._COMPILED_LESS_CSS['bootstrap.min.css'];
+            theme.compiledGradientsCssMin = this._COMPILED_LESS_CSS['bootstrap-theme.min.css'];
             //disable default CSS
             //store in localstorage
             //activate alternate CSS
         }
+        return theme;
     };
 
     /**
@@ -570,6 +577,7 @@ var Controller = (function () {
     */
     Controller.prototype.setCurrentTheme = function (key) {
         this._CURRENT_THEME = this._THEMES[key];
+        return this._CURRENT_THEME;
     };
 
     /**
@@ -727,12 +735,17 @@ var Application = (function () {
             evt.preventDefault();
             var $this = $(this);
             $this.html("<i class='icon-fixed-width icon-spinner icon-spin'></i>Compile CSS");
-            controller.setCurrentTheme($("#theme-selector").val());
-            controller.updateCompiledCSS();
-            var theme = controller.getTheme('compiled');
+
+            //todo cause issue after first compilation
+            var theme = controller.setCurrentTheme($("#template-selector").val());
+            controller.updateCompiledCSS(theme);
+
+            theme = controller.setCurrentTheme("compiled");
+
             window.localStorage.setItem('compiled', JSON.stringify(theme));
             $this.html("<i class='icon-fixed-width icon-gear'></i>Compile CSS");
-            $("#theme-selector").val("compiled");
+            $("#template-selector").val("compiled");
+
             Application.updateCSS(theme);
         });
 
@@ -900,14 +913,14 @@ var Application = (function () {
         });
     };
 
-    Application.initThemeSelector = /**
-    * [initThemeSelector description]
+    Application.initTemplateSelector = /**
+    * [initTemplateSelector description]
     * @param  {Controller} controller [description]
     * @return {Void}            [description]
     */
     function (/*@type {Controller}*/ controller) {
         //update theme when selection changes
-        $("#theme-selector").change(function (evt) {
+        $("#template-selector").change(function (evt) {
             //evt.stopPropagation();
             var selection = $(this).val();
             if (_DEBUG) {
@@ -923,6 +936,31 @@ var Application = (function () {
 
             //$("#loading").hide();
             $("#content").css("visibility", "visible");
+        });
+        //*/
+    };
+
+    Application.initGradientsCheck = /**
+    * [initGradientsCheck description]
+    * @param  {Controller} controller [description]
+    * @return {Void}            [description]
+    */
+    function (/*@type {Controller}*/ controller) {
+        //update theme when selection changes
+        $("#gradients-check").click(function (evt) {
+            evt.stopPropagation();
+            var selection = $(this).val();
+            if (_DEBUG) {
+                console.log(selection);
+            }
+
+            var theme = controller.getCurrentTheme();
+            var checked = $(this).prop('checked');
+            if (theme.compiledGradientsCssMin != null) {
+                Application.updateGradientsCSS(theme, checked);
+            } else {
+                $(this).prop('checked', false);
+            }
         });
         //*/
     };
@@ -946,7 +984,25 @@ var Application = (function () {
         }
     };
 
-    Application.main = function () {
+    Application.updateGradientsCSS = /**
+    * [updateGradientsCSS description]
+    * @param  {Object} theme [description]
+    * @return {Void}       [description]
+    */
+    function (theme, checked) {
+        var $compiled = $(document.getElementById("gradients:css"));
+
+        if (theme != null && checked == true) {
+            $compiled.append(theme.compiledGradientsCssMin);
+        } else {
+            $compiled.empty();
+        }
+    };
+
+    Application.main = /**
+    * Main
+    */
+    function () {
         var controller = new Controller();
 
         if (window.localStorage.getItem('compiled')) {
@@ -954,7 +1010,9 @@ var Application = (function () {
             controller.setTheme('compiled', theme);
         }
 
-        Application.initThemeSelector(controller);
+        Application.initTemplateSelector(controller);
+
+        Application.initGradientsCheck(controller);
 
         Application.initDownloadButton(controller);
 
@@ -980,7 +1038,7 @@ var Application = (function () {
 
         $("#loading").hide();
         $("#content").css("visibility", "visible");
-        $("#theme-selector").val("default");
+        $("#template-selector").val("default");
     };
     Application.generateNote = function (message, type) {
         var n = noty({

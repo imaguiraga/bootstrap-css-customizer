@@ -113,17 +113,21 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 								</li>
 							</ul>
 						</li>
+						<li>
+							<label style="margin:5px;" class="btn btn-primary btn-sm">
+								<input id="gradients-check" type="checkbox" >
+								Gradients
+							</label>
+						</li>
 					</ul>
                       {{ content }}
 
 					<form class="navbar-form navbar-right inline-form">
 
 						<div class="form-group">
-						<h4 class="inline">
-						  <span style="margin-left: 20px" class="label label-default">Theme</span>
-						</h4>
-						  <select id="theme-selector" ng-model="template" style="width:120px" class="form-control input-sm" title="Bootstrap theme selector">
-							 
+						<label style="font-size:1em" for="template-selector" class="control-label label">Template</label>
+						
+						  <select id="template-selector" style="width:120px" class="form-control input-sm" title="Bootstrap theme selector">							 
 							<optgroup label="User">							 
 								<option <option value="compiled">compiled</option>
 							</optgroup>
