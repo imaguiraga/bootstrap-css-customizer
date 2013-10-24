@@ -1,6 +1,12 @@
 var Controller = (function () {
     function Controller() {
         /**
+        * [_CW bootstrap copyright]
+        * @type {String}
+        */
+        this._CW = '/*!\n * Bootstrap v3.0.0\n *\n * Copyright 2013 Twitter, Inc\n * Licensed under the Apache License v2.0\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Designed and built with all the love in the world @twitter by @mdo and @fat.\n */\n\n';
+
+        /**
         * [_THEMES description]
         * @type {Object}
         */
@@ -37,10 +43,64 @@ var Controller = (function () {
         this._parser = new less.Parser();
 
         /**
-        * [_themeparser description]
-        * @type {less.Parser}
+        * [_CORE_LESS description]
+        * @type {Object}
         */
-        this._themeparser = new less.Parser();
+        this._CORE_LESS = {
+            "lessCore": [
+	/*
+		"bootstrap/mixins.less",
+		"bootstrap/normalize.less",
+		"bootstrap/print.less",
+		"bootstrap/scaffolding.less",
+		"bootstrap/type.less",
+		"bootstrap/code.less",
+		"bootstrap/grid.less",
+		"bootstrap/tables.less",
+		"bootstrap/forms.less",
+		"bootstrap/buttons.less",
+		"bootstrap/component-animations.less",
+		"bootstrap/glyphicons.less",
+		"bootstrap/dropdowns.less",
+		"bootstrap/button-groups.less",
+		"bootstrap/input-groups.less",
+		"bootstrap/navs.less",
+		"bootstrap/navbar.less",
+		"bootstrap/breadcrumbs.less",
+		"bootstrap/pagination.less",
+		"bootstrap/pager.less",
+		"bootstrap/labels.less",
+		"bootstrap/badges.less",
+		"bootstrap/jumbotron.less",
+		"bootstrap/thumbnails.less",
+		"bootstrap/alerts.less",
+		"bootstrap/progress-bars.less",
+		"bootstrap/media.less",
+		"bootstrap/list-group.less",
+		"bootstrap/panels.less",
+		"bootstrap/wells.less",
+		"bootstrap/close.less",
+		"bootstrap/modals.less",
+		"bootstrap/tooltip.less",
+		"bootstrap/popovers.less",
+		"bootstrap/carousel.less",
+		"bootstrap/utilities.less",
+		"bootstrap/responsive-utilities.less",
+		//*/
+		"bootstrap/bootstrap-ibr.less"
+		//,"bootstrap/theme-gradients-ibr.less"
+            ],
+            "lessVariables": ["bootstrap/variables.less"]
+        };
+    this._THEME_LESS = {
+            "lessCore": [
+		/*
+		"bootstrap/mixins.less",        
+		//*/
+		"bootstrap/theme-gradients-ibr.less"
+            ],
+            "lessVariables": ["bootstrap/variables.less"]
+        };
     }
     /**
     * [getThemes description]
@@ -79,15 +139,14 @@ var Controller = (function () {
 
                     if (!controller._THEMES[theme.name.toLowerCase()]) {
                         if ($.isArray(theme.lessVariables)) {
-                            theme.lessVariables = Controller._CORE_LESS.lessVariables.concat(theme.lessVariables);
+                            theme.lessVariables = controller._CORE_LESS.lessVariables.concat(theme.lessVariables);
                         } else {
-                            theme.lessVariables = Controller._CORE_LESS.lessVariables.concat([theme.lessVariables]);
+                            theme.lessVariables = controller._CORE_LESS.lessVariables.concat([theme.lessVariables]);
                         }
-
                         if ($.isArray(theme.less)) {
-                            theme.less = theme.less.concat(Controller._CORE_LESS.lessCore);
+                            theme.less = theme.less.concat(controller._CORE_LESS.lessCore);
                         } else {
-                            theme.less = [theme.less].concat(Controller._CORE_LESS.lessCore);
+                            theme.less = [theme.less].concat(controller._CORE_LESS.lessCore);
                         }
                         theme.compiled = false;
                         theme.compiledCssMin = null;
@@ -274,6 +333,12 @@ var Controller = (function () {
         if (_DEBUG) {
             console.log("end-2. -> updateLESSVariables " + key + " - t=" + (new (Date)() - startTime) + "ms");
         }
+
+        if (variables != null) {
+            if ((typeof less) !== "undefined") {
+                //less.modifyVars(variables);
+            }
+        }
     };
 
     /**
@@ -285,49 +350,26 @@ var Controller = (function () {
         startTime = endTime = new (Date)();
         var css = null;
         var lessInput = Application.collectLESSVariables(this._CURRENT_THEME);
+
+        //var this._parser = new(less.Parser);
         var controller = this;
 
-        this._parser.parse(lessInput.core, function (err, tree) {
+        this._parser.parse(lessInput, function (err, tree) {
             if (err) {
-                console.log(lessInput.core);
-                Application.generateNote(err, 'error');
+                //console.log(lessInput);
                 return console.error(err);
             }
             try  {
                 css = {
-                    'bootstrap.css': Controller._CW + tree.toCSS(),
-                    'bootstrap.min.css': Controller._CW + tree.toCSS({ compress: true }),
-                    'variables.less': lessInput.core
+                    'bootstrap.css': controller._CW + tree.toCSS(),
+                    'bootstrap.min.css': controller._CW + tree.toCSS({ compress: true }),
+                    'variables.less': lessInput
                 };
             } catch (e) {
-                console.log(lessInput.core);
-                Application.generateNote(e.name + ": " + e.message, 'error');
                 console.error(e);
             }
         });
-
-        var endTime = new (Date)();
-        var msg = "css compiled in " + (endTime - startTime) + "ms";
-        console.log(msg);
-        Application.generateNote(msg, 'success');
-        controller._themeparser.parse(lessInput.theme, function (err, tree) {
-            if (err) {
-                console.log(lessInput.theme);
-                Application.generateNote(err, 'error');
-                return console.error(err);
-            }
-            try  {
-                css['bootstrap-theme.css'] = Controller._CW + tree.toCSS();
-                css['bootstrap-theme.min.css'] = Controller._CW + tree.toCSS({ compress: true });
-            } catch (e) {
-                console.log(lessInput.theme);
-                Application.generateNote(e.name + ": " + e.message, 'error');
-                console.error(e);
-            }
-        });
-        msg = "theme css compiled in " + (new (Date)() - endTime) + "ms";
-        console.log(msg);
-        Application.generateNote(msg, 'success');
+        console.log("css compiled in " + (new (Date)() - endTime) + "ms");
         return css;
     };
 
@@ -452,6 +494,7 @@ var Controller = (function () {
     */
     Controller.prototype.loadLESSVariables = function (url, variables) {
         var pattern = /([^@]+):([^;]+)/gm;
+        pattern = /([^@]+):([^;]+)/gm;
 
         //var deferredReady = $.Deferred();
         $.ajax({
@@ -494,11 +537,19 @@ var Controller = (function () {
         var variables = this.loadThemeVariables(theme);
 
         //reset the new references for all loaded variables
+        /*for(var id in variables){
+        var value = variables[id];
+        var $input = $("#"+id);
+        updateLESSVariablesRef(id,value,$input);
+        }
+        //*/
         //creates bug this._LESS_VARIABLES = variables;
         this._LESS_VARIABLES_REF = {};
         var startTime = new (Date)();
         var controller = this;
 
+        /*$("input:text.form-control")
+        .filter("[data-var]")//*/
         $lessVariablesInput.each(function (i, elt) {
             var $this = $(elt);
             var id = $this.attr("id");
@@ -588,21 +639,6 @@ var Controller = (function () {
     Controller.prototype.setTheme = function (key, theme) {
         this._THEMES[key] = theme;
     };
-    Controller._CW = '/*!\n * Bootstrap v3.0.0\n *\n * Copyright 2013 Twitter, Inc\n * Licensed under the Apache License v2.0\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Designed and built with all the love in the world @twitter by @mdo and @fat.\n */\n\n';
-
-    Controller._CORE_LESS = {
-        "lessCore": [
-            "bootstrap/bootstrap-ibr.less"
-        ],
-        "lessVariables": ["bootstrap/variables.less"]
-    };
-
-    Controller._THEME_LESS = {
-        "lessCore": [
-            "bootstrap/theme-ibr.less"
-        ],
-        "lessVariables": ["bootstrap/variables.less"]
-    };
     return Controller;
 })();
 
@@ -613,7 +649,6 @@ var _DEBUG = false;
 * @type {List<Input>}
 */
 var $lessVariablesInput = $("input:text.form-control").filter("[data-var]");
-
 var Application = (function () {
     function Application() {
     }
@@ -628,37 +663,22 @@ var Application = (function () {
 
         //add default variables
         var variables = [];
-        var checked = {
-            css: $('#less-section input:checked').map(function () {
-                return this.value;
-            }).toArray()
-        };
-
-        if (!checked.css.length) {
-            return;
-        }
-
         var lessVariables = theme.lessVariables;
         var less = theme.less;
-
-        if (lessVariables) {
-            if ($.isArray(lessVariables)) {
-                for (var i = 0; i < lessVariables.length; i++) {
-                    variables.push("@import '" + lessVariables[i] + "'");
-                }
-            } else {
-                variables.push("@import '" + lessVariables + "'");
+        if ($.isArray(lessVariables)) {
+            for (var i = 0; i < lessVariables.length; i++) {
+                variables.push("@import '" + lessVariables[i] + "'");
             }
+        } else {
+            variables.push("@import '" + lessVariables + "'");
         }
 
-        //override default variables with input fields values
+        //override default variables
         $lessVariablesInput.each(function (i, elt) {
             var $this = $(elt);
             var id = $this.attr("id");
             variables.push("@" + id + ": " + $this.val() + "");
         });
-
-        var themeVariables = variables.slice();
 
         if ($.isArray(less)) {
             for (var i = 0; i < less.length; i++) {
@@ -668,20 +688,7 @@ var Application = (function () {
             variables.push("@import '" + less + "'");
         }
 
-        //add import sections for theme
-        var themeLess = Controller._THEME_LESS.lessCore;
-        if ($.isArray(themeLess)) {
-            for (var i = 0; i < themeLess.length; i++) {
-                themeVariables.push("@import '" + themeLess[i] + "'");
-            }
-        } else {
-            themeVariables.push("@import '" + themeLess + "'");
-        }
-
-        return {
-            "core": variables.join(";\n") + ";",
-            "theme": themeVariables.join(";\n") + ";"
-        };
+        return variables.join(";\n") + ";";
     };
 
     Application.initDraggable = /**
@@ -692,8 +699,7 @@ var Application = (function () {
     function (/*@type {Controller}*/ controller) {
         $(".icon-resize-full").next("input").click(function (evt) {
             evt.stopPropagation();
-
-            //$(this).attr('checked',true);
+           // $(this).attr('checked', true);
             $(".color-picker").each(function (i, elt) {
                 var $this = $(this);
                 $this.addClass("color-box-full");
@@ -703,8 +709,7 @@ var Application = (function () {
 
         $(".icon-resize-small").next("input").click(function (evt) {
             evt.stopPropagation();
-
-            //$(this).attr('checked',true);
+           // $(this).attr('checked', true);
             $(".color-picker").each(function (i, elt) {
                 var $this = $(this);
                 $this.addClass("color-box-small");
@@ -783,7 +788,6 @@ var Application = (function () {
 
             var value = $this.val().length > 0 ? $this.val() : $this.attr("placeholder");
             $this.val(value);
-
             if (_DEBUG) {
                 console.log(i + " - {" + key + "} = [ " + value + " ]");
             }
@@ -840,6 +844,7 @@ var Application = (function () {
                             console.log("onchange - updateLESSVariables " + key);
                             console.log(key + " 1.c - change " + (new (Date)() - startTime1) + "ms");
                         }
+
                         controller.updateLESSVariables(key, colorHex);
                     }
                 }).droppable({
@@ -859,6 +864,8 @@ var Application = (function () {
                         }
 
                         $this.css({ 'background-color': colorHex, 'color': fontColor });
+
+                        //*/
                         $this.trigger("colorpickersliders.updateColor", newVal);
                     }
                 });
@@ -974,22 +981,15 @@ var Application = (function () {
             controller.populateLESSVariables(controller.getCurrentTheme());
         });
 
+        //*/
         $('#color-tab-content').slimScroll({
             height: '90%'
         });
 
+        //loadThemes("http://api.bootswatch.com/3/");
         $("#loading").hide();
         $("#content").css("visibility", "visible");
         $("#theme-selector").val("default");
-    };
-    Application.generateNote = function (message, type) {
-        var n = noty({
-            text: message,
-            type: type || 'notification',
-            dismissQueue: true,
-            layout: 'topCenter',
-            theme: 'defaultTheme'
-        });
     };
     return Application;
 })();
