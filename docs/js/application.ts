@@ -856,9 +856,10 @@ class Application{
 			
 			window.localStorage.setItem('compiled', JSON.stringify(theme));
 			$this.html("<i class='icon-fixed-width icon-gear'></i>Compile CSS");
-			$("#template-selector").val("compiled");
 			
 			Application.updateCSS(theme);
+			$("#template-selector").val("compiled");
+			$("#gradients-check").closest("label").removeClass("disabled");
 
 		});
 		
@@ -1054,7 +1055,11 @@ class Application{
 			var theme = controller.getCurrentTheme();
 			Application.updateCSS(theme);
 			controller.populateLESSVariables(theme);
-			
+			if(selection  === 'compiled'){
+				$("#gradients-check").closest("label").removeClass("disabled");
+			}else{
+				$("#gradients-check").closest("label").addClass("disabled");
+			}
 			//$("#loading").hide();
 			$("#content").css("visibility","visible");	
 		});
@@ -1170,6 +1175,7 @@ class Application{
 		$("#loading").hide();
 		$("#content").css("visibility","visible");	
 		$("#template-selector").val("default");//.trigger('change');
+		$("#gradients-check").closest("label").addClass("disabled");
 
 	}
 	static    generateNote(message,type) {
