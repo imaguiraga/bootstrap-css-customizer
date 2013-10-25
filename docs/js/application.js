@@ -35,12 +35,6 @@ var Controller = (function () {
         * @type {less.Parser}
         */
         this._parser = new less.Parser();
-
-        /**
-        * [_themeparser description]
-        * @type {less.Parser}
-        */
-        this._themeparser = new less.Parser();
     }
     /**
     * [getThemes description]
@@ -287,8 +281,8 @@ var Controller = (function () {
         var css = null;
         var lessInput = Application.collectLESSVariables(this._CURRENT_THEME);
         var controller = this;
-
-        this._parser.parse(lessInput.core, function (err, tree) {
+        var _parser = new (less.Parser)();
+        _parser.parse(lessInput.core, function (err, tree) {
             if (err) {
                 console.log(lessInput.core);
                 Application.generateNote(err, 'error');
@@ -311,7 +305,8 @@ var Controller = (function () {
         var msg = "css compiled in " + (endTime - startTime) + "ms";
         console.log(msg);
         Application.generateNote(msg, 'success');
-        controller._themeparser.parse(lessInput.theme, function (err, tree) {
+        _parser = new (less.Parser)();
+        _parser.parse(lessInput.theme, function (err, tree) {
             if (err) {
                 console.log(lessInput.theme);
                 Application.generateNote(err, 'error');
@@ -337,25 +332,18 @@ var Controller = (function () {
     * @return {Void} [description]
     */
     Controller.prototype.updateCompiledCSS = function (template) {
-        //todo use reference to parent template instead of current template
         var theme = null;
         this._COMPILED_LESS_CSS = this.compileCSS();
 
         if (this._COMPILED_LESS_CSS != null) {
             //clone compiled from currently selected theme
             theme = this._THEMES['compiled'];
-
-            //theme.less = this._CURRENT_THEME.less;
-            //theme.lessVariables = this._CURRENT_THEME.lessVariables;
             theme.less = template.less;
             theme.lessVariables = template.lessVariables;
             theme.compiled = true;
             theme.compiledLessVariables = this._COMPILED_LESS_CSS['variables.less'] || {};
             theme.compiledCssMin = this._COMPILED_LESS_CSS['bootstrap.min.css'];
             theme.compiledGradientsCssMin = this._COMPILED_LESS_CSS['bootstrap-theme.min.css'];
-            //disable default CSS
-            //store in localstorage
-            //activate alternate CSS
         }
         return theme;
     };
@@ -527,22 +515,24 @@ var Controller = (function () {
                 }
                 try  {
                     if (newVal.charAt(0) === '#') {
+                        Application.updateLESSVariables(controller, $this, newVal);
+                        /*
                         var fontColor = "white";
-
-                        if ($.xcolor.readable("white", newVal)) {
-                            fontColor = "white";
+                        
+                        if($.xcolor.readable("white",newVal)){
+                        fontColor = "white";
                         } else {
-                            fontColor = "black";
+                        fontColor = "black";
                         }
-
-                        $this.css({ 'background-color': colorHex, 'color': fontColor });
-
-                        //*/
+                        
+                        $this.css( {'background-color' :colorHex, 'color' : fontColor} );
+                        
                         //onchange colorpicker update variables
-                        $this.trigger("colorpickersliders.updateColor", newVal);
-                        if (_DEBUG) {
-                            console.log(id + " 2.c - pop " + (new (Date)() - startTime1) + "ms");
+                        $this.trigger("colorpickersliders.updateColor",newVal);
+                        if(_DEBUG){
+                        console.log(id+" 2.c - pop "+ (new(Date) - startTime1) + "ms");
                         }
+                        //*/
                     } else {
                         if (_DEBUG) {
                             console.log($this.attr('id') + " = " + newVal);
@@ -830,7 +820,6 @@ var Application = (function () {
                         //update scope variables double bindings
                         //tinycolor object is in color.tiny
                         var colorHex = color.tiny.toHexString();
-                        var colorRgb = color.tiny.toRgbString();
 
                         var $input = $(this.connectedinput);
                         var key = $input.attr("data-var");
@@ -878,6 +867,119 @@ var Application = (function () {
                 });
             }
         });
+    };
+
+    Application.initColorPickersV2 = /**
+    * [initColorPickersV2 description]
+    * @param  {Controller} controller [description]
+    * @return {Void}            [description]
+    */
+    function (/*@type {Controller}*/ controller) {
+        $lessVariablesInput.each(function (i, elt) {
+            var $this = $(elt);
+
+            //remove @ from key
+            var key = controller.getVariableKey($this.attr("id"));
+
+            var value = $this.val().length > 0 ? $this.val() : $this.attr("placeholder");
+            $this.val(value);
+
+            if (_DEBUG) {
+                console.log(i + " - {" + key + "} = [ " + value + " ]");
+            }
+            controller.setVariable(key, { 'default': value, 'value': value });
+
+            if (value && value.indexOf("@") >= 0) {
+                controller.updateLESSVariablesRef(key, value, $this);
+            }
+
+            if ($this.hasClass("color-input")) {
+                var $this = $(elt);
+                $this.before("<i class='icon-bullseye'></i>");
+                var key = $this.attr("data-var");
+                var value = $this.val();
+                $this.attr({
+                    "data-color-format": "hex"
+                });
+                $this.css('background-color', value);
+
+                $this.click(function (evt) {
+                    $(this).spectrum({
+                        clickoutFiresChange: true,
+                        showAlpha: true,
+                        showInitial: true,
+                        showInput: true,
+                        showButtons: false,
+                        preferredFormat: "hex6",
+                        move: function (color) {
+                            var $input = $(this);
+                            var colorHex = color.toHexString();
+                            $input.val(colorHex);
+                            Application.updateLESSVariables(controller, $input, colorHex);
+                        },
+                        hide: function (color) {
+                            var $input = $(this);
+                            $input.spectrum("destroy");
+                        },
+                        change: function (color) {
+                            var $input = $(this);
+
+                            //update scope variables double bindings
+                            //tinycolor object is in color
+                            var colorHex = color.toHexString();
+                            Application.updateLESSVariables(controller, $input, colorHex);
+                        }
+                    }).show();
+                    $this.spectrum("set", $this.val());
+                    //*/
+                });
+
+                //set as drop target
+                $this.droppable({
+                    drop: function (event, ui) {
+                        event.stopPropagation();
+                        var newVal = ui.draggable.css('background-color');
+                        var colorHex = rgb2hex(newVal);
+                        var $input = $(this);
+                        $input.val(colorHex);
+                        Application.updateLESSVariables(controller, $input, colorHex);
+                    }
+                });
+            }
+        });
+    };
+
+    Application.updateLESSVariables = /**
+    * [updateLESSVariables description]
+    * @param  {Controller} controller [description]
+    * @param  {Object} $input [description]
+    * @param  {String} colorHex [description]
+    * @return {Void}            [description]
+    */
+    function (/*@type {Controller}*/ controller, $input, colorHex) {
+        var startTime1 = new (Date)();
+
+        var key = $input.attr("data-var");
+
+        if (_DEBUG) {
+            console.log(key + " 0.c - change " + (new (Date)() - startTime1) + "ms");
+        }
+
+        //dynamically update fontcolor
+        var fontColor = "black";
+
+        if ($.xcolor.readable("white", colorHex)) {
+            fontColor = "white";
+        } else {
+            fontColor = "black";
+        }
+
+        $input.css({ 'background-color': colorHex, 'color': fontColor });
+        if (_DEBUG) {
+            console.log("onchange - updateLESSVariables " + key);
+            console.log(key + " 1.c - change " + (new (Date)() - startTime1) + "ms");
+        }
+        controller.updateLESSVariables(key, colorHex);
     };
 
     Application.tooltipInit = /**
@@ -1026,7 +1128,8 @@ var Application = (function () {
 
         Application.initDraggable(controller);
 
-        Application.initColorPickers(controller);
+        //Application.initColorPickers(controller);
+        Application.initColorPickersV2(controller);
 
         Application.tooltipInit();
 
@@ -1055,6 +1158,9 @@ var Application = (function () {
             layout: 'topCenter',
             theme: 'defaultTheme'
         });
+        setTimeout(function () {
+            n.close();
+        }, 3000);
     };
     return Application;
 })();
