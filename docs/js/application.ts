@@ -35,11 +35,7 @@ class Controller{
 	 * @type {Object}
 	 */
 	private _LESS_VARIABLES : any;
-	/**
-	 * [_LESS_VARIABLES_REF description]
-	 * @type {Array}
-	 */
-	//private _LESS_VARIABLES_REF : any;
+
 	/**
 	 * [_parser description]
 	 * @type {less.Parser}
@@ -140,11 +136,7 @@ class Controller{
 	* @type {Object}
 	*/
 		this._LESS_VARIABLES = {};
-	/**
-	* [_LESS_VARIABLES_REF description]
-	* @type {Array}
-	*/
-//		this._LESS_VARIABLES_REF = [];
+
 	/**
 	* [_parser description]
 	* @type {less.Parser}
@@ -268,10 +260,7 @@ class Controller{
 				if(_DEBUG){
 					console.log("{"+key+ "} -> {"+reference+"}");
 				}
-                /*
-				if(typeof this._LESS_VARIABLES_REF[reference] === "undefined"){
-					this._LESS_VARIABLES_REF[reference] = [];	
-				}//*/
+
                 if(typeof this._LESS_VARIABLES[reference] === "undefined"){
 					this._LESS_VARIABLES[reference] = {};	
 				}
@@ -281,7 +270,7 @@ class Controller{
 				var ref = $input.data("ref");
 				//remove old reference
 				if((typeof ref !== "undefined") && (ref !== reference)){
-					var arr = this._LESS_VARIABLES[ref].links;//var arr = this._LESS_VARIABLES_REF[ref];
+					var arr = this._LESS_VARIABLES[ref].links;
 					if($.isArray(arr)){
 						var len = arr.length;
 						//find position
@@ -297,8 +286,8 @@ class Controller{
 
 					}
 				}
-				//add new reference
-				this._LESS_VARIABLES[reference].links.push({'key' : key, 'value' :value});//this._LESS_VARIABLES_REF[reference].push({'key' : key, 'value' :value});
+				//add new reference //update formula link
+				this._LESS_VARIABLES[reference].links.push({'key' : key, 'value' :value});
 				$input.data("ref",reference);
 			}
 		}
@@ -341,13 +330,18 @@ class Controller{
 			//find references and update their values 
 			var id = "#"+current.key;
 			var $source = $(id);
-			var ref = this._LESS_VARIABLES[current.key].links;//var ref = this._LESS_VARIABLES_REF[current.key];
+			var links = this._LESS_VARIABLES[current.key].links;
 			var regex = /background-color:(.*);color:(.*);?/;
 			
 			//console.log("1.-> updateLESSVariables "+ current.key+" - "+JSON.stringify(ref));
 			var startTime2 = new(Date);
-			for(var i in ref){
-				var target = ref[i];
+			for(var i in links){
+				var target = links[i];
+                //skip empty links
+                if(target.value == null){
+                    continue;
+                }
+                
 				var depKey = target.key;
 				id = "#"+depKey;
 				var $target = $(id);
@@ -395,7 +389,7 @@ class Controller{
 				}
 				
 				//check if there are dependencies
-				var deps = this._LESS_VARIABLES[depKey].links;//var deps = this._LESS_VARIABLES_REF[depKey];
+				var deps = this._LESS_VARIABLES[depKey].links;
 				if( (typeof deps) !== "undefined" && deps.length > 0){
 					//put newly computed value on the stack
 					stack.push({'key':depKey,'value':backgroundColor});
@@ -675,7 +669,7 @@ class Controller{
 					return;
 				}
 				try{
-					if(newVal.charAt(0) === '#'){	
+					if(newVal.charAt(0) === '#' && newVal.indexOf("@") === -1){	
 						Application.updateLESSVariables(controller,$this,newVal);
 
 					}else{
@@ -1077,37 +1071,18 @@ class Application{
 					//*/
 				}).change(function(evt){
                     var $input = $(this);
-                    var id = $input.attr("id");
+                   
                     var value = $input.val();
-                    if(value.charAt(0) === "#"){
-                        var color = tinycolor(value);
-                        Application.updateLESSVariables(controller,$input,color.toHexString());
-                        //TODO Add/Remove formula link
+                    
+                    if(value.indexOf("@")>-1){
+                        Application.updateLESSVariablesLinks(controller,$input,value);
                         
-                    }else if(value.indexOf("@")>-1){
-                        //TODO find parent computed values
-                        //get "ref" + "computed-value"
-                        var $ref = $("#"+$input.data("ref"));
-                        var colorHex = $ref.data("computed-value");
-                        if( typeof colorHex === "undefined"){
-                            var color = tinycolor($ref.css("background-color"));
-                            colorHex = color.toHexString();
-                            $ref.data("computed-value",colorHex);
-                            
-                        }else{
-                            var color = tinycolor(colorHex);
-                            colorHex = color.toHexString();
-                        }
-                        //update formula link
-                        var ref = controller._LESS_VARIABLES[$input.data("ref")].links;
-                        for(var i in ref){
-                            if(ref[i].key === id){
-                                ref[i].value = value;
-                            }
-                        }
-                        //trigger refresh from the parent
-                        Application.updateLESSVariables(controller,$ref,colorHex);
+                    }else{//does not contain variables
+                        var color = tinycolor(value);
+                        Application.removeLESSVariablesLinks(controller,$input,color.toHexString());
+                    
                     }
+                    
                 });
 				
 				//set as drop target
@@ -1128,6 +1103,68 @@ class Application{
 		
 	}
 	
+	/**
+	 * [updateLESSVariablesLinks description]
+	 * @param  {Controller} controller [description]
+	 * @param  {Object} $input [description]
+     * @param  {String} value [description]
+	 * @return {Void}            [description]
+	 */
+	static updateLESSVariablesLinks(/*@type {Controller}*/ controller: Controller,$input:any, value:string){
+		//find parent computed values
+        //get "ref" + "computed-value"
+        var id = $input.attr("id");
+        controller.updateLESSVariablesRef(id,value,$input);
+        var ref = $input.data("ref");
+        var $ref = $("#"+ref);
+
+        
+        var colorHex = $ref.data("computed-value");
+        
+        if( typeof colorHex === "undefined"){
+            var color = tinycolor($ref.css("background-color"));
+            colorHex = color.toHexString();
+            $ref.data("computed-value",colorHex);
+            
+        }else{
+            var color = tinycolor(colorHex);
+            colorHex = color.toHexString();
+        }
+        
+        //trigger refresh from the parent
+        Application.updateLESSVariables(controller,$ref,colorHex);
+	
+	}
+    
+	/**
+	 * [removeLESSVariablesLinks description]
+	 * @param  {Controller} controller [description]
+	 * @param  {Object} $input [description]
+     * @param  {String} value [description]
+	 * @return {Void}            [description]
+	 */
+	static removeLESSVariablesLinks(/*@type {Controller}*/ controller: Controller,$input:any, value:string){
+        //get "ref" + "computed-value"
+        var id = $input.attr("id");
+        var ref = $input.data("ref");
+        var $ref = $("#"+ref);
+        
+        //reference not found
+        if(value.indexOf("@"+ref) === -1){
+            var links = controller._LESS_VARIABLES[ref].links;
+            for(var i in links){
+                if(links[i].key === id){
+                    links[i].value = null;
+                     $input.data("ref",null);
+                }
+            }
+        }
+
+        //trigger refresh from the parent
+        Application.updateLESSVariables(controller,$input,value);
+	
+	}    
+    
 	/**
 	 * [updateLESSVariables description]
 	 * @param  {Controller} controller [description]
@@ -1161,8 +1198,7 @@ class Application{
         $input.data("computed-value",colorHex);
 		controller.updateLESSVariables(key, colorHex);
 	
-	}
-		
+	}	
 	/**
 	 * [tooltipInit description]
 	 * @return {[void]} [description]

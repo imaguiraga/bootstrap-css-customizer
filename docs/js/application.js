@@ -33,11 +33,6 @@ var Controller = (function () {
         this._LESS_VARIABLES = {};
 
         /**
-        * [_LESS_VARIABLES_REF description]
-        * @type {Array}
-        */
-        //		this._LESS_VARIABLES_REF = [];
-        /**
         * [_parser description]
         * @type {less.Parser}
         */
@@ -162,7 +157,7 @@ var Controller = (function () {
                     }
                 }
 
-                //add new reference
+                //add new reference //update formula link
                 this._LESS_VARIABLES[reference].links.push({ 'key': key, 'value': value });
                 $input.data("ref", reference);
             }
@@ -207,13 +202,18 @@ var Controller = (function () {
             //find references and update their values
             var id = "#" + current.key;
             var $source = $(id);
-            var ref = this._LESS_VARIABLES[current.key].links;
+            var links = this._LESS_VARIABLES[current.key].links;
             var regex = /background-color:(.*);color:(.*);?/;
 
             //console.log("1.-> updateLESSVariables "+ current.key+" - "+JSON.stringify(ref));
             var startTime2 = new (Date)();
-            for (var i in ref) {
-                var target = ref[i];
+            for (var i in links) {
+                var target = links[i];
+
+                if (target.value == null) {
+                    continue;
+                }
+
                 var depKey = target.key;
                 id = "#" + depKey;
                 var $target = $(id);
@@ -539,7 +539,7 @@ var Controller = (function () {
                     return;
                 }
                 try  {
-                    if (newVal.charAt(0) === '#') {
+                    if (newVal.charAt(0) === '#' && newVal.indexOf("@") === -1) {
                         Application.updateLESSVariables(controller, $this, newVal);
                     } else {
                         if (_DEBUG) {
@@ -951,36 +951,14 @@ var Application = (function () {
                     //*/
                 }).change(function (evt) {
                     var $input = $(this);
-                    var id = $input.attr("id");
+
                     var value = $input.val();
-                    if (value.charAt(0) === "#") {
+
+                    if (value.indexOf("@") > -1) {
+                        Application.updateLESSVariablesLinks(controller, $input, value);
+                    } else {
                         var color = tinycolor(value);
-                        Application.updateLESSVariables(controller, $input, color.toHexString());
-                        //TODO Add/Remove formula link
-                    } else if (value.indexOf("@") > -1) {
-                        //TODO find parent computed values
-                        //get "ref" + "computed-value"
-                        var $ref = $("#" + $input.data("ref"));
-                        var colorHex = $ref.data("computed-value");
-                        if (typeof colorHex === "undefined") {
-                            var color = tinycolor($ref.css("background-color"));
-                            colorHex = color.toHexString();
-                            $ref.data("computed-value", colorHex);
-                        } else {
-                            var color = tinycolor(colorHex);
-                            colorHex = color.toHexString();
-                        }
-
-                        //update formula link
-                        var ref = controller._LESS_VARIABLES[$input.data("ref")].links;
-                        for (var i in ref) {
-                            if (ref[i].key === id) {
-                                ref[i].value = value;
-                            }
-                        }
-
-                        //trigger refresh from the parent
-                        Application.updateLESSVariables(controller, $ref, colorHex);
+                        Application.removeLESSVariablesLinks(controller, $input, color.toHexString());
                     }
                 });
 
@@ -998,6 +976,63 @@ var Application = (function () {
                 });
             }
         });
+    };
+
+    Application.updateLESSVariablesLinks = /**
+    * [updateLESSVariablesLinks description]
+    * @param  {Controller} controller [description]
+    * @param  {Object} $input [description]
+    * @param  {String} value [description]
+    * @return {Void}            [description]
+    */
+    function (/*@type {Controller}*/ controller, $input, value) {
+        //find parent computed values
+        //get "ref" + "computed-value"
+        var id = $input.attr("id");
+        controller.updateLESSVariablesRef(id, value, $input);
+        var ref = $input.data("ref");
+        var $ref = $("#" + ref);
+
+        var colorHex = $ref.data("computed-value");
+
+        if (typeof colorHex === "undefined") {
+            var color = tinycolor($ref.css("background-color"));
+            colorHex = color.toHexString();
+            $ref.data("computed-value", colorHex);
+        } else {
+            var color = tinycolor(colorHex);
+            colorHex = color.toHexString();
+        }
+
+        //trigger refresh from the parent
+        Application.updateLESSVariables(controller, $ref, colorHex);
+    };
+
+    Application.removeLESSVariablesLinks = /**
+    * [removeLESSVariablesLinks description]
+    * @param  {Controller} controller [description]
+    * @param  {Object} $input [description]
+    * @param  {String} value [description]
+    * @return {Void}            [description]
+    */
+    function (/*@type {Controller}*/ controller, $input, value) {
+        //get "ref" + "computed-value"
+        var id = $input.attr("id");
+        var ref = $input.data("ref");
+        var $ref = $("#" + ref);
+
+        if (value.indexOf("@" + ref) === -1) {
+            var links = controller._LESS_VARIABLES[ref].links;
+            for (var i in links) {
+                if (links[i].key === id) {
+                    links[i].value = null;
+                    $input.data("ref", null);
+                }
+            }
+        }
+
+        //trigger refresh from the parent
+        Application.updateLESSVariables(controller, $input, value);
     };
 
     Application.updateLESSVariables = /**
