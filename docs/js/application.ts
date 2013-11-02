@@ -358,12 +358,14 @@ class Controller{
 				//no need to compute the value for direct assignment
 				//@link-color
 				if(target.value.charAt(0) === "@"){
-				var startTime1 = new(Date);
+				    var startTime1 = new(Date);
 					$target.css({
 						"background-color": backgroundColor,
 						"color": fontColor
 					});
-					if(_DEBUG){console.log("@1. -> parseLESSVariables "+ id+" - "+ (new(Date) - startTime1) + "ms"); }								
+                    $target.data("computed-value",backgroundColor);
+					if(_DEBUG){console.log("@1. -> parseLESSVariables "+ id+" - "+ (new(Date) - startTime1) + "ms"); }	
+                    
 				}else{
 					//generate CSS and parse it for content
 					var $css = "@"+current.key+":"+current.value+"; #"+target.key+" {background-color:"+target.value+";color:"+fontColor+";}";//$target.val()/*
@@ -385,6 +387,7 @@ class Controller{
 								"background-color": backgroundColor,
 								"color": fontColor
 							});
+                            $target.data("computed-value",backgroundColor);
 							
 						}
 						if(_DEBUG){console.log("1. -> parseLESSVariables "+ id+" - "+ (new(Date) - startTime1) + "ms");}
@@ -965,7 +968,8 @@ class Application{
 						if(_DEBUG){
 							console.log("onchange - updateLESSVariables "+ key);
 							console.log(key+" 1.c - change "+ (new(Date) - startTime1) + "ms");
-						}		
+						}
+                         $this.data("computed-value",colorHex);
 						controller.updateLESSVariables(key, colorHex);
 				
 					}
@@ -1072,24 +1076,49 @@ class Application{
 					$this.spectrum("set",$this.val());
 					//*/
 				}).change(function(evt){
-                    var $this = $(this);
-                    var value = $this.val();
+                    var $input = $(this);
+                    var id = $input.attr("id");
+                    var value = $input.val();
                     if(value.charAt(0) === "#"){
                         var color = tinycolor(value);
-                        Application.updateLESSVariables(controller,$this,color.toHexString());
-                    }else{
-                    
+                        Application.updateLESSVariables(controller,$input,color.toHexString());
+                        //TODO Add/Remove formula link
+                        
+                    }else if(value.indexOf("@")>-1){
+                        //TODO find parent computed values
+                        //get "ref" + "computed-value"
+                        var $ref = $("#"+$input.data("ref"));
+                        var colorHex = $ref.data("computed-value");
+                        if( typeof colorHex === "undefined"){
+                            var color = tinycolor($ref.css("background-color"));
+                            colorHex = color.toHexString();
+                            $ref.data("computed-value",colorHex);
+                            
+                        }else{
+                            var color = tinycolor(colorHex);
+                            colorHex = color.toHexString();
+                        }
+                        //update formula link
+                        var ref = controller._LESS_VARIABLES[$input.data("ref")].links;
+                        for(var i in ref){
+                            if(ref[i].key === id){
+                                ref[i].value = value;
+                            }
+                        }
+                        //trigger refresh from the parent
+                        Application.updateLESSVariables(controller,$ref,colorHex);
                     }
                 });
 				
 				//set as drop target
 				$this.droppable({
 					drop: function( event, ui ) {
-						  event.stopPropagation();
-						  var newVal = ui.draggable.css('background-color');
-						  var colorHex = rgb2hex(newVal);
-						  var $input = $(this);
-						  $input.val(colorHex);
+						event.stopPropagation();
+                        var $input = $(this);
+						var newVal = ui.draggable.css('background-color');
+                        var color = tinycolor(newVal);
+						var colorHex = color.toHexString();					  
+						$input.val(colorHex);
 						Application.updateLESSVariables(controller,$input,colorHex);
 					}
 					
@@ -1127,7 +1156,9 @@ class Application{
 		if(_DEBUG){
 			console.log("onchange - updateLESSVariables "+ key);
 			console.log(key+" 1.c - change "+ (new(Date) - startTime1) + "ms");
-		}		
+		}	
+        //add computed value
+        $input.data("computed-value",colorHex);
 		controller.updateLESSVariables(key, colorHex);
 	
 	}
