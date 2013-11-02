@@ -13,7 +13,7 @@ exclude:          [".editorconfig", ".gitignore", ".project",
  ".classpath", "pom.xml", ".ruby-version", "bower.json", "composer.json", 
  "CONTRIBUTING.md", "CNAME", "LICENSE", "Gruntfile.js",
  "package.json", "node_modules", "README.md", "docs", "run", "wiki", "src" ]
-port:             9001
+port:             3000
 
 # Custom vars
 repo:             todo

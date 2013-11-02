@@ -1,3 +1,11 @@
+/// <reference path='typescript/jquery/jquery.d.ts'/>
+/// <reference path='typescript/jquery/jquery.noty.d.ts'/>
+/// <reference path='typescript/less.d.ts'/>
+/**
+* [Controller description]
+*/
+//declare var $: any;
+//declare var jQuery: any;
 var Controller = (function () {
     function Controller() {
         /**
@@ -28,8 +36,7 @@ var Controller = (function () {
         * [_LESS_VARIABLES_REF description]
         * @type {Array}
         */
-        this._LESS_VARIABLES_REF = [];
-
+        //		this._LESS_VARIABLES_REF = [];
         /**
         * [_parser description]
         * @type {less.Parser}
@@ -129,14 +136,17 @@ var Controller = (function () {
                 if (_DEBUG) {
                     console.log("{" + key + "} -> {" + reference + "}");
                 }
-                if (typeof this._LESS_VARIABLES_REF[reference] === "undefined") {
-                    this._LESS_VARIABLES_REF[reference] = [];
-                }
 
+                if (typeof this._LESS_VARIABLES[reference] === "undefined") {
+                    this._LESS_VARIABLES[reference] = {};
+                }
+                if (typeof this._LESS_VARIABLES[reference].links === "undefined") {
+                    this._LESS_VARIABLES[reference].links = [];
+                }
                 var ref = $input.data("ref");
 
                 if ((typeof ref !== "undefined") && (ref !== reference)) {
-                    var arr = this._LESS_VARIABLES_REF[ref];
+                    var arr = this._LESS_VARIABLES[ref].links;
                     if ($.isArray(arr)) {
                         var len = arr.length;
 
@@ -153,7 +163,7 @@ var Controller = (function () {
                 }
 
                 //add new reference
-                this._LESS_VARIABLES_REF[reference].push({ 'key': key, 'value': value });
+                this._LESS_VARIABLES[reference].links.push({ 'key': key, 'value': value });
                 $input.data("ref", reference);
             }
         }
@@ -197,7 +207,7 @@ var Controller = (function () {
             //find references and update their values
             var id = "#" + current.key;
             var $source = $(id);
-            var ref = this._LESS_VARIABLES_REF[current.key];
+            var ref = this._LESS_VARIABLES[current.key].links;
             var regex = /background-color:(.*);color:(.*);?/;
 
             //console.log("1.-> updateLESSVariables "+ current.key+" - "+JSON.stringify(ref));
@@ -253,7 +263,7 @@ var Controller = (function () {
                 }
 
                 //check if there are dependencies
-                var deps = this._LESS_VARIABLES_REF[depKey];
+                var deps = this._LESS_VARIABLES[depKey].links;
                 if ((typeof deps) !== "undefined" && deps.length > 0) {
                     //put newly computed value on the stack
                     stack.push({ 'key': depKey, 'value': backgroundColor });
@@ -489,8 +499,6 @@ var Controller = (function () {
         var variables = this.loadThemeVariables(theme);
 
         //reset the new references for all loaded variables
-        //creates bug this._LESS_VARIABLES = variables;
-        this._LESS_VARIABLES_REF = {};
         var startTime = new (Date)();
         var controller = this;
 
@@ -499,6 +507,9 @@ var Controller = (function () {
             var id = $this.attr("id");
             var value = variables[id];
             if (id && value) {
+                //clear variables cache on reload
+                controller._LESS_VARIABLES[id].links = [];
+                controller._LESS_VARIABLES[id].value = value;
                 controller.updateLESSVariablesRef(id, value, $this);
             }
         }).each(function (i, elt) {
@@ -506,48 +517,38 @@ var Controller = (function () {
             var $this = $(elt);
             var id = $this.attr("id");
             var value = variables[id];
+            var newVal = value;
+
+            if (id && value) {
+                $this.val(value);
+                /*
+                controller._LESS_VARIABLES[id].links = [];
+                controller._LESS_VARIABLES[id].value = value;
+                controller.updateLESSVariablesRef(id,value,$this);//*/
+            }
+
+            controller._LESS_VARIABLES[id].type = "text";
 
             if ($this.hasClass("color-input")) {
-                var newVal = value;
                 var colorHex = newVal;
+                controller._LESS_VARIABLES[id].type = "color";
+
                 if (newVal == null) {
                     return;
                 }
                 try  {
                     if (newVal.charAt(0) === '#') {
                         Application.updateLESSVariables(controller, $this, newVal);
-                        /*
-                        var fontColor = "white";
-                        
-                        if($.xcolor.readable("white",newVal)){
-                        fontColor = "white";
-                        } else {
-                        fontColor = "black";
-                        }
-                        
-                        $this.css( {'background-color' :colorHex, 'color' : fontColor} );
-                        
-                        //onchange colorpicker update variables
-                        $this.trigger("colorpickersliders.updateColor",newVal);
-                        if(_DEBUG){
-                        console.log(id+" 2.c - pop "+ (new(Date) - startTime1) + "ms");
-                        }
-                        //*/
                     } else {
                         if (_DEBUG) {
                             console.log($this.attr('id') + " = " + newVal);
                         }
-                        $this.val(value);
                     }
                     if (newVal.charAt(0) !== '#') {
                         //colorHex = rgb2hex(newVal);
                     }
                 } catch (err) {
                     console.error($this.attr('id') + " = " + newVal + " - " + err.message);
-                }
-            } else {
-                if (id && value) {
-                    $this.val(value);
                 }
             }
             var time = (new (Date)() - startTime1);
@@ -799,14 +800,18 @@ var Application = (function () {
 
             if ($this.hasClass("color-input")) {
                 var $this = $(elt);
-                $this.before("<i class='icon-bullseye'></i>");
+                $this.before("<i class='icon-bullseye'></i><br />");
                 var key = $this.attr("data-var");
                 var value = $this.val();
                 $this.attr({
                     "data-color-format": "hex"
                 });
-                $this.css('background-color', value);
 
+                //$this.css('background-color',value);
+                $this.css({
+                    "background-color": value,
+                    "display": "inline-block"
+                });
                 $this.ColorPickerSliders({
                     order: {
                         preview: 1,
@@ -1142,7 +1147,7 @@ var Application = (function () {
         });
 
         $('#color-tab-content').slimScroll({
-            height: '90%'
+            height: '85%'
         });
 
         $("#loading").hide();

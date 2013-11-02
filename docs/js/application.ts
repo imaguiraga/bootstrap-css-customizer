@@ -1,16 +1,19 @@
+/// <reference path='typescript/jquery/jquery.d.ts'/>
+/// <reference path='typescript/jquery/jquery.noty.d.ts'/>
+/// <reference path='typescript/less.d.ts'/>
 /**
  * [Controller description]
  */
-declare var $: any;
-declare var jQuery: any;
+//declare var $: any;
+//declare var jQuery: any;
 
 class Controller{
    
-        /**
+   /**
 	* [_CW bootstrap copyright]
 	* @type {String}
 	*/
-        static _CW : string = '/*!\n * Bootstrap v3.0.0\n *\n * Copyright 2013 Twitter, Inc\n * Licensed under the Apache License v2.0\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Designed and built with all the love in the world @twitter by @mdo and @fat.\n */\n\n';
+    static _CW : string = '/*!\n * Bootstrap v3.0.0\n *\n * Copyright 2013 Twitter, Inc\n * Licensed under the Apache License v2.0\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Designed and built with all the love in the world @twitter by @mdo and @fat.\n */\n\n';
 
 	/**
 	 * [_THEMES description]
@@ -36,7 +39,7 @@ class Controller{
 	 * [_LESS_VARIABLES_REF description]
 	 * @type {Array}
 	 */
-	private _LESS_VARIABLES_REF : any;
+	//private _LESS_VARIABLES_REF : any;
 	/**
 	 * [_parser description]
 	 * @type {less.Parser}
@@ -130,7 +133,7 @@ class Controller{
 	* [_COMPILED_LESS_CSS description]
 	* @type {Object}
 	*/
-	this._COMPILED_LESS_CSS = null;
+	   this._COMPILED_LESS_CSS = null;
 	
 	/**
 	* [_LESS_VARIABLES description]
@@ -141,7 +144,7 @@ class Controller{
 	* [_LESS_VARIABLES_REF description]
 	* @type {Array}
 	*/
-		this._LESS_VARIABLES_REF = [];
+//		this._LESS_VARIABLES_REF = [];
 	/**
 	* [_parser description]
 	* @type {less.Parser}
@@ -265,14 +268,20 @@ class Controller{
 				if(_DEBUG){
 					console.log("{"+key+ "} -> {"+reference+"}");
 				}
+                /*
 				if(typeof this._LESS_VARIABLES_REF[reference] === "undefined"){
 					this._LESS_VARIABLES_REF[reference] = [];	
+				}//*/
+                if(typeof this._LESS_VARIABLES[reference] === "undefined"){
+					this._LESS_VARIABLES[reference] = {};	
 				}
-				
+				if(typeof this._LESS_VARIABLES[reference].links === "undefined"){
+					this._LESS_VARIABLES[reference].links = [];	
+				}
 				var ref = $input.data("ref");
 				//remove old reference
 				if((typeof ref !== "undefined") && (ref !== reference)){
-					var arr = this._LESS_VARIABLES_REF[ref];
+					var arr = this._LESS_VARIABLES[ref].links;//var arr = this._LESS_VARIABLES_REF[ref];
 					if($.isArray(arr)){
 						var len = arr.length;
 						//find position
@@ -289,7 +298,7 @@ class Controller{
 					}
 				}
 				//add new reference
-				this._LESS_VARIABLES_REF[reference].push({'key' : key, 'value' :value});
+				this._LESS_VARIABLES[reference].links.push({'key' : key, 'value' :value});//this._LESS_VARIABLES_REF[reference].push({'key' : key, 'value' :value});
 				$input.data("ref",reference);
 			}
 		}
@@ -332,7 +341,7 @@ class Controller{
 			//find references and update their values 
 			var id = "#"+current.key;
 			var $source = $(id);
-			var ref = this._LESS_VARIABLES_REF[current.key];
+			var ref = this._LESS_VARIABLES[current.key].links;//var ref = this._LESS_VARIABLES_REF[current.key];
 			var regex = /background-color:(.*);color:(.*);?/;
 			
 			//console.log("1.-> updateLESSVariables "+ current.key+" - "+JSON.stringify(ref));
@@ -383,7 +392,7 @@ class Controller{
 				}
 				
 				//check if there are dependencies
-				var deps = this._LESS_VARIABLES_REF[depKey];
+				var deps = this._LESS_VARIABLES[depKey].links;//var deps = this._LESS_VARIABLES_REF[depKey];
 				if( (typeof deps) !== "undefined" && deps.length > 0){
 					//put newly computed value on the stack
 					stack.push({'key':depKey,'value':backgroundColor});
@@ -409,7 +418,7 @@ class Controller{
 		var css = null;
 		var lessInput = Application.collectLESSVariables(this._CURRENT_THEME);
 		var controller = this;
-		 var _parser = new (less.Parser)();
+		var _parser = new (less.Parser)();
 		_parser.parse(lessInput.core, function (err, tree) {
 			if (err) { 
 				console.log(lessInput.core);
@@ -531,6 +540,7 @@ class Controller{
 	setVariable(key: string, value: string){
 		this._LESS_VARIABLES[key] = {'default':value,'value':value };
 	}
+    
 	/**
 	 * [loadThemeVariables description]
 	 * @param  {Object} theme [description]
@@ -622,8 +632,6 @@ class Controller{
 		  var variables = this.loadThemeVariables(theme);
 		  //reset the new references for all loaded variables
 
-		  //creates bug this._LESS_VARIABLES = variables;
-		  this._LESS_VARIABLES_REF = {};
 		  var startTime = new(Date);
 		  var controller = this;
 
@@ -632,46 +640,46 @@ class Controller{
 			var id = $this.attr("id");
 			var value = variables[id];
 			if(id && value){
+                //clear variables cache on reload
+                controller._LESS_VARIABLES[id].links = [];
+                controller._LESS_VARIABLES[id].value = value;
 				controller.updateLESSVariablesRef(id,value,$this);
 			}
-		}).each(function(i,elt){
+		}).each(function(i,elt){//*/
 			var startTime1 = new(Date);
 			var $this = $(elt);
 			var id = $this.attr("id");
 			var value = variables[id];
+            var newVal = value;
+                   
+            
+            if(id && value){
+				$this.val(value);
+                /*
+                controller._LESS_VARIABLES[id].links = [];
+                controller._LESS_VARIABLES[id].value = value;
+				controller.updateLESSVariablesRef(id,value,$this);//*/
+            }
 
-			if($this.hasClass("color-input")){
-				var newVal = value;
+            controller._LESS_VARIABLES[id].type = "text";	
+            
+            if($this.hasClass("color-input")){
+				
 				var colorHex = newVal;
-				if(newVal == null){
+                controller._LESS_VARIABLES[id].type = "color";
+				
+                if(newVal == null){
 					return;
 				}
 				try{
-					if(newVal.charAt(0) === '#'){						
+					if(newVal.charAt(0) === '#'){	
 						Application.updateLESSVariables(controller,$this,newVal);
-						
-						/*	
-						var fontColor = "white";
-				   
-						if($.xcolor.readable("white",newVal)){
-							fontColor = "white";
-						} else {
-							fontColor = "black";
-						}
-						
-						$this.css( {'background-color' :colorHex, 'color' : fontColor} );	
 
-						//onchange colorpicker update variables
-						$this.trigger("colorpickersliders.updateColor",newVal);	
-						if(_DEBUG){						
-							console.log(id+" 2.c - pop "+ (new(Date) - startTime1) + "ms");
-						}
-						//*/
 					}else{
 						if(_DEBUG){
 							console.log($this.attr('id')+" = "+newVal);
 						}
-						$this.val(value);
+
 					}
 					if(newVal.charAt(0) !== '#'){
 						//colorHex = rgb2hex(newVal);
@@ -680,10 +688,6 @@ class Controller{
 					console.error($this.attr('id')+" = "+newVal+" - "+err.message);
 				}
 				
-			}else{
-				if(id && value){
-					$this.val(value);					
-				}
 			}
 			var time = (new(Date) - startTime1);
 			if(time > 0){
@@ -915,14 +919,17 @@ class Application{
 			
 			if($this.hasClass("color-input")){
 				var $this = $(elt);
-				$this.before("<i class='icon-bullseye'></i>");
+				$this.before("<i class='icon-bullseye'></i><br />");
 				var key = $this.attr("data-var");
 				var value = $this.val();
 				$this.attr({
 					"data-color-format" : "hex",			
 				});
-				$this.css('background-color',value);
-			
+				//$this.css('background-color',value);
+			    $this.css({
+                    "background-color":value,
+                    "display": "inline-block"
+                });
 				$this.ColorPickerSliders({
 					order: {
 						preview:1,
@@ -1275,7 +1282,7 @@ class Application{
 		});
 
 		$('#color-tab-content').slimScroll({
-			height: '90%'
+			height: '85%'
 		});
 
 		$("#loading").hide();
@@ -1303,3 +1310,31 @@ class Application{
 $(function main() {
 	Application.main();
 });
+
+
+/*
+$(".basic").click(function(evt){
+ 
+$(this).spectrum({
+    clickoutFiresChange: true,
+    showAlpha: true,
+    showInitial: true,
+    showInput: true,
+    showButtons: false,
+    move: function(color) {
+        var $input = $(this).closest("input");
+        $input.css("backgroundColor",color.toHexString());
+        $input.val(color.toHexString());
+    },
+    hide: function(color) {
+        $(this).closest("input").spectrum("destroy");
+    },
+    change: function(color) {
+
+    }
+    
+}).show();
+$(this).spectrum().("set",$(this).css("backgroundColor"));
+    
+});
+//*/
