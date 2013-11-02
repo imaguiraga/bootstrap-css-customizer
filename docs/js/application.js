@@ -510,6 +510,8 @@ var Controller = (function () {
                 //clear variables cache on reload
                 controller._LESS_VARIABLES[id].links = [];
                 controller._LESS_VARIABLES[id].value = value;
+                controller._LESS_VARIABLES[id].$element = $this;
+                controller._LESS_VARIABLES[id].type = "text";
                 controller.updateLESSVariablesRef(id, value, $this);
             }
         }).each(function (i, elt) {
@@ -526,8 +528,6 @@ var Controller = (function () {
                 controller._LESS_VARIABLES[id].value = value;
                 controller.updateLESSVariablesRef(id,value,$this);//*/
             }
-
-            controller._LESS_VARIABLES[id].type = "text";
 
             if ($this.hasClass("color-input")) {
                 var colorHex = newVal;
@@ -909,6 +909,15 @@ var Application = (function () {
                 $this.css('background-color', value);
 
                 $this.click(function (evt) {
+                    var $input = $(this);
+                    var value = $this.val();
+
+                    //disable color pickers input for variables
+                    var stop = (value.indexOf("@") > -1);
+                    if (stop) {
+                        evt.stopImmediatePropagation();
+                    }
+                }).click(function (evt) {
                     $(this).spectrum({
                         clickoutFiresChange: true,
                         showAlpha: true,
@@ -937,6 +946,14 @@ var Application = (function () {
                     }).show();
                     $this.spectrum("set", $this.val());
                     //*/
+                }).change(function (evt) {
+                    var $this = $(this);
+                    var value = $this.val();
+                    if (value.charAt(0) === "#") {
+                        var color = tinycolor(value);
+                        Application.updateLESSVariables(controller, $this, color.toHexString());
+                    } else {
+                    }
                 });
 
                 //set as drop target

@@ -643,16 +643,18 @@ class Controller{
                 //clear variables cache on reload
                 controller._LESS_VARIABLES[id].links = [];
                 controller._LESS_VARIABLES[id].value = value;
+                controller._LESS_VARIABLES[id].$element = $this;
+                controller._LESS_VARIABLES[id].type = "text";
 				controller.updateLESSVariablesRef(id,value,$this);
 			}
+            
 		}).each(function(i,elt){//*/
 			var startTime1 = new(Date);
 			var $this = $(elt);
 			var id = $this.attr("id");
 			var value = variables[id];
             var newVal = value;
-                   
-            
+                               
             if(id && value){
 				$this.val(value);
                 /*
@@ -660,9 +662,7 @@ class Controller{
                 controller._LESS_VARIABLES[id].value = value;
 				controller.updateLESSVariablesRef(id,value,$this);//*/
             }
-
-            controller._LESS_VARIABLES[id].type = "text";	
-            
+            	            
             if($this.hasClass("color-input")){
 				
 				var colorHex = newVal;
@@ -1031,7 +1031,17 @@ class Application{
 				});
 				$this.css('background-color',value);
 				
-				$this.click(function(evt){
+				$this.click(function (evt) {
+                    var $input = $(this);
+                    var value = $this.val();
+
+                    //disable color pickers input for variables
+                    var stop = (value.indexOf("@") > -1);
+                    if(stop){
+                        evt.stopImmediatePropagation();
+                    }
+                    
+                }).click(function(evt){
 					
 					$(this).spectrum({
 						clickoutFiresChange: true,
@@ -1042,7 +1052,7 @@ class Application{
 						preferredFormat: "hex6",
 						move: function(color) {
 							var $input = $(this);//.closest("input");							
-							 var colorHex = color.toHexString();
+							var colorHex = color.toHexString();
 							$input.val(colorHex);
 							Application.updateLESSVariables(controller,$input,colorHex);
 						},
@@ -1052,16 +1062,25 @@ class Application{
 						},
 						change: function(color) {
 							var $input = $(this);
-							  //update scope variables double bindings
-							  //tinycolor object is in color
-							 var colorHex = color.toHexString();
+							//update scope variables double bindings
+							//tinycolor object is in color
+							var colorHex = color.toHexString();
 							Application.updateLESSVariables(controller,$input,colorHex);
 						}
 							
 					}).show();
 					$this.spectrum("set",$this.val());
 					//*/
-				});
+				}).change(function(evt){
+                    var $this = $(this);
+                    var value = $this.val();
+                    if(value.charAt(0) === "#"){
+                        var color = tinycolor(value);
+                        Application.updateLESSVariables(controller,$this,color.toHexString());
+                    }else{
+                    
+                    }
+                });
 				
 				//set as drop target
 				$this.droppable({
