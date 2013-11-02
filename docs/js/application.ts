@@ -268,23 +268,26 @@ class Controller{
 					this._LESS_VARIABLES[reference].links = [];	
 				}
 				var ref = $input.data("ref");
-				//remove old reference
-				if((typeof ref !== "undefined") && (ref !== reference)){
-					var arr = this._LESS_VARIABLES[ref].links;
-					if($.isArray(arr)){
-						var len = arr.length;
-						//find position
-						for(var i = 0;i < len; i++){
-							if(arr[i].key === key){						
-								arr.splice(i,1);
-								if(_DEBUG){
-									console.log("ref from {"+ref+ "} -> {"+reference+"}");
-								}
-								break;
-							}
-						}
-
-					}
+				//remove old reference reference has changed
+				if(ref!= null && (typeof ref !== "undefined") && (ref !== reference)){
+                    if(typeof this._LESS_VARIABLES[ref].links !== "undefined"){
+                        var arr = this._LESS_VARIABLES[ref].links;
+                        if($.isArray(arr)){
+                            var len = arr.length;
+                            //find position
+                            for(var i = 0;i < len; i++){
+                                if(arr[i].key === key){
+                                    //reomve link
+                                    arr.splice(i,1);
+                                    if(_DEBUG){
+                                        console.log("ref from {"+ref+ "} -> {"+reference+"}");
+                                    }
+                                    break;
+                                }
+                            }
+    
+                        }
+                    }
 				}
 				//add new reference //update formula link
 				this._LESS_VARIABLES[reference].links.push({'key' : key, 'value' :value});
@@ -1155,7 +1158,8 @@ class Application{
             for(var i in links){
                 if(links[i].key === id){
                     links[i].value = null;
-                     $input.data("ref",null);
+                    $input.data("ref",null);
+                    break;
                 }
             }
         }

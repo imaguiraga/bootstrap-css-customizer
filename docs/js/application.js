@@ -140,18 +140,21 @@ var Controller = (function () {
                 }
                 var ref = $input.data("ref");
 
-                if ((typeof ref !== "undefined") && (ref !== reference)) {
-                    var arr = this._LESS_VARIABLES[ref].links;
-                    if ($.isArray(arr)) {
-                        var len = arr.length;
+                if (ref != null && (typeof ref !== "undefined") && (ref !== reference)) {
+                    if (typeof this._LESS_VARIABLES[ref].links !== "undefined") {
+                        var arr = this._LESS_VARIABLES[ref].links;
+                        if ($.isArray(arr)) {
+                            var len = arr.length;
 
-                        for (var i = 0; i < len; i++) {
-                            if (arr[i].key === key) {
-                                arr.splice(i, 1);
-                                if (_DEBUG) {
-                                    console.log("ref from {" + ref + "} -> {" + reference + "}");
+                            for (var i = 0; i < len; i++) {
+                                if (arr[i].key === key) {
+                                    //reomve link
+                                    arr.splice(i, 1);
+                                    if (_DEBUG) {
+                                        console.log("ref from {" + ref + "} -> {" + reference + "}");
+                                    }
+                                    break;
                                 }
-                                break;
                             }
                         }
                     }
@@ -1027,6 +1030,7 @@ var Application = (function () {
                 if (links[i].key === id) {
                     links[i].value = null;
                     $input.data("ref", null);
+                    break;
                 }
             }
         }
