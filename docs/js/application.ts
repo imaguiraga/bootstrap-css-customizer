@@ -1068,7 +1068,7 @@ class Application{
                     //disable color pickers input for variables
                     var stop = (value.indexOf("@") > -1 
                                 || value === "transparent" || value === "inherit" 
-                                || value.charAt(0) !== "#" || value.indexOf("rgb") !== 0
+                                || (value.charAt(0) !== "#"  && value.indexOf("rgb") !== 0)
                                );
                     if(stop){
                         evt.stopImmediatePropagation();
