@@ -631,11 +631,14 @@ var Application = (function () {
     function ($input, value) {
         var color = tinycolor(value);
         var name = "" + color.toName();
+        var tooltip = null;
         if (name !== "false") {
-            $input.attr("title", "Color [ " + color.toHexString() + " - " + color.toRgbString() + " - " + color.toHslString() + " - " + name + " ]");
+            tooltip = "Color [ " + color.toHexString() + " - " + color.toRgbString() + " - " + color.toHslString() + " - " + name + " ]";
         } else {
-            $input.attr("title", "Color [ " + color.toHexString() + " - " + color.toRgbString() + " - " + color.toHslString() + " ]");
+            tooltip = "Color [ " + color.toHexString() + " - " + color.toRgbString() + " - " + color.toHslString() + " ]";
         }
+        $input.attr("title", tooltip);
+        $input.attr("data-original-title", tooltip);
     };
 
     Application.collectLESSVariables = /**
