@@ -269,7 +269,7 @@ class Controller{
 				}
 				var ref = $input.data("ref");
 				//remove old reference reference has changed
-				if(ref!= null && (typeof ref !== "undefined") && (ref !== reference)){
+				if(ref != null && (typeof ref !== "undefined") && (ref !== reference)){
                     if(typeof this._LESS_VARIABLES[ref].links !== "undefined"){
                         var arr = this._LESS_VARIABLES[ref].links;
                         if($.isArray(arr)){
@@ -745,6 +745,7 @@ class Application{
 		startTime = endTime = new(Date);
 		//add default variables
 		var variables = [];
+        /* TODO
 		var checked = {  
 			css: $('#less-section input:checked').map(function () { return this.value }).toArray()
 		};
@@ -752,8 +753,8 @@ class Application{
 		if (!checked.css.length){
 			return;
 		}	
-		
-		var lessVariables = theme.lessVariables;//variables.less
+		//*/
+		var lessVariables = theme.lessVariables;
 		var less = theme.less;
 		//update less variables
 		if(lessVariables){
@@ -919,7 +920,7 @@ class Application{
 			
 			if($this.hasClass("color-input")){
 				var $this = $(elt);
-				$this.before("<i class='icon-bullseye'></i><br />");
+				$this.before("<i class='icon-fixed-width icon-tint'></i><br />");
 				var key = $this.attr("data-var");
 				var value = $this.val();
 				$this.attr({
@@ -1018,13 +1019,13 @@ class Application{
 			}
 			controller.setVariable(key,{'default':value,'value':value });
 			//contains @
-			if(value && value.indexOf("@") >= 0){
+			if(value && value.indexOf("@") > -1){
 				controller.updateLESSVariablesRef(key,value,$this);
 			}
 			
 			if($this.hasClass("color-input")){
 				var $this = $(elt);
-				$this.before("<i class='icon-bullseye'></i>");
+				$this.before("<i class='icon-fixed-width icon-tint'></i>");
 				var key = $this.attr("data-var");
 				var value = $this.val();
 				$this.attr({
@@ -1037,7 +1038,10 @@ class Application{
                     var value = $this.val();
 
                     //disable color pickers input for variables
-                    var stop = (value.indexOf("@") > -1);
+                    var stop = (value.indexOf("@") > -1 
+                                || value === "transparent" || value === "inherit" 
+                                || value.charAt(0) !== "#" || value.indexOf("rgb") !== 0
+                               );
                     if(stop){
                         evt.stopImmediatePropagation();
                     }
@@ -1124,10 +1128,14 @@ class Application{
         
         var colorHex = $ref.data("computed-value");
         
-        if( typeof colorHex === "undefined"){
-            var color = tinycolor($ref.css("background-color"));
-            colorHex = color.toHexString();
-            $ref.data("computed-value",colorHex);
+        if( typeof colorHex === "undefined" || colorHex == null){
+            if($ref.css("background-color") != undefined){
+                var color = tinycolor($ref.css("background-color"));
+                colorHex = color.toHexString();
+                $ref.data("computed-value",colorHex);
+            }else{
+                colorHex = null;
+            }
             
         }else{
             var color = tinycolor(colorHex);
@@ -1154,12 +1162,16 @@ class Application{
         
         //reference not found
         if(value.indexOf("@"+ref) === -1){
-            var links = controller._LESS_VARIABLES[ref].links;
-            for(var i in links){
-                if(links[i].key === id){
-                    links[i].value = null;
-                    $input.data("ref",null);
-                    break;
+            if( controller._LESS_VARIABLES[ref] != undefined){
+                var links = controller._LESS_VARIABLES[ref].links;
+                if(links != undefined){
+                    for(var i in links){
+                        if(links[i].key === id){
+                            links[i].value = null;
+                            $input.data("ref",null);
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -1177,6 +1189,10 @@ class Application{
 	 * @return {Void}            [description]
 	 */
 	static updateLESSVariables(/*@type {Controller}*/ controller: Controller,$input:any,colorHex:string){
+        if(colorHex == undefined || colorHex == null){
+            return;
+        }
+        
 		var startTime1 = new(Date);
 
 		var key = $input.attr("data-var");
@@ -1257,10 +1273,12 @@ class Application{
 			var theme = controller.getCurrentTheme();
 			Application.updateCSS(theme);
 			controller.populateLESSVariables(theme);
-			if(selection  === 'compiled'){
+			if(selection === 'compiled'){
 				$("#gradients-check").closest("label").removeClass("disabled");
 			}else{
 				$("#gradients-check").closest("label").addClass("disabled");
+                $("#gradients-check").prop('checked',false);
+                Application.updateGradientsCSS(theme,false);
 			}
 			//$("#loading").hide();
 			$("#content").css("visibility","visible");	
@@ -1381,7 +1399,7 @@ class Application{
 		$("#gradients-check").closest("label").addClass("disabled");
 
 	}
-	static    generateNote(message,type) {
+	static generateNote(message,type) {
 		var n = noty({
 			text: message,
 			type: type || 'notification',

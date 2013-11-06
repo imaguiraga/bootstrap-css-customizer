@@ -1,19 +1,25 @@
     <div class="page-header"><h2 id="variables-navbar">Navbar</h2></div>
     <div class="row edit-view">
+      <div class="col-lg-4">
+        <label>@navbar-height</label>
+        <input type="text" class="form-control" placeholder="50px" data-var="@navbar-height" id="navbar-height" />
+      </div>      
+      <div class="col-lg-4">      
+        <label>@navbar-margin-bottom</label>         
+        <input type="text" class="form-control" placeholder="@line-height-computed" data-var="@navbar-margin-bottom" id="navbar-margin-bottom" />
+      </div>      
+      <div class="col-lg-4">  
+        <label>@navbar-border-radius</label>
+        <input type="text" class="form-control" placeholder="@border-radius-base" data-var="@navbar-border-radius" id="navbar-border-radius" />  
+      </div>
       <div class="col-lg-6">
         <div class="page-header"><h3>Default navbar</h3></div>
         <div class="page-header"><h4>Basics</h4></div>
-        <label>@navbar-height</label>
-        <input type="text" class="form-control" placeholder="50px" data-var="@navbar-height" id="navbar-height" />
-        <label>@navbar-margin-bottom</label>
-        <input type="text" class="form-control" placeholder="@line-height-computed" data-var="@navbar-margin-bottom" id="navbar-margin-bottom" />
         <label>@navbar-default-color</label>
         <input type="text" class="color-box color-input form-control" placeholder="#777" value="#777" data-var="@navbar-default-color" id="navbar-default-color" />
 		<label>@navbar-default-bg</label>
         <input type="text" class="color-box color-input form-control" placeholder="#f8f8f8" value="#f8f8f8" data-var="@navbar-default-bg" id="navbar-default-bg" />
-        <label>@navbar-border-radius</label>
-        <input type="text" class="form-control" placeholder="@border-radius-base" data-var="@navbar-border-radius" id="navbar-border-radius" />
-        <div class="page-header"><h4>Links</h4></div>
+               <div class="page-header"><h4>Links</h4></div>
         <label>@navbar-default-link-color</label>
         <input type="text" class="color-box color-input form-control" placeholder="#777" value="#777" data-var="@navbar-default-link-color" id="navbar-default-link-color" />
         <label>@navbar-default-link-hover-color</label>

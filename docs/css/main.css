@@ -188,12 +188,12 @@
 	   -khtml-border-radius: 2px;
 	   border-radius: 2px;
 	   padding: 0px;
-	   z-index: 50!important;
+	   /*z-index: 50!important;*/
 	}
 
 	.color-box{
 	   position: relative;
-	   z-index: 50!important;
+	  /*z-index: 50!important;*/
 	}
 	
 	.color-input{

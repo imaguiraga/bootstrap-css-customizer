@@ -632,16 +632,16 @@ var Application = (function () {
 
         //add default variables
         var variables = [];
+
+        /* TODO
         var checked = {
-            css: $('#less-section input:checked').map(function () {
-                return this.value;
-            }).toArray()
+        css: $('#less-section input:checked').map(function () { return this.value }).toArray()
         };
-
-        if (!checked.css.length) {
-            return;
+        
+        if (!checked.css.length){
+        return;
         }
-
+        //*/
         var lessVariables = theme.lessVariables;
         var less = theme.less;
 
@@ -805,7 +805,7 @@ var Application = (function () {
 
             if ($this.hasClass("color-input")) {
                 var $this = $(elt);
-                $this.before("<i class='icon-bullseye'></i><br />");
+                $this.before("<i class='icon-fixed-width icon-tint'></i><br />");
                 var key = $this.attr("data-var");
                 var value = $this.val();
                 $this.attr({
@@ -900,13 +900,13 @@ var Application = (function () {
             }
             controller.setVariable(key, { 'default': value, 'value': value });
 
-            if (value && value.indexOf("@") >= 0) {
+            if (value && value.indexOf("@") > -1) {
                 controller.updateLESSVariablesRef(key, value, $this);
             }
 
             if ($this.hasClass("color-input")) {
                 var $this = $(elt);
-                $this.before("<i class='icon-bullseye'></i>");
+                $this.before("<i class='icon-fixed-width icon-tint'></i>");
                 var key = $this.attr("data-var");
                 var value = $this.val();
                 $this.attr({
@@ -919,7 +919,7 @@ var Application = (function () {
                     var value = $this.val();
 
                     //disable color pickers input for variables
-                    var stop = (value.indexOf("@") > -1);
+                    var stop = (value.indexOf("@") > -1 || value === "transparent" || value === "inherit" || value.charAt(0) !== "#" || value.indexOf("rgb") !== 0);
                     if (stop) {
                         evt.stopImmediatePropagation();
                     }
@@ -998,10 +998,14 @@ var Application = (function () {
 
         var colorHex = $ref.data("computed-value");
 
-        if (typeof colorHex === "undefined") {
-            var color = tinycolor($ref.css("background-color"));
-            colorHex = color.toHexString();
-            $ref.data("computed-value", colorHex);
+        if (typeof colorHex === "undefined" || colorHex == null) {
+            if ($ref.css("background-color") != undefined) {
+                var color = tinycolor($ref.css("background-color"));
+                colorHex = color.toHexString();
+                $ref.data("computed-value", colorHex);
+            } else {
+                colorHex = null;
+            }
         } else {
             var color = tinycolor(colorHex);
             colorHex = color.toHexString();
@@ -1025,12 +1029,16 @@ var Application = (function () {
         var $ref = $("#" + ref);
 
         if (value.indexOf("@" + ref) === -1) {
-            var links = controller._LESS_VARIABLES[ref].links;
-            for (var i in links) {
-                if (links[i].key === id) {
-                    links[i].value = null;
-                    $input.data("ref", null);
-                    break;
+            if (controller._LESS_VARIABLES[ref] != undefined) {
+                var links = controller._LESS_VARIABLES[ref].links;
+                if (links != undefined) {
+                    for (var i in links) {
+                        if (links[i].key === id) {
+                            links[i].value = null;
+                            $input.data("ref", null);
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -1047,6 +1055,10 @@ var Application = (function () {
     * @return {Void}            [description]
     */
     function (/*@type {Controller}*/ controller, $input, colorHex) {
+        if (colorHex == undefined || colorHex == null) {
+            return;
+        }
+
         var startTime1 = new (Date)();
 
         var key = $input.attr("data-var");
@@ -1133,6 +1145,8 @@ var Application = (function () {
                 $("#gradients-check").closest("label").removeClass("disabled");
             } else {
                 $("#gradients-check").closest("label").addClass("disabled");
+                $("#gradients-check").prop('checked', false);
+                Application.updateGradientsCSS(theme, false);
             }
 
             //$("#loading").hide();

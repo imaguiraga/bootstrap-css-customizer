@@ -32,7 +32,6 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
       <script src="js/respond.min.js"></script>
     <![endif]-->
     <!-- Place anything custom after this. -->
-
 	</head>
 	<body>
 		<!--[if lt IE 7]>
@@ -55,12 +54,46 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li style="padding:6px;">
+						<li class="active">
+							<a href="#">
+								<i class="icon-fixed-width icon-home">
+								</i>
+								Home
+							</a>
+						</li>
+						<li class="btn-group" style="margin:6px;clear:right">
+							<!-- 
+							<a href="#" id="btn-compile"><i class="icon-fixed-width icon-gear"></i>Compile</a>
+							-->
 							
-							<button style="padding:6px;" type="button" href="#" class="btn btn-default" id="btn-compile"><i class="icon-fixed-width icon-gear"></i>Compile CSS</button>
-							<button style="padding:6px;" type="button" href="#" class="edit-view btn btn-default" id="btn-preview"><i class="icon-fixed-width icon-eye-open"></i>Preview CSS</button>
-							<button style="padding:6px;" type="button" href="#" class="btn btn-default" id="btn-download"><i class="icon-fixed-width icon-download-alt"></i>Download CSS</button>
+							<button style="padding:6px;" type="button" href="#" class="btn btn-default" id="btn-compile"><i class="icon-fixed-width icon-gear"></i>Compile</button>
+							<button style="padding:6px;" type="button" href="#" class="edit-view btn btn-default" id="btn-preview"><i class="icon-fixed-width icon-eye-open"></i>Preview</button>
+							<button style="padding:6px;" type="button" href="#" class="btn btn-default" id="btn-download"><i class="icon-fixed-width icon-download-alt"></i>Download</button>
 
+						</li>
+
+						<li>
+							<!--						
+							<a id="btn-preview" class="edit-view" href="#"><i class="icon-fixed-width icon-eye-open"></i>Preview</a>
+							-->
+						</li>
+						
+						<li>
+						<!--
+							<a id="btn-download" href="#download"><i class="icon-fixed-width icon-download-alt"></i>Download</a>
+							-->
+						</li>
+						<li>
+							<a href="#about">
+								About
+							</a>
+						</li>
+						<li>
+							<a href="#contact">
+								<i class="icon-envelope">
+								</i>
+								Contact
+							</a>
 						</li>
 
 						<li class="dropdown">
@@ -113,21 +146,17 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 								</li>
 							</ul>
 						</li>
-						<li>
-							<label style="margin:5px;" class="btn btn-primary btn-sm disabled">
-								<input id="gradients-check" type="checkbox" >
-								Gradients
-							</label>
-						</li>
 					</ul>
                       {{ content }}
 
 					<form class="navbar-form navbar-right inline-form">
 
 						<div class="form-group">
-						<label style="font-size:1em" for="template-selector" class="control-label label">Template</label>
-						
-						  <select id="template-selector" style="width:120px" class="form-control input-sm" title="Bootstrap theme selector">							 
+						<h4 class="inline">
+						  <span style="margin-left: 20px" class="label label-default">Theme</span>
+						</h4>
+						  <select id="theme-selector" ng-model="template" style="width:120px" class="form-control input-sm" title="Bootstrap theme selector">
+							 
 							<optgroup label="User">							 
 								<option <option value="compiled">compiled</option>
 							</optgroup>
@@ -163,20 +192,20 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 		<div class="container">
 
        -->  
-		<div id="loading" style="width:100%;height:100%;text-align:center"><h3 style="margin-top:100px"><i class="icon-fixed-width icon-refresh icon-spin" style="padding:4px"></i> Loading ....</h3></div>  
+		<div id="loading" style="width:100%;height:100%;text-align:center"><p style="margin-top:50px"><i class="icon-refresh icon-2x icon-spin" style="padding:4px"></i> Loading ....</p></div>  
 		<div id="content" style="visibility:hidden" class="row theme-edit" style="padding:5px;">
-			<div id="colortab" class="col-lg-2 hidden-xs hidden-sm affix edit-view" style="margin-left:5px;margin-right:0px;z-index:5000">
+			<div id="colortab" class="well col-lg-3 hidden-xs hidden-sm affix edit-view" style="margin-left:5px;margin-right:0px;z-index:5000">
 				  {% include colorView.compiled.inc.html %}
 			</div>
-			<!-- /col-lg-2 -->
+			<!-- /col-lg-3 -->
 
-			<div id="variables" class="col-lg-10 col-lg-offset-2">
+			<div id="variables" class="col-lg-9 col-lg-offset-3">
 				<div class="container">	
 					{% include lessVariables.inc.html %}
 				</div>	
 			</div>
 
-			<!-- /col-lg-10 -->
+			<!-- /col-lg-9 -->
             
 		</div>
 		<!-- 1
