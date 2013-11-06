@@ -231,6 +231,7 @@ var Controller = (function () {
                         "color": fontColor
                     });
                     $target.data("computed-value", backgroundColor);
+                    Application.updateTooltip($target, backgroundColor);
                     if (_DEBUG) {
                         console.log("@1. -> parseLESSVariables " + id + " - " + (new (Date)() - startTime1) + "ms");
                     }
@@ -260,6 +261,7 @@ var Controller = (function () {
                                 "color": fontColor
                             });
                             $target.data("computed-value", backgroundColor);
+                            Application.updateTooltip($target, backgroundColor);
                         }
                         if (_DEBUG) {
                             console.log("1. -> parseLESSVariables " + id + " - " + (new (Date)() - startTime1) + "ms");
@@ -621,6 +623,21 @@ var $lessVariablesInput = $("input:text.form-control").filter("[data-var]");
 var Application = (function () {
     function Application() {
     }
+    Application.updateTooltip = /**
+    * [updateTooltip description]
+    * @param  {Object} $input [description]
+    * @param  {String} value [description]
+    */
+    function ($input, value) {
+        var color = tinycolor(value);
+        var name = "" + color.toName();
+        if (name !== "false") {
+            $input.attr("title", "Color [ " + color.toHexString() + " - " + color.toRgbString() + " - " + color.toHslString() + " - " + name + " ]");
+        } else {
+            $input.attr("title", "Color [ " + color.toHexString() + " - " + color.toRgbString() + " - " + color.toHslString() + " ]");
+        }
+    };
+
     Application.collectLESSVariables = /**
     * [collectLESSVariables description]
     * @param  {Object} theme [description]
@@ -854,6 +871,7 @@ var Application = (function () {
                             console.log(key + " 1.c - change " + (new (Date)() - startTime1) + "ms");
                         }
                         $this.data("computed-value", colorHex);
+                        Application.updateTooltip($this, colorHex);
                         controller.updateLESSVariables(key, colorHex);
                     }
                 }).droppable({
@@ -873,6 +891,8 @@ var Application = (function () {
                         }
 
                         $this.css({ 'background-color': colorHex, 'color': fontColor });
+                        $this.data("computed-value", colorHex);
+                        Application.updateTooltip($this, colorHex);
                         $this.trigger("colorpickersliders.updateColor", newVal);
                     }
                 });
@@ -1003,6 +1023,7 @@ var Application = (function () {
                 var color = tinycolor($ref.css("background-color"));
                 colorHex = color.toHexString();
                 $ref.data("computed-value", colorHex);
+                Application.updateTooltip($ref, colorHex);
             } else {
                 colorHex = null;
             }
@@ -1084,6 +1105,7 @@ var Application = (function () {
 
         //add computed value
         $input.data("computed-value", colorHex);
+        Application.updateTooltip($input, colorHex);
         controller.updateLESSVariables(key, colorHex);
     };
 
