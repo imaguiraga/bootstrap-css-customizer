@@ -934,6 +934,11 @@ var Application = (function () {
                 });
                 $this.css('background-color', value);
 
+                $this.attr("data-toggle", "tooltip");
+                $this.attr("data-placement", "top");
+
+                Application.updateTooltip($this, value);
+
                 $this.click(function (evt) {
                     var $input = $(this);
                     var value = $this.val();
@@ -1117,6 +1122,7 @@ var Application = (function () {
         // tooltip demo
         $("[data-toggle=tooltip]").tooltip();
 
+        //        $("color-input").tooltip();
         // popover demo
         $("[data-toggle=popover]").popover();
 
