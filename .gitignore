@@ -1,6 +1,7 @@
 /target
 docs/_site/
 _site/
+_gh_pages/
 _includes/bak/
 /webapp.zip
 /backupdocs.zip
