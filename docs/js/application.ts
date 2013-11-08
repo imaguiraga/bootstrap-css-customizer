@@ -852,7 +852,7 @@ class Application{
 		$(".color-picker").each(function(i,elt){
 			$(this).find("input.color-box-input").attr("readonly","true");
 		 }).draggable({ 
-			appendTo : "body",
+			appendTo : "#colortab",
 			revert: "valid", 
 			cursor: "move", 
 			opacity: 0.9, 
