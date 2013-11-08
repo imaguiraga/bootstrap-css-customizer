@@ -632,11 +632,11 @@ var Application = (function () {
         var color = tinycolor(value);
         var name = "" + color.toName();
         var tooltip = null;
-        if (name !== "false") {
-            tooltip = "Color [ " + color.toHexString() + " - " + color.toRgbString() + " - " + color.toHslString() + " - " + name + " ]";
-        } else {
-            tooltip = "Color [ " + color.toHexString() + " - " + color.toRgbString() + " - " + color.toHslString() + " ]";
+        if (name === "false") {
+            name = "Color";
         }
+
+        tooltip = name + " [ " + color.toHexString() + " - " + color.toRgbString() + " - " + color.toHslString() + " ]";
         $input.attr("title", tooltip);
         $input.attr("data-original-title", tooltip);
     };

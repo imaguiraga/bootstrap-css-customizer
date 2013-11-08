@@ -746,11 +746,11 @@ class Application{
         var color = tinycolor(value); 
         var name = ""+color.toName();
         var tooltip = null;
-        if(name !== "false"){
-            tooltip = "Color [ "+color.toHexString()+" - "+color.toRgbString()+" - "+color.toHslString()+" - "+name+" ]";
-        }else{
-            tooltip = "Color [ "+color.toHexString()+" - "+color.toRgbString()+" - "+color.toHslString()+" ]";
+        if(name === "false"){
+            name = "Color";
         }
+		
+		tooltip = name+" [ "+color.toHexString()+" - "+color.toRgbString()+" - "+color.toHslString()+" ]";
         $input.attr("title",tooltip);
         $input.attr("data-original-title",tooltip);
     }
@@ -1094,7 +1094,7 @@ class Application{
                     //disable color pickers input for variables
                     var stop = (value.indexOf("@") > -1 
                                 || value === "transparent" || value === "inherit" 
-                                || (value.charAt(0) !== "#"  && value.indexOf("rgb") !== 0)
+                                || (value.charAt(0) !== "#"  && value.indexOf("rgb") !== 0 && value.indexOf("hsl") !== 0)
                                );
                     if(stop){
                         evt.stopImmediatePropagation();
