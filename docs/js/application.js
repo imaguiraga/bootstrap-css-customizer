@@ -769,7 +769,7 @@ var Application = (function () {
             theme = controller.setCurrentTheme("compiled");
 
             window.localStorage.setItem('compiled', JSON.stringify(theme));
-            $this.html("<i class='icon-fixed-width icon-gear'></i>Compile CSS");
+            $this.html("<i class='icon-fixed-width icon-gears'></i>Compile CSS");
 
             Application.updateCSS(theme);
             $("#template-selector").val("compiled");
