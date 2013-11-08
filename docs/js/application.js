@@ -714,26 +714,42 @@ var Application = (function () {
     * @return {Void}            [description]
     */
     function (/*@type {Controller}*/ controller) {
-        $(".icon-resize-full").next("input").click(function (evt) {
-            evt.stopPropagation();
-
-            //$(this).attr('checked',true);
-            $(".color-picker").each(function (i, elt) {
-                var $this = $(this);
-                $this.addClass("color-box-full");
-                $this.removeClass("color-box-small");
-            });
+        /*
+        $(".icon-resize-full").next("input").click(function (evt){
+        evt.stopPropagation();
+        $(".color-picker").each( function(i,elt){
+        var $this = $(this);
+        $this.addClass("color-box-full");
+        $this.removeClass("color-box-small");
         });
-
-        $(".icon-resize-small").next("input").click(function (evt) {
+        });
+        
+        $(".icon-resize-small").next("input").click(function (evt){
+        evt.stopPropagation();
+        $(".color-picker").each( function(i,elt){
+        var $this = $(this);
+        $this.addClass("color-box-small");
+        $this.removeClass("color-box-full");
+        });
+        
+        });
+        //*/
+        $("#colorname-check").click(function (evt) {
             evt.stopPropagation();
 
-            //$(this).attr('checked',true);
-            $(".color-picker").each(function (i, elt) {
-                var $this = $(this);
-                $this.addClass("color-box-small");
-                $this.removeClass("color-box-full");
-            });
+            if ($(this).prop('checked') == true) {
+                $(".color-picker").each(function (i, elt) {
+                    var $this = $(this);
+                    $this.addClass("color-box-full");
+                    $this.removeClass("color-box-small");
+                });
+            } else {
+                $(".color-picker").each(function (i, elt) {
+                    var $this = $(this);
+                    $this.addClass("color-box-small");
+                    $this.removeClass("color-box-full");
+                });
+            }
         });
 
         //make parent element draggable

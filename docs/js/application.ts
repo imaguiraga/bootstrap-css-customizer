@@ -826,10 +826,9 @@ class Application{
 	 * @return {Void}            [description]
 	 */
 	static initDraggable(/*@type {Controller}*/ controller: Controller){
-
+		/*
 		$(".icon-resize-full").next("input").click(function (evt){
 			evt.stopPropagation();
-			//$(this).attr('checked',true);
 			$(".color-picker").each( function(i,elt){
 				var $this = $(this);
 				$this.addClass("color-box-full");
@@ -839,7 +838,6 @@ class Application{
 		
 		$(".icon-resize-small").next("input").click(function (evt){
 			evt.stopPropagation();
-			//$(this).attr('checked',true);
 			$(".color-picker").each( function(i,elt){
 				var $this = $(this);
 				$this.addClass("color-box-small");
@@ -847,6 +845,24 @@ class Application{
 			});
 			
 		});
+		//*/
+		$("#colorname-check").click(function (evt) {
+            evt.stopPropagation();
+
+			if(	$(this).prop('checked') == true){	
+				$(".color-picker").each(function (i, elt) {
+					var $this = $(this);
+					$this.addClass("color-box-full");
+					$this.removeClass("color-box-small");
+				});
+			}else{		
+				$(".color-picker").each(function (i, elt) {
+					var $this = $(this);
+					$this.addClass("color-box-small");
+					$this.removeClass("color-box-full");
+				});
+			}
+        });
 
 		//make parent element draggable
 		$(".color-picker").each(function(i,elt){
