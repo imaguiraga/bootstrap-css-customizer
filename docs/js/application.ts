@@ -849,7 +849,17 @@ class Application{
 		});
 
 		//make parent element draggable
-		  $(".color-picker").draggable({ revert: "valid",cursor: "move" ,opacity: 0.9, helper: "clone",revertDuration: 50,zIndex: 6000 });
+		$(".color-picker").each(function(i,elt){
+			$(this).find("input.color-box-input").attr("readonly","true");
+		 }).draggable({ 
+			appendTo : "body",
+			revert: "valid", 
+			cursor: "move", 
+			opacity: 0.9, 
+			helper: "clone", 
+			revertDuration: 50, 
+			zIndex: 6000 			
+		});
 
 	}
 

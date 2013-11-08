@@ -9,6 +9,8 @@ z-index: 5000;
 height: 100%;
 top: 40px;
 left: 0px;
+margin-left:0px;
+margin-right:0px;
 border-radius: 0px;
 padding:4px;
 background-color: #2f2f2f!important;
@@ -17,8 +19,8 @@ background-color: #2f2f2f!important;
 
 #color-tab-content{
 position: relative;
-overflow: hidden;
-width: auto;
+/*overflow: hidden;
+width: auto;*/
 height: 95%;
 margin-bottom: 20px;
 background-color: #2f2f2f!important;

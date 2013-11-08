@@ -5,6 +5,8 @@
 /*@import url("vendor/colorpicker.css");*/
 @import url("vendor/jquery-ui.css");
 @import url("vendor/spectrum.css");
+@import url("vendor/jquery.custom-scrollbar.css");
+
 /*Glyphicons Font */
 /*@import url("glyphicons.css");*/
  
@@ -25,31 +27,6 @@
 */
 @import url("syntax.css");
 @import url("colors.css");
-
-/* Sparkline stats
-=================================================================== */
- .sparkLineStats {
-    position: relative;
-    margin-bottom: -4px;
-}
-.sparkLineStats ul {
-    margin:0;
-}
-.sparkLineStats li {
-    margin-bottom: 0;
-    line-height: 42px;
-    padding-top:3px;
-    font-size: 12px
-}
-.sparkLineStats li .number {
-    font-size: 2em;
-    font-weight: 400;
-    padding:0px 0px 0px 2px;
-    /*color: #fff;  */
-}
-.sparkLineStats li span:first-child {
-    margin-right: 5px;
-}
 
 /*-----------------FONT AWESOME-----------------*/
  .icon-1 {
@@ -160,21 +137,7 @@
 	.color-box-small > span,.color-box-small > input{
 	   display:none;
 	}
-	 /*
-	.color-box-full > input{
-	  text-align:center;
-	  text-transform:uppercase;
-	  display:inline-block;
-	  border:0px;witdh:4em;
-	  margin:0px;
-	  font-size:0.85em;
-	  -moz-border-radius: 2px;
-	   -webkit-border-radius: 2px;
-	   -khtml-border-radius: 2px;
-	   border-radius: 2px;
-	   padding:0px;
-	}
-	//*/
+
 	.color-box-input{
 	  font-family:Calibri;
 	  text-align:center;
