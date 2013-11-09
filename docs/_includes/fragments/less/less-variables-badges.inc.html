@@ -1,30 +1,36 @@
-    <div class="page-header"><h2 id="variables-badges">Badges</h2></div>
-    <div class="row edit-view">
-      <div class="col-lg-4">
-        <label>@badge-color</label>
-        <input type="text" class="color-box color-input form-control" placeholder="#fff" value="#fff" data-var="@badge-color" id="badge-color" />
-        <p>Badge text color</p>
-          </div>
-      <div class="col-lg-4">
-        <label>@badge-bg</label>
-        <input type="text" class="color-box color-input form-control" placeholder="@gray-light" data-var="@badge-bg" id="badge-bg" />
-        <p>Badge background color</p>
-          </div>
-      <div class="col-lg-4">
-        <label>@badge-link-hover-color</label>
-        <input type="text" class="color-box color-input form-control" placeholder="#fff" value="#fff" data-var="@badge-link-hover-color" id="badge-link-hover-color" />
-        <p>Linked badge text color on hover</p>
-      </div>
-      <div class="col-lg-4">
-        <label>@badge-active-color</label>
-        <input type="text" class="color-box color-input form-control" placeholder="@link-color" data-var="@badge-active-color" id="badge-active-color" />
-        <p>Badge text color in active nav link</p>
+<div class="page-header">
+    <h2 id="variables-badges">Badges</h2>
+</div>
+<div class="edit-view">
+    <div class="row">
+        <div class="col-lg-4">
+            <label>@badge-color</label>
+            <input type="text" class="color-box color-input form-control" placeholder="#fff" value="#fff" data-var="@badge-color" id="badge-color" />
+            <p>Badge text color</p>
         </div>
-      <div class="col-lg-4">
-        <label>@badge-active-bg</label>
-        <input type="text" class="color-box color-input form-control" placeholder="#fff" value="#fff" data-var="@badge-active-bg" id="badge-active-bg" />
-        <p>Badge text color in active nav link</p>
-      </div>
+        <div class="col-lg-4">
+            <label>@badge-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@gray-light" data-var="@badge-bg" id="badge-bg" />
+            <p>Badge background color</p>
+        </div>
+        <div class="col-lg-4">
+            <label>@badge-link-hover-color</label>
+            <input type="text" class="color-box color-input form-control" placeholder="#fff" value="#fff" data-var="@badge-link-hover-color" id="badge-link-hover-color" />
+            <p>Linked badge text color on hover</p>
+        </div>
     </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <label>@badge-active-color</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@link-color" data-var="@badge-active-color" id="badge-active-color" />
+            <p>Badge text color in active nav link</p>
+        </div>
+        <div class="col-lg-4">
+            <label>@badge-active-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="#fff" value="#fff" data-var="@badge-active-bg" id="badge-active-bg" />
+            <p>Badge text color in active nav link</p>
+        </div>
+    </div>
+</div>
 
-    {% include fragments/less/preview-badges.inc.html %}
+{% include fragments/less/preview-badges.inc.html %}
