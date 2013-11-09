@@ -634,7 +634,7 @@ var Application = (function () {
         var tooltip = null;
         if (name === "false") {
             name = "Color";
-            name = $.xcolor.nearestname(color.toHexString());
+            //slow name = $.xcolor.nearestname(color.toHexString());
         }
 
         tooltip = name + " [ " + color.toHexString() + " - " + color.toRgbString() + " - " + color.toHslString() + " ]";
