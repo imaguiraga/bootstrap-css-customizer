@@ -748,6 +748,7 @@ class Application{
         var tooltip = null;
         if(name === "false"){
             name = "Color";
+            name = $.xcolor.nearestname(color.toHexString());
         }
 		
 		tooltip = name+" [ "+color.toHexString()+" - "+color.toRgbString()+" - "+color.toHslString()+" ]";
@@ -1096,7 +1097,10 @@ class Application{
                                 || value === "transparent" || value === "inherit" 
                                 || (value.charAt(0) !== "#"  && value.indexOf("rgb") !== 0 && value.indexOf("hsl") !== 0)
                                );
-                    if(stop){
+                    //try converting entry to color
+                    var color = tinycolor(value);
+                                           
+                    if(value === "transparent" || value === "inherit" || color.ok == false){
                         evt.stopImmediatePropagation();
                     }
                     
@@ -1140,7 +1144,12 @@ class Application{
                         
                     }else{//does not contain variables
                         var color = tinycolor(value);
-                        Application.removeLESSVariablesLinks(controller,$input,color.toHexString());
+                        if(color.ok){
+                            Application.removeLESSVariablesLinks(controller,$input,color.toHexString());
+                        }else{
+                            //reset this value to previous one
+                            $input.val($input.data("prev-value"));
+                        }
                     
                     }
                     
@@ -1198,7 +1207,9 @@ class Application{
         }
         
         //trigger refresh from the parent
-        Application.updateLESSVariables(controller,$ref,colorHex);
+        if(color.ok){
+            Application.updateLESSVariables(controller,$ref,colorHex);
+        }
 	
 	}
     
@@ -1251,6 +1262,7 @@ class Application{
 		var startTime1 = new(Date);
 
 		var key = $input.attr("data-var");
+        $input.data("prev-value",$input.val());
 		//slow process
 		if(_DEBUG){
 			console.log(key+" 0.c - change "+ (new(Date) - startTime1) + "ms");

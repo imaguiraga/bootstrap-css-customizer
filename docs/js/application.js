@@ -634,6 +634,7 @@ var Application = (function () {
         var tooltip = null;
         if (name === "false") {
             name = "Color";
+            name = $.xcolor.nearestname(color.toHexString());
         }
 
         tooltip = name + " [ " + color.toHexString() + " - " + color.toRgbString() + " - " + color.toHslString() + " ]";
@@ -974,7 +975,11 @@ var Application = (function () {
 
                     //disable color pickers input for variables
                     var stop = (value.indexOf("@") > -1 || value === "transparent" || value === "inherit" || (value.charAt(0) !== "#" && value.indexOf("rgb") !== 0 && value.indexOf("hsl") !== 0));
-                    if (stop) {
+
+                    //try converting entry to color
+                    var color = tinycolor(value);
+
+                    if (value === "transparent" || value === "inherit" || color.ok == false) {
                         evt.stopImmediatePropagation();
                     }
                 }).click(function (evt) {
@@ -1015,7 +1020,12 @@ var Application = (function () {
                         Application.updateLESSVariablesLinks(controller, $input, value);
                     } else {
                         var color = tinycolor(value);
-                        Application.removeLESSVariablesLinks(controller, $input, color.toHexString());
+                        if (color.ok) {
+                            Application.removeLESSVariablesLinks(controller, $input, color.toHexString());
+                        } else {
+                            //reset this value to previous one
+                            $input.val($input.data("prev-value"));
+                        }
                     }
                 });
 
@@ -1066,8 +1076,9 @@ var Application = (function () {
             colorHex = color.toHexString();
         }
 
-        //trigger refresh from the parent
-        Application.updateLESSVariables(controller, $ref, colorHex);
+        if (color.ok) {
+            Application.updateLESSVariables(controller, $ref, colorHex);
+        }
     };
 
     Application.removeLESSVariablesLinks = /**
@@ -1117,6 +1128,7 @@ var Application = (function () {
         var startTime1 = new (Date)();
 
         var key = $input.attr("data-var");
+        $input.data("prev-value", $input.val());
 
         if (_DEBUG) {
             console.log(key + " 0.c - change " + (new (Date)() - startTime1) + "ms");
