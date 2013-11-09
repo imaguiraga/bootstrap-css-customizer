@@ -804,7 +804,7 @@ var Application = (function () {
 
                 $this.removeClass("edit-view");
                 $(".edit-view").hide();
-                $("#variables").removeClass("col-lg-10 col-lg-offset-2").addClass("col-lg-12");
+                $("#variables").removeClass("col-md-10 col-md-offset-2").addClass("col-md-12");
                 $("#colortab").removeClass("hidden-xs hidden-sm affix");
 
                 $this.html("<i class='icon-fixed-width icon-edit'></i>Edit CSS");
@@ -815,7 +815,7 @@ var Application = (function () {
 
                 $(".edit-view").show();
                 $this.addClass("edit-view");
-                $("#variables").removeClass("col-lg-12").addClass("col-lg-10 col-lg-offset-2");
+                $("#variables").removeClass("col-md-12").addClass("col-md-10 col-md-offset-2");
                 $("#colortab").addClass("hidden-xs hidden-sm affix");
                 $this.html("<i class='icon-fixed-width icon-eye-open'></i>Preview CSS");
 
@@ -973,7 +973,7 @@ var Application = (function () {
                     var value = $this.val();
 
                     //disable color pickers input for variables
-                    var stop = (value.indexOf("@") > -1 || value === "transparent" || value === "inherit" || (value.charAt(0) !== "#" && value.indexOf("rgb") !== 0));
+                    var stop = (value.indexOf("@") > -1 || value === "transparent" || value === "inherit" || (value.charAt(0) !== "#" && value.indexOf("rgb") !== 0 && value.indexOf("hsl") !== 0));
                     if (stop) {
                         evt.stopImmediatePropagation();
                     }

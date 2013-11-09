@@ -229,12 +229,12 @@ ng-init="template='css/theme/default/bootstrap.min.css'">
 		<div id="loading" style="width:100%;height:100%;text-align:center"><h3 style="margin-top:100px"><i class="icon-fixed-width icon-refresh icon-spin" style="padding:4px"></i> Loading ....</h3></div> 
 -->
     <div id="content" style="visibility:hidden" class="row theme-edit" style="padding:5px;">
-        <div id="colortab" class="col-lg-2 hidden-xs hidden-sm affix edit-view">
+        <div id="colortab" class="col-md-2 visible-md visible-lg affix edit-view">
             {% include colorView.compiled.inc.html %}
         </div>
         <!-- /col-lg-2 -->
 
-        <div id="variables" class="col-lg-10 col-lg-offset-2">
+        <div id="variables" class="col-md-10 col-md-offset-2">
             <div class="container">
                 {% include lessVariables.inc.html %}
             </div>
