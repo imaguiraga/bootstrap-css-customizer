@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+
+<html class="no-js" xmlns:ng="http://angularjs.org" id="ng-app">
+<!--<![endif]-->
+
+<head>
+
+    <!-- Meta, title, CSS, favicons, etc. -->
+    {% include header.inc.html %}
+
+    <!--[if lte IE 8]>
+      <script>
+        document.createElement('ng-include');
+        document.createElement('ng-pluralize');
+        document.createElement('ng-view');
+ 
+        // Optionally these for CSS
+        document.createElement('ng:include');
+        document.createElement('ng:pluralize');
+        document.createElement('ng:view');
+      </script>
+    <![endif]-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <!-- Place anything custom after this. -->
+
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+                <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+    <div id="loading" style="background-color:black;opacity:0.5;top:0px;left:0px;position:fixed;width:100%;height:100%;text-align:center;z-index:6000">
+        <div id="spinner" style="margin-top:200px;color:white">
+        	<h3 >
+            <i class="icon-fixed-width icon-spinner icon-spin icon-large"></i>Loading ....</h3>
+        </div>
+    </div>
+
+    <div class="navbar navbar-inverse navbar-fixed-top theme-edit" style="z-index:5500">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar">
+                    </span>
+                    <span class="icon-bar">
+                    </span>
+                    <span class="icon-bar">
+                    </span>
+                </button>
+                <!--
+                <a class="navbar-brand" href="#">
+                    <span class="label label-primary">Bootstrap</span>
+                    <span class="label label-success">Theme</span>
+                    <span class="label label-danger">Roller</span>
+                </a>
+                -->
+                <a class="navbar-brand brand" href="index.html">
+                    <span class="label label-primary">Bootstrap</span>
+                    <span class="label label-success">CSS</span>
+                    <span class="label label-danger">Customizer {{ site.version }}</span>
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li style="padding:6px;" >
+
+                        <button style="padding:6px;" type="button" href="#" class="btn btn-default" id="btn-compile">
+                            <i class="icon-fixed-width icon-gears"></i>Compile CSS</button>
+                        <button style="padding:6px;" type="button" href="#" class="edit-view btn btn-default" id="btn-preview">
+                            <i class="icon-fixed-width icon-eye-open"></i>Preview CSS</button>
+                        <button style="padding:6px;" type="button" href="#" class="btn btn-default" id="btn-download">
+                            <i class="icon-fixed-width icon-download-alt"></i>Download CSS</button>
+
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Components
+                            <b class="caret">
+                            </b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#variables-basics">Basics</a>
+                            </li>
+                            <li>
+                                <a href="#variables-buttons">Buttons</a>
+                            </li>
+                            <li>
+                                <a href="#variables-form-states">Form states</a>
+                            </li>
+                            <li>
+                                <a href="#variables-alerts">Alerts</a>
+                            </li>
+                            <li>
+                                <a href="#variables-navbar">Navbar</a>
+                            </li>
+                            <li>
+                                <a href="#variables-nav">Nav</a>
+                            </li>
+                            <li>
+                                <a href="#variables-tables">Tables</a>
+                            </li>
+                            <li>
+                                <a href="#variables-forms">Forms</a>
+                            </li>
+                            <li>
+                                <a href="#variables-dropdowns">Dropdowns</a>
+                            </li>
+                            <li>
+                                <a href="#variables-panels-wells">Panels and wells</a>
+                            </li>
+                            <li>
+                                <a href="#variables-accordion">Accordion</a>
+                            </li>
+                            <li>
+                                <a href="#variables-badges">Badges</a>
+                            </li>
+                            <li>
+                                <a href="#variables-breadcrumbs">Breadcrumbs</a>
+                            </li>
+                            <li>
+                                <a href="#variables-jumbotron">Jumbotron</a>
+                            </li>
+                            <li>
+                                <a href="#variables-modals">Modals</a>
+                            </li>
+                            <li>
+                                <a href="#variables-carousel">Carousel</a>
+                            </li>
+                            <li>
+                                <a href="#variables-list-group">List group</a>
+                            </li>
+                            <li>
+                                <a href="#variables-thumbnails">Thumbnails</a>
+                            </li>
+                            <li>
+                                <a href="#variables-progress">Progress bars</a>
+                            </li>
+                            <li>
+                                <a href="#variables-pagination">Pagination</a>
+                            </li>
+                            <li>
+                                <a href="#variables-pager">Pager</a>
+                            </li>
+                            <li>
+                                <a href="#variables-labels">Labels</a>
+                            </li>
+                            <li>
+                                <a href="#variables-tooltips-popovers">Tooltips and popovers</a>
+                            </li>
+                            <li>
+                                <a href="#variables-close">Close button</a>
+                            </li>
+                            <li>
+                                <a href="#variables-type">Type</a>
+                            </li>
+                            <li>
+                                <a href="#variables-other">Other</a>
+                            </li>
+                            <li class="divider">
+                            </li>
+                            <li class="dropdown-header">
+                                Nav header
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Separated link
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    One more separated link
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <label style="margin:5px;" class="btn btn-primary btn-sm disabled">
+                            <input id="gradients-check" type="checkbox" style="margin:4px">Apply Gradients
+                        </label>
+                    </li>
+					<li><a href="docs.html">Docs</a></li>
+					<li><a id="forkme_banner" target="_blank " href="{{ page.github_url }}"><i class="icon-github-sign "></i></a></li>  
+				</ul>
+                {{ content }}
+
+                <form class="navbar-form navbar-right inline-form">
+
+                    <div class="form-group">
+                        <label style="font-size:1em" for="template-selector" class="control-label label">Template</label>
+
+                        <select id="template-selector" style="width:120px" class="form-control input-sm" title="Bootstrap theme selector">
+                            <optgroup label="User">
+                                <option <option value="compiled">compiled</option>
+                            </optgroup>
+                            <optgroup label="Bootstrap">
+                                <option value="default">default</option>
+                            </optgroup>
+                            <optgroup label="Bootswatch">
+                                <option value="amelia">amelia</option>
+                                <option value="cerulean">cerulean</option>
+                                <option value="cosmo">cosmo</option>
+                                <option value="cyborg">cyborg</option>
+                                <option value="flatly">flatly</option>
+                                <option value="journal">journal</option>
+                                <option value="readable">readable</option>
+                                <option value="simplex">simplex</option>
+                                <option value="slate">slate</option>
+                                <option value="spacelab">spacelab</option>
+                                <option value="united">united</option>
+                            </optgroup>
+
+                        </select>
+                    </div>
+
+                </form>
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+    </div>
+
+
+    <!--  1
+		<div class="container">
+
+       -->
+
+    <div id="content" style="visibility:hidden" class="row theme-edit" style="padding:5px;">
+        <div id="colortab" class="col-md-2 visible-md visible-lg affix edit-view">
+            {% include colorView.compiled.inc.html %}
+        </div>
+        <!-- /col-md-2 -->
+
+        <div id="variables" class="col-md-10 col-md-offset-2">
+            <div class="container">
+                {% include lessVariables.inc.html %}
+            </div>
+        </div>
+
+        <!-- /col-md-10 -->
+
+    </div>
+    <!-- 1
+		/row
+        </div> /container -->
+    <!-- back to top link-->
+    <a id="goto-top" href="#" class="btn btn-default" title="Back To Top">
+        <i class="icon-chevron-sign-up icon-2">
+        </i>
+    </a>
+    <hr />
+    <footer>
+        {% include footer.inc.html %}
+    </footer>
+    <!-- JS and analytics only. -->
+    {% include footerjs.inc.html %}
+</body>
+
+</html>

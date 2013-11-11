@@ -6,8 +6,8 @@ pygments:         true
 permalink:        pretty
 
 # Server
-source:           ./docs
-destination:      _gh_pages
+source:           ./templates
+destination:      ./_gh_pages
 #layouts:     ./docs/_layouts
 
 exclude:          [".editorconfig", ".gitignore", ".project",
@@ -17,5 +17,7 @@ exclude:          [".editorconfig", ".gitignore", ".project",
 port:             3000
 
 # Custom vars
-repo:             todo
-
+version:          "(0.1.0)"
+repo:             "https://github.com/imaguiraga/bootstrap-css-customizer"
+github_url:       "https://github.com/imaguiraga/bootstrap-css-customizer"
+github_user_url: "https://github.com/imaguiraga"
