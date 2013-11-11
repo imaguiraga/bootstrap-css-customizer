@@ -192,11 +192,9 @@ ul.unstyled {
     -khtml-border-radius: 2px;
     border-radius: 2px;
     padding: 0px;
-    /*z-index: 50!important;*/
 }
 .color-box {
     position: relative;
-    /*z-index: 50!important;*/
 }
 .color-input {
     position: relative;
@@ -206,10 +204,9 @@ ul.unstyled {
 }
 .droppable-box {
     position: relative;
-    /* z-index: 50!important; */
 }
 div {}
 
 .brand > span{
-	font-size:16px;
+	/*font-size:16px;*/
 }

@@ -2,7 +2,6 @@
 layout: index.layout
 title: Bootstrap CSS Customizer
 base_url: "../"
-bootswacth_url: "http://bootswatch.com"
 ---
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -19,17 +18,13 @@ bootswacth_url: "http://bootswatch.com"
         </div>
         <div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav pull-right">
-				<li class="active"><a href="#">Home</a></li>
-				<li><a href="customizer.html">Customizer</a></li>
-				<li><a href="docs.html">Docs</a></li>
-				<li><a id="forkme_banner" href="{{ site.github_url }}"><i class="icon-github-sign"></i></a></li>     
+				<li class="active"><a href="#"><i class="icon-fixed-width icon-home"></i>Home</a></li>
+				<li><a href="customizer.html" onclick="_gaq.push(['_trackEvent', 'Home Page actions', 'goto', this.href]);"><i class="icon-fixed-width icon-gears"></i> Customizer</a></li>
+				<li><a href="docs.html" onclick="_gaq.push(['_trackEvent', 'Home Page actions', 'goto', this.href]);"><i class="icon-fixed-width icon-book"></i> Docs</a></li>
+				<li><a id="forkme_banner" href="{{ site.github_url }}" onclick="_gaq.push(['_trackEvent', 'Home Page actions', 'goto', this.href]);"><i class="icon-github-sign"></i></a></li>     
 				<li>
 					<a style="padding-bottom:0px">
 						<iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=imaguiraga&amp;repo=bootstrap-css-customizer&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-					</a>
-				</li>
-				<li>
-					<a style="padding-bottom:0px">
 						<iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=imaguiraga&amp;repo=bootstrap-css-customizer&amp;type=fork&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="102px" height="20px"></iframe>
 					</a>
 				</li>
@@ -43,21 +38,10 @@ bootswacth_url: "http://bootswatch.com"
       <div class="container">
         <h1>An Advanced Bootstrap CSS Customizer</h1>
         <p>with drag-and-drop color pickers and CSS previews.</p>
-        <p><a class="btn btn-success btn-lg" href="customizer.html">Start Here</a></p>
+        <p><a class="btn btn-success btn-lg" href="customizer.html" onclick="_gaq.push(['_trackEvent', 'Home Page Jumbotron actions', 'goto', this.href]);">Start Here</a></p>
       </div>
     </div>
 	<!--
-	  <div class="social-buttons container hidden-print">
-		<ul class="unstyled inline">
-		  <li class="inline">
-			<iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=imaguiraga&amp;repo=imaguiraga.github.io&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-		  </li>
-		  <li class="inline">
-			<iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=imaguiraga&amp;repo=imaguiraga.github.io&amp;type=fork&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="102px" height="20px"></iframe>
-		  </li>
-		</ul>
-	  </div>
-
 
     <div class="container">
 

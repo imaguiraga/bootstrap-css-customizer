@@ -62,21 +62,21 @@
                     <span class="label label-danger">Roller</span>
                 </a>
                 -->
-                <a class="navbar-brand brand" href="index.html">
-                    <span class="label label-primary">Bootstrap</span>
-                    <span class="label label-success">CSS</span>
-                    <span class="label label-danger">Customizer {{ site.version }}</span>
+                <a class="navbar-brand brand" href="index.html" onclick="_gaq.push(['_trackEvent', 'Customizer actions', 'goto', this.href]);">
+                    <span class="label label-primary">B</span>
+                    <span class="label label-success">C</span>
+                    <span class="label label-danger">C {{ site.version }}</span>
                 </a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li style="padding:6px;" >
 
-                        <button style="padding:6px;" type="button" href="#" class="btn btn-default" id="btn-compile">
+                        <button style="padding:6px;" type="button" href="#" class="btn btn-default" id="btn-compile" onclick="_gaq.push(['_trackEvent', 'Customizer actions', 'compile']);">
                             <i class="icon-fixed-width icon-gears"></i>Compile CSS</button>
-                        <button style="padding:6px;" type="button" href="#" class="edit-view btn btn-default" id="btn-preview">
+                        <button style="padding:6px;" type="button" href="#" class="edit-view btn btn-default" id="btn-preview" onclick="_gaq.push(['_trackEvent', 'Customizer actions', 'preview/edit']);">
                             <i class="icon-fixed-width icon-eye-open"></i>Preview CSS</button>
-                        <button style="padding:6px;" type="button" href="#" class="btn btn-default" id="btn-download">
+                        <button style="padding:6px;" type="button" href="#" class="btn btn-default" id="btn-download" onclick="_gaq.push(['_trackEvent', 'Customizer actions', 'download']);">
                             <i class="icon-fixed-width icon-download-alt"></i>Download CSS</button>
 
                     </li>
@@ -188,8 +188,8 @@
                             <input id="gradients-check" type="checkbox" style="margin:4px">Apply Gradients
                         </label>
                     </li>
-					<li><a href="docs.html">Docs</a></li>
-					<li><a id="forkme_banner" target="_blank " href="{{ page.github_url }}"><i class="icon-github-sign "></i></a></li>  
+					<li><a href="docs.html" onclick="_gaq.push(['_trackEvent', 'Customizer', 'goto', this.href]);"><i class="icon-fixed-width icon-book"></i> Docs</a></li>
+					
 				</ul>
                 {{ content }}
 
