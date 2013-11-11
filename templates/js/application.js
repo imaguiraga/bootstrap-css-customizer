@@ -1296,7 +1296,7 @@ var Application = (function () {
             corners: 1,
             rotate: 0,
             direction: 1,
-            color: '#000',
+            color: '#fff',
             speed: 1,
             trail: 60,
             shadow: false,
@@ -1316,8 +1316,6 @@ var Application = (function () {
     * Main
     */
     function () {
-        var spinner = Application.initSpinner();
-        spinner.spin();
         var controller = new Controller();
 
         if (window.localStorage.getItem('compiled')) {
@@ -1353,7 +1351,6 @@ var Application = (function () {
         });
 
         $("#loading").hide();
-        spinner.stop();
 
         $("#content").css("visibility", "visible");
         $("#template-selector").val("default");
@@ -1378,6 +1375,10 @@ var Application = (function () {
 * [Anonymous startup function]
 * @return {Void} [description]
 */
-$(function main() {
-    Application.main();
-});
+(function () {
+    var spinner = Application.initSpinner();
+    $(function main() {
+        Application.main();
+        spinner.stop();
+    });
+})();

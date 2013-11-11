@@ -1435,7 +1435,7 @@ class Application{
 		  corners: 1, // Corner roundness (0..1)
 		  rotate: 0, // The rotation offset
 		  direction: 1, // 1: clockwise, -1: counterclockwise
-		  color: '#000', // #rgb or #rrggbb or array of colors
+		  color: '#fff', // #rgb or #rrggbb or array of colors
 		  speed: 1, // Rounds per second
 		  trail: 60, // Afterglow percentage
 		  shadow: false, // Whether to render a shadow
@@ -1451,12 +1451,11 @@ class Application{
 		return spinner;
 	}
 
-          /**
+    /**
 	* Main
 	*/
 	static main(){
 
-		var spinner = Application.initSpinner();
 		var /*@type {Controller}*/ controller = new Controller();
 		
 		//load stored compiled theme from cache
@@ -1464,7 +1463,6 @@ class Application{
 			var theme = JSON.parse(window.localStorage.getItem('compiled'))
 			controller.setTheme('compiled',theme);
 		}
-
 
 		Application.initTemplateSelector(controller);
 		
@@ -1495,12 +1493,10 @@ class Application{
 			height: '85%'
 		});
 
-
 		$("#loading").hide();
-		spinner.stop();
 
 		$("#content").css("visibility","visible");	
-		$("#template-selector").val("default");//.trigger('change');
+		$("#template-selector").val("default");
 		$("#gradients-check").closest("label").addClass("disabled");
 
 	}
@@ -1520,10 +1516,15 @@ class Application{
  * [Anonymous startup function]
  * @return {Void} [description]
  */
-$(function main() {
-	Application.main();
-});
+ (function(){
+ 
+	var spinner = Application.initSpinner();
+	$(function main() {
+		Application.main();
+		spinner.stop();
+	});
 
+})();
 
 /*
 $(".basic").click(function(evt){
