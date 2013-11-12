@@ -143,12 +143,13 @@ var TemplateSelector = (function () {
             var html = TemplateSelector._TEMPLATE_HTML.replace(/templateId/g, newId).replace(/templateName/g, newName);
             var $html = $(html);
             var $elt = $source.replaceWith($html);
-            $elt.remove();
+
+            //$elt.remove();
             Application.initDeleteButton(_controller, $html.find(".btn-template-delete"), this);
             Application.initRenameButton(_controller, $html.find(".btn-template-rename"), this);
         }
     };
-    TemplateSelector._TEMPLATE_HTML = "<a id='templateId' class='user-template' data-link='templateId' href='#'><span>templateName</span>" + "<div  class='btn-group pull-right' style='display:inline-block;margin:0px;padding:0px' >" + "<button style='padding:2px' type='button' class='btn btn-default btn-template-rename' title='Rename template'><i class='icon-edit-sign'></i></button>" + "<button style='padding:2px' type='button' class='btn btn-default btn-template-delete' title='Delete template'><i class='icon-remove'></i></button>" + "</div></a>";
+    TemplateSelector._TEMPLATE_HTML = "<a id='templateId' style='padding-right:4px;' class='user-template' data-link='templateId' href='#'><span>templateName</span>" + "<div  class='btn-group pull-right' style='display:inline-block;margin:0px;padding:0px' >" + "<button style='padding:2px' type='button' class='btn btn-default btn-template-rename' title='Rename template'><i class='icon-edit-sign'></i></button>" + "<button style='padding:2px' type='button' class='btn btn-default btn-template-delete' title='Delete template'><i class='icon-remove'></i></button>" + "</div></a>";
     return TemplateSelector;
 })();
 
@@ -231,11 +232,12 @@ var Controller = (function () {
                         } else {
                             theme.less = [theme.less].concat(Controller._CORE_LESS.lessCore);
                         }
+                        theme.themeId = theme.name.toLowerCase();
                         theme.compiled = false;
                         theme.compiledCssMin = null;
                         theme.compiledGradientsCssMin = null;
                         theme.compiledLessVariables = null;
-                        controller._THEMES[theme.name.toLowerCase()] = theme;
+                        controller._THEMES[theme.themeId] = theme;
                     }
                 }
             }
@@ -496,17 +498,40 @@ var Controller = (function () {
     */
     Controller.prototype.updateCompiledCSS = function (template) {
         var theme = null;
+
+        var templateId = "compiled";
+        var description = "Compiled";
+
+        if (template.compiled == true) {
+            templateId = template.themeId;
+            description = template.name;
+            theme = template;
+        } else {
+            theme = {};
+        }
+
         this._COMPILED_LESS_CSS = this.compileCSS();
 
         if (this._COMPILED_LESS_CSS != null) {
             //clone compiled from currently selected theme
-            theme = this._THEMES['compiled'];
+            theme.thumbnail = null;
+            theme.preview = null;
+            theme.css = template.css;
+            theme.cssMin = template.cssMin;
+            theme.cssCdn = template.cssCdn;
+
+            //theme = template;//this._THEMES['compiled'];
             theme.less = template.less;
             theme.lessVariables = template.lessVariables;
             theme.compiled = true;
             theme.compiledLessVariables = this._COMPILED_LESS_CSS['variables.less'] || {};
             theme.compiledCssMin = this._COMPILED_LESS_CSS['bootstrap.min.css'];
             theme.compiledGradientsCssMin = this._COMPILED_LESS_CSS['bootstrap-theme.min.css'];
+            theme.themeId = templateId;
+            theme.name = description;
+            theme.description = description;
+
+            this._THEMES[templateId] = theme;
         }
         return theme;
     };
@@ -770,24 +795,28 @@ var Controller = (function () {
     * @param  {String}     themeId [description]
     * @param  {String}     newId [description]
     * @param  {String}     newName [description]
-    * @return {Void}            [description]
+    * @return {Thme}       newTheme [description]
     */
     Controller.prototype.renameTheme = function (themeId, newId, newName) {
         var themes = {};
         var current = null;
         for (key in this._THEMES) {
             var theme = this._THEMES[key];
-            if (key !== themeId) {
-                themes[key] = theme;
-            } else {
-                theme.name = newId;
+            if (key === themeId) {
+                theme.themeId = newId;
+                theme.name = newName;
                 theme.description = newName;
-                themes[newName] = theme;
+                themes[newId] = theme;
+                current = theme;
+            } else {
+                themes[key] = theme;
             }
+
             this._THEMES[key] = null;
         }
         this._THEMES = null;
         this._THEMES = themes;
+        return current;
     };
     Controller._CW = '/*!\n * Bootstrap v3.0.0\n *\n * Copyright 2013 Twitter, Inc\n * Licensed under the Apache License v2.0\n * http://www.apache.org/licenses/LICENSE-2.0\n *\n * Designed and built with all the love in the world @twitter by @mdo and @fat.\n */\n\n';
 
@@ -977,9 +1006,20 @@ var Application = (function () {
 
             //todo cause issue after first compilation
             var theme = controller.setCurrentTheme(templateSelector.getSelectedTemplate());
-            controller.updateCompiledCSS(theme);
 
+            //newly created themes from external templates
+            /*
             var templateId = "compiled";
+            var description = "Compiled";
+            
+            if(theme.compiled == true){
+            templateId = theme.themeId;
+            description = theme.name;
+            }//*/
+            theme = controller.updateCompiledCSS(theme);
+            var templateId = theme.themeId;
+            var description = theme.name;
+
             theme = controller.setCurrentTheme(templateId);
             if (window.localStorage) {
                 window.localStorage.setItem(templateId, JSON.stringify(theme));
@@ -989,7 +1029,7 @@ var Application = (function () {
 
             var $template = $("#" + templateId);
             if ($template[0] == undefined) {
-                templateSelector.addTemplate(templateId, "Compiled");
+                templateSelector.addTemplate(templateId, description);
             }
 
             //TODO Application.updateCSS(theme);
@@ -1390,7 +1430,9 @@ var Application = (function () {
             $downloadBtn.addClass("disabled");
 
             var zip = controller.generateZip(controller.compileCSS(), null);
-            saveAs(zip, "bootstrap.zip");
+            var filename = "bootstrap_" + controller.getCurrentTheme().themeId + ".zip";
+
+            saveAs(zip, filename);
             $downloadBtn.removeClass("disabled");
         });
     };
@@ -1434,27 +1476,68 @@ var Application = (function () {
     * @return {Void}            [description]
     */
     function (controller, $renameBtn, templateSelector) {
-        $renameBtn.on('click', function (e) {
+        $renameBtn.on('click', function (evt) {
             //TODO capture new value
-            e.preventDefault();
+            evt.preventDefault();
+            evt.stopPropagation();
+            console.log(evt.type + " - " + evt.target.localName + " - " + evt.target.textContent);
             var $this = $(this);
             var $item = $(this).closest("a");
+
             if ($item !== undefined) {
-                $item.addClass("disabled");
-                var newName = "";
-                var newId = "";
-                var templateId = $item.attr("data-link");
-                if (templateId !== undefined) {
-                    var theme = controller.renameTheme(templateId, newId, newName);
+                var $html = $("<input type='text' class='form-control' value='" + $item.text() + "'></input>");
+                $item.after($html);
 
-                    templateSelector.renameTemplate(templateId, newId, newName);
-
-                    if (window.localStorage && window.localStorage.getItem(templateId)) {
-                        window.localStorage.removeItem(templateId);
-                        window.localStorage.setItem(newId, JSON.stringify(theme));
+                $html.on("click", function (evt) {
+                    evt.stopPropagation();
+                    $item.addClass("disabled");
+                }).on("blur", function (evt) {
+                    console.log(evt.type + " - " + evt.target.localName + " - " + evt.target.textContent);
+                    $(this).remove();
+                    if ($item != null) {
+                        $item.show();
+                        $item.removeClass("disabled");
                     }
-                }
-                $item.removeClass("disabled");
+                }).on("change", function (evt) {
+                    evt.stopPropagation();
+                    console.log(evt.type + " - " + evt.target.localName + " - " + evt.target.textContent);
+
+                    //check new value length
+                    var newName = $(this).val().trim();
+                    if (newName.length == 0) {
+                        $(this).trigger("blur");
+                        $item.show();
+                        return;
+                    }
+
+                    //normalize newId
+                    var newId = newName.replace(/\s+/g, "_").toLowerCase();
+
+                    $item.find("span").text(newName);
+
+                    var templateId = $item.attr("data-link");
+                    if (templateId !== undefined) {
+                        var theme = controller.renameTheme(templateId, newId, newName);
+
+                        templateSelector.renameTemplate(templateId, newId, newName);
+
+                        if (window.localStorage && window.localStorage.getItem(templateId)) {
+                            window.localStorage.removeItem(templateId);
+                            window.localStorage.setItem(newId, JSON.stringify(theme));
+                        }
+                        $item = null;
+                    }
+
+                    $(this).remove();
+                    if ($item != null) {
+                        $item.show();
+                    }
+                }).on("keyUp", function (evt) {
+                    console.log(evt.type + " - " + evt.target.localName + " - " + evt.target.textContent);
+                });
+
+                $item.hide();
+                $html.focus();
             }
         });
     };
@@ -1542,12 +1625,12 @@ var Application = (function () {
         var $compiled = $(document.getElementById("compiled:css"));
 
         if (theme != null && theme.compiled == true) {
-            $compiled.append(theme.compiledCssMin);
+            $compiled.html(theme.compiledCssMin);
             $link.disabled = true;
         } else {
             $link.href = theme.cssMin;
-            $compiled.empty();
             $link.disabled = false;
+            $compiled.empty();
         }
     };
 
@@ -1603,9 +1686,11 @@ var Application = (function () {
                 var templateId = window.localStorage.key(i);
                 try  {
                     var theme = JSON.parse(window.localStorage.getItem(templateId));
-                    if (theme != undefined && theme.name != undefined && theme.description != undefined) {
+                    if (theme != undefined && theme.themeId != undefined && theme.name != undefined) {
                         controller.setTheme(templateId, theme);
-                        templates.push({ "templateId": theme.name, "templateName": theme.description });
+                        templates.push({ "templateId": theme.themeId, "templateName": theme.name });
+                    } else {
+                        window.localStorage.removeItem(templateId);
                     }
                 } catch (e) {
                     //clear if initialization fails data might be corrupted
