@@ -8,12 +8,10 @@ permalink:        pretty
 # Server
 source:           ./templates
 destination:      ./_gh_pages
-#layouts:     ./docs/_layouts
 
-exclude:          [".editorconfig", ".gitignore", ".project",
- ".classpath", "pom.xml", ".ruby-version", "bower.json", "composer.json", "reload.js", "preview*.html",
- "CONTRIBUTING.md", "CNAME", "LICENSE", "Gruntfile.js",
- "package.json", "node_modules", "README.md", "docs", "run", "wiki", "src","fontello" ]
+exclude:          [".editorconfig", ".gitignore", ".project","workspace",
+ ".classpath", "pom.xml", ".ruby-version", "package.json", "reload.js", "preview*.html",
+ "CONTRIBUTING.md", "CNAME", "LICENSE", "Gruntfile.js", "node_modules", "README.md", "docs", "run", "wiki", "src","fontello", "webapps" ]
 port:             3000
 
 # Custom vars

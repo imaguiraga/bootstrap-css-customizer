@@ -19,9 +19,9 @@ base_url: "../"
         <div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav pull-right">
 				<li class="active"><a href="#"><i class="icon-fixed-width icon-home"></i>Home</a></li>
-				<li><a href="customizer.html" onclick="_gaq.push(['_trackEvent', 'Home Page actions', 'goto', this.href]);"><i class="icon-fixed-width icon-gears"></i> Customizer</a></li>
-				<li><a href="docs.html" onclick="_gaq.push(['_trackEvent', 'Home Page actions', 'goto', this.href]);"><i class="icon-fixed-width icon-book"></i> Docs</a></li>
-				<li><a id="forkme_banner" href="{{ site.github_url }}" onclick="_gaq.push(['_trackEvent', 'Home Page actions', 'goto', this.href]);"><i class="icon-github-sign"></i></a></li>     
+				<li><a href="customizer.html" onclick="logEvent(['_trackEvent', 'Home Page actions', 'goto', this.href]);"><i class="icon-fixed-width icon-gears"></i> Customizer</a></li>
+				<li><a href="docs.html" onclick="logEvent(['_trackEvent', 'Home Page actions', 'goto', this.href]);"><i class="icon-fixed-width icon-book"></i> Docs</a></li>
+				<li><a id="forkme_banner" href="{{ site.github_url }}" onclick="logEvent(['_trackEvent', 'Home Page actions', 'goto', this.href]);"><i class="icon-github-sign"></i></a></li>     
 				<li>
 					<a style="padding-bottom:0px">
 						<iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=imaguiraga&amp;repo=bootstrap-css-customizer&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
@@ -38,7 +38,7 @@ base_url: "../"
       <div class="container">
         <h1>An Advanced Bootstrap CSS Customizer</h1>
         <p>with drag-and-drop color pickers and CSS previews.</p>
-        <p><a class="btn btn-success btn-lg" href="customizer.html" onclick="_gaq.push(['_trackEvent', 'Home Page Jumbotron actions', 'goto', this.href]);">Start Here</a></p>
+        <p><a class="btn btn-success btn-lg" href="customizer.html" onclick="logEvent(['_trackEvent', 'Home Page Jumbotron actions', 'goto', this.href]);">Start Here</a></p>
       </div>
     </div>
 	<!--

@@ -12,18 +12,6 @@
     <!-- Meta, title, CSS, favicons, etc. -->
     {% include header.inc.html %}
 
-    <!--[if lte IE 8]>
-      <script>
-        document.createElement('ng-include');
-        document.createElement('ng-pluralize');
-        document.createElement('ng-view');
- 
-        // Optionally these for CSS
-        document.createElement('ng:include');
-        document.createElement('ng:pluralize');
-        document.createElement('ng:view');
-      </script>
-    <![endif]-->
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="js/html5shiv.js"></script>
@@ -38,7 +26,7 @@
                 <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
     <div id="loading" style="background-color:black;opacity:0.5;top:0px;left:0px;position:fixed;width:100%;height:100%;text-align:center;z-index:6000">
-        <div id="spinner" style="margin-top:200px;color:white">
+        <div id="spinner" style="color:white;position:absolute;top:50%;left:50%;width:200px:height:200px;margin: -100px 0 0 -100px;">
         	<h3>Loading ....</h3>
         </div>
     </div>
@@ -54,7 +42,7 @@
                     <span class="icon-bar">
                     </span>
                 </button>
-                <a class="navbar-brand brand" href="index.html" onclick="_gaq.push(['_trackEvent', 'Customizer actions', 'goto', this.href]);">
+                <a class="navbar-brand brand" href="index.html" onclick="logEvent(['_trackEvent', 'Customizer actions', 'goto', this.href]);">
                     <span class="label label-primary">B</span>
                     <span class="label label-success">C</span>
                     <span class="label label-danger">C {{ site.version }}</span>
@@ -64,12 +52,14 @@
                 <ul class="nav navbar-nav">
                     <li style="padding:6px;" >
 
-                        <button style="padding:6px;" type="button" href="#" class="btn btn-default" id="btn-compile" onclick="_gaq.push(['_trackEvent', 'Customizer actions', 'compile']);">
+                        <button style="padding:6px;" type="button" href="#" class="btn btn-default" id="btn-compile" onclick="logEvent(['_trackEvent', 'Customizer actions', 'compile']);">
                             <i class="icon-fixed-width icon-gears"></i>Compile CSS</button>
-                        <button style="padding:6px;" type="button" href="#" class="edit-view btn btn-default" id="btn-preview" onclick="_gaq.push(['_trackEvent', 'Customizer actions', 'preview/edit']);">
+                        <button style="padding:6px;" type="button" href="#" class="edit-view btn btn-default" id="btn-preview" onclick="logEvent(['_trackEvent', 'Customizer actions', 'preview/edit']);">
                             <i class="icon-fixed-width icon-eye-open"></i>Preview CSS</button>
-                        <button style="padding:6px;" type="button" href="#" class="btn btn-default" id="btn-download" onclick="_gaq.push(['_trackEvent', 'Customizer actions', 'download']);">
+<!--                       
+					   <button style="padding:6px;" type="button" href="#" class="btn btn-default" id="btn-download" onclick="logEvent(['_trackEvent', 'Customizer actions', 'download']);">
                             <i class="icon-fixed-width icon-download-alt"></i>Download CSS</button>
+							-->
 
                     </li>
 
@@ -158,32 +148,112 @@
                             <li>
                                 <a href="#variables-other">Other</a>
                             </li>
-                            <li class="divider">
-                            </li>
-                            <li class="dropdown-header">
-                                Nav header
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Separated link
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    One more separated link
-                                </a>
-                            </li>
+
                         </ul>
                     </li>
-                    <li>
-                        <label style="margin:5px;" class="btn btn-primary btn-sm disabled">
+					  <!-- template dropdown -->
+					<li class="dropdown">
+              
+					  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-default">Template</span> <span id="template-name">Default </span> <b class="caret"></b>                        
+						</a>
+					 
+					  <ul id="template-drop-down" class="dropdown-menu">
+						<li class="dropdown-header">User Templates</li>
+						<li id="user-template-list">
+						<!--
+							<a id="compiled" class="user-template" data-link="compiled" href="#"><span>Compiled</span>
+							   <div  class="btn-group pull-right" style="display:inline-block;margin:0px;padding:0px" >
+									<button style="padding:2px" type="button" class="btn btn-default btn-template-rename" title="Rename template">
+										<i class="icon-edit-sign"></i>
+									</button>
+									 <button style="padding:2px" type="button" class="btn btn-default btn-template-delete" title="Delete template">
+										<i class="icon-remove"></i>
+									</button>
+							   </div>
+							</a>
+							-->
+						</li>
+						<li class="divider"></li>
+						<li class="dropdown-header">External Templates</li>
+						<li>
+							<a id="default" class="external-template" data-link="default" href="#"><span>Default</span></a>
+						</li>
+						<li>
+							<a id="amelia" class="external-template" data-link="amelia" href="#"><span>Amelia</span></a>
+						</li> 
+						<li>
+							<a id="cerulean" class="external-template" data-link="cerulean" href="#"><span>Cerulean</span></a>
+						</li>
+						<li>
+							<a id="cosmo" class="external-template" data-link="cosmo" href="#"><span>Cosmo</span></a>
+						</li>
+					 
+						<li>
+							<a id="cyborg" class="external-template" data-link="cyborg" href="#"><span>Cyborg</span></a>
+						</li>
+							   
+						<li>
+							<a id="flatly" class="external-template" data-link="flatly" href="#"><span>Flatly</span></a>
+						</li>
+							   
+						<li>
+							<a id="journal" class="external-template" data-link="journal" href="#"><span>Journal</span></a>
+						</li>
+								
+						<li>
+							<a id="readable" class="external-template" data-link="readable" href="#"><span>Readable</span></a>
+						</li>
+								   
+						<li>
+							<a id="simplex" class="external-template" data-link="simplex" href="#"><span>Simplex</span></a>
+						</li>
+								
+						<li>
+							<a id="slate" class="external-template" data-link="slate" href="#"><span>Slate</span></a>
+						</li>
+
+						<li>
+							<a id="spacelab" class="external-template" data-link="spacelab" href="#"><span>Spacelab</span></a>
+						</li>
+									 
+						<li>
+							<a id="united" class="external-template" data-link="united" href="#"><span>United</span></a>										  
+						</li>
+
+					  </ul>
+					</li>
+					<li style="padding-top: 12px;">
+						<div class=" btn-group" style="display:inline-block;" >                   
+						   <button id="btn-template-download" style="padding:2px" type="button" class="btn btn-default disabled" title="Download template CSS">
+								<i class="icon-download-alt">
+								</i>
+							</button>
+							<a id="btn-template-link" style="padding:2px" type="button" target="_blank" class="btn btn-default" title="View external link">
+								<i class="icon-link">
+								</i>
+							</a>
+							<!--
+							<a style="padding:2px" type="button" class="btn btn-default" title="Rename template">
+								<i class="icon-edit-sign">
+								</i>
+							</a>							
+				   
+							<button id="btn-template-delete" style="padding:2px" type="button" class="btn btn-default disabled" title="Delete template">
+								<i class="icon-remove">
+								</i>
+							</button>	
+-->							
+					  </div> 
+				  </li>
+  <!-- template dropdown -->
+                    <li style="padding-top: 9px;padding-left:2px;">
+                        <label class="btn btn-primary btn-sm disabled">
                             <input id="gradients-check" type="checkbox" style="margin:4px">Apply Gradients</label>
                     </li>
-					<li><a href="docs.html" onclick="_gaq.push(['_trackEvent', 'Customizer', 'goto', this.href]);"><i class="icon-fixed-width icon-book"></i> Docs</a></li>
+					<li><a href="docs.html" onclick="logEvent(['_trackEvent', 'Customizer', 'goto', this.href]);"><i class="icon-fixed-width icon-book"></i> Docs</a></li>
 					
 				</ul>
-                {{ content }}
-
+<!--               
                 <form class="navbar-form navbar-right inline-form">
 
                     <div class="form-group">
@@ -214,7 +284,8 @@
                     </div>
 
                 </form>
-
+-->
+				{{ content }}
             </div>
             <!-- /.navbar-collapse -->
         </div>

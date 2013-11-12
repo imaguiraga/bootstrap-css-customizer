@@ -1,18 +1,22 @@
 {
-    "name": "bootstrap theme roller"
-  , "description": "Theme roller for bootstrap created from Bootstrap customize + bootswatch API"
+    "name": "Bootstrap CSS Customizer"
+  , "description": "Theme roller for bootstrap created from Bootstrap + Bootswatch API"
   , "version": "0.1.0"
-  , "keywords": ["bootstrap", "css", "theme", "bootswatch"]
-  , "homepage": "TODO"
+  , "keywords": ["bootstrap", "css", "customizer", "generator", "theme", "bootswatch"]
+  , "homepage": "https://github.com/imaguiraga"
   , "author": "Ibrahim Maguiraga"
   , "repository": {
       "type": "git"
-    , "url": "TODO"
+    , "url": "https://github.com/imaguiraga/bootstrap-css-customizer"
   }
   , "licenses": [
     {
         "type": "Apache-2.0"
       , "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    },
+	{
+        "type": "MIT License"
+      , "url": "http://opensource.org/licenses/mit-license.html"
     }
   ]
   , "devDependencies": {
