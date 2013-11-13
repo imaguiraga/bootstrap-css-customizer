@@ -1071,8 +1071,8 @@ var Application = (function () {
         });
     };
 
-    Application.initColorPickers = /**
-    * [initColorPickers description]
+    Application.initColorPickersV3 = /**
+    * [initColorPickersV3 description]
     * @param  {Controller} controller [description]
     * @return {Void}            [description]
     */
@@ -1091,84 +1091,117 @@ var Application = (function () {
             }
             controller.setVariable(key, { 'default': value, 'value': value });
 
-            if (value && value.indexOf("@") >= 0) {
+            if (value && value.indexOf("@") > -1) {
                 controller.updateLESSVariablesRef(key, value, $this);
             }
 
             if ($this.hasClass("color-input")) {
                 var $this = $(elt);
-                $this.before("<i class='icon-fixed-width icon-tint'></i><br />");
+                $this.before("<i class='icon-fixed-width icon-tint'></i>");
                 var key = $this.attr("data-var");
                 var value = $this.val();
                 $this.attr({
                     "data-color-format": "hex"
                 });
+                $this.css('background-color', value);
 
-                //$this.css('background-color',value);
-                $this.css({
-                    "background-color": value,
-                    "display": "inline-block"
-                });
-                $this.ColorPickerSliders({
-                    order: {
-                        preview: 1,
-                        hsl: 2,
-                        opacity: 3
-                    },
-                    onchange: function (container, color) {
-                        var startTime1 = new (Date)();
-                        var $this = $(this);
+                $this.attr("data-toggle", "tooltip");
+                $this.attr("data-placement", "top");
 
-                        //update scope variables double bindings
-                        //tinycolor object is in color.tiny
-                        var colorHex = color.tiny.toHexString();
+                Application.updateTooltip($this, value);
 
-                        var $input = $(this.connectedinput);
-                        var key = $input.attr("data-var");
+                $this.click(function (evt) {
+                    var $input = $(this);
+                    var value = $this.val();
 
-                        if (_DEBUG) {
-                            console.log(key + " 0.c - change " + (new (Date)() - startTime1) + "ms");
-                        }
+                    //disable color pickers input for variables
+                    var stop = (value.indexOf("@") > -1 || value === "transparent" || value === "inherit" || (value.charAt(0) !== "#" && value.indexOf("rgb") !== 0 && value.indexOf("hsl") !== 0));
 
-                        //dynamically update fontcolor
-                        var fontColor = "black";
+                    //try converting entry to color
+                    var color = tinycolor(value);
 
-                        if (color.cielch.l < 60) {
-                            fontColor = "white";
-                        } else {
-                            fontColor = "black";
-                        }
-
-                        $this.css("color", fontColor);
-
-                        if (_DEBUG) {
-                            console.log("onchange - updateLESSVariables " + key);
-                            console.log(key + " 1.c - change " + (new (Date)() - startTime1) + "ms");
-                        }
-                        $this.data("computed-value", colorHex);
-                        Application.updateTooltip($this, colorHex);
-                        controller.updateLESSVariables(key, colorHex);
+                    if (value === "transparent" || value === "inherit" || color.ok == false) {
+                        evt.stopImmediatePropagation();
                     }
-                }).droppable({
+                }).on("blur", function (evt) {
+                    //delete resources
+                    $(this).trigger("colorpickersliders.destroy");
+                }).click(function (evt) {
+                    //create colorpicker on demand
+                    $this.ColorPickerSliders({
+                        order: {
+                            preview: 1,
+                            hsl: 2,
+                            opacity: 3
+                        },
+                        onchange: function (container, color) {
+                            var startTime1 = new (Date)();
+                            var $this = $(this);
+
+                            //update scope variables double bindings
+                            //tinycolor object is in color.tiny
+                            var colorHex = color.tiny.toHexString();
+
+                            var $input = this.connectedinput;
+                            if (!($input instanceof jQuery)) {
+                                $input = $($input);
+                            }
+                            var key = $input.attr("data-var");
+
+                            if (_DEBUG) {
+                                console.log(key + " 0.c - change " + (new (Date)() - startTime1) + "ms");
+                            }
+
+                            //dynamically update fontcolor
+                            var fontColor = "black";
+
+                            if (color.cielch.l < 60) {
+                                fontColor = "white";
+                            } else {
+                                fontColor = "black";
+                            }
+
+                            $this.css("color", fontColor);
+
+                            if (_DEBUG) {
+                                console.log("onchange - updateLESSVariables " + key);
+                                console.log(key + " 1.c - change " + (new (Date)() - startTime1) + "ms");
+                            }
+
+                            Application.updateLESSVariables(controller, $input, colorHex);
+                        }
+                    });
+
+                    //display popup
+                    $this.trigger("colorpickersliders.showPopup");
+                }).change(function (evt) {
+                    var $input = $(this);
+
+                    var value = $input.val();
+
+                    if (value.indexOf("@") > -1) {
+                        Application.updateLESSVariablesLinks(controller, $input, value);
+                    } else {
+                        var color = tinycolor(value);
+                        if (color.ok) {
+                            Application.removeLESSVariablesLinks(controller, $input, color.toHexString());
+                        } else {
+                            //reset this value to previous one
+                            $input.val($input.data("prev-value"));
+                        }
+                    }
+                });
+
+                //set as drop target
+                $this.droppable({
                     drop: function (event, ui) {
                         event.stopPropagation();
+                        var $input = $(this);
                         var newVal = ui.draggable.css('background-color');
-                        var colorHex = rgb2hex(newVal);
-                        var $this = $(this);
-                        $this.val(colorHex);
-
-                        var fontColor = "white";
-
-                        if ($.xcolor.readable("white", newVal)) {
-                            fontColor = "white";
-                        } else {
-                            fontColor = "black";
-                        }
-
-                        $this.css({ 'background-color': colorHex, 'color': fontColor });
-                        $this.data("computed-value", colorHex);
-                        Application.updateTooltip($this, colorHex);
-                        $this.trigger("colorpickersliders.updateColor", newVal);
+                        var color = tinycolor(newVal);
+                        var colorHex = color.toHexString();
+                        $input.val(colorHex);
+                        Application.updateLESSVariables(controller, $input, colorHex);
                     }
                 });
             }
@@ -1228,6 +1261,7 @@ var Application = (function () {
                         evt.stopImmediatePropagation();
                     }
                 }).click(function (evt) {
+                    //create colorpicker on demand
                     $(this).spectrum({
                         clickoutFiresChange: true,
                         showAlpha: true,
@@ -1249,7 +1283,6 @@ var Application = (function () {
                             var $input = $(this);
 
                             //update scope variables double bindings
-                            //tinycolor object is in color
                             var colorHex = color.toHexString();
                             Application.updateLESSVariables(controller, $input, colorHex);
                         }
@@ -1716,8 +1749,7 @@ var Application = (function () {
         //Application.initPreviewToggle(controller);
         Application.initDraggable(controller);
 
-        //Application.initColorPickers(controller);
-        Application.initColorPickersV2(controller);
+        Application.initColorPickersV3(controller);
 
         Application.tooltipInit();
 
