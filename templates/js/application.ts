@@ -546,7 +546,7 @@ class Controller{
                             var color = tinycolor(backgroundColor);
                             var cielch = $.fn.ColorPickerSliders.rgb2lch(color.toRgb());
                             if (cielch.l >0 && cielch.l < 60) {
-                                    fontColor = "white";
+                                fontColor = "white";
                             }
                             else {
                                 fontColor = "black";
@@ -1682,7 +1682,7 @@ class Application{
         var color = tinycolor(backgroundColor);
         var cielch = $.fn.ColorPickerSliders.rgb2lch(color.toRgb());
         if (cielch.l >0 && cielch.l < 60) {
-				fontColor = "white";
+            fontColor = "white";
         }
         else {
             fontColor = "black";
