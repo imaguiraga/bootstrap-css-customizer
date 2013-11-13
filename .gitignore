@@ -1,6 +1,7 @@
-/target
+target/
 docs/_site/
 _site/
 _gh_pages/
 _includes/bak/
+node_modules/
 ./*.zip
