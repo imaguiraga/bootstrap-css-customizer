@@ -543,6 +543,15 @@ class Controller{
 							} else {
 								fontColor = "black";
 							}
+                            var color = tinycolor(backgroundColor);
+                            var cielch = $.fn.ColorPickerSliders.rgb2lch(color.toRgb());
+                            if (cielch.l >0 && cielch.l < 60) {
+                                    fontColor = "white";
+                            }
+                            else {
+                                fontColor = "black";
+                            }
+
 							if(_DEBUG){console.log("1.0 -> parseLESSVariables "+ id+" - "+ (new(Date) - startTime1) + "ms");}		
 							$target.css({
 								"background-color": backgroundColor,
@@ -1669,6 +1678,15 @@ class Application{
 		} else {
 			fontColor = "black";
 		}
+        
+        var color = tinycolor(backgroundColor);
+        var cielch = $.fn.ColorPickerSliders.rgb2lch(color.toRgb());
+        if (cielch.l >0 && cielch.l < 60) {
+				fontColor = "white";
+        }
+        else {
+            fontColor = "black";
+        }
 
         //use white color for transparent and inherit  
         
