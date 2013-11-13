@@ -6,7 +6,7 @@
  */
 //declare var $: any;
 //declare var jQuery: any;
-
+//"use strict";
 class TemplateSelector{
 
 	private _selector :any;	
@@ -989,7 +989,7 @@ class Application{
         var tooltip = null;
         if(name === "false"){
             name = "Color";
-           //slow name = $.xcolor.nearestname(color.toHexString());
+           //slow name = $.xcolor.nearestname(color.toString());
         }
 		
 		tooltip = name+" [ "+color.toHexString()+" - "+color.toRgbString()+" - "+color.toHslString()+" ]";
@@ -1231,30 +1231,47 @@ class Application{
 				$this.before("<i class='icon-fixed-width icon-tint'></i>");
 				var key = $this.attr("data-var");
 				var value = $this.val();
-				$this.attr({
-					"data-color-format" : "hex",			
-				});
-				$this.css('background-color',value);
+                var color = tinycolor(value);
+                var format = "hex";
 				
-                $this.attr("data-toggle","tooltip");
-                $this.attr("data-placement","top");
+                //update color format 
+                if(color.ok){
+                    format = color.format;
+                }
+                            
+				$this.attr({
+					"data-color-format" : format,
+                    "data-toggle" : "tooltip",
+                    "data-placement" : "top"
+				});
+				$this.data("color-format",format);
+                $this.css('background-color',value);
                 
                 Application.updateTooltip($this,value);
                 
 				$this.click(function (evt) {
                     var $input = $(this);
-                    var value = $this.val();
+                    var value = $input.val();
 
                     //disable color pickers input for variables
                     var stop = (value.indexOf("@") > -1 
-                                || value === "transparent" || value === "inherit" 
+                                /*|| value === "transparent" */|| value === "inherit" 
                                 || (value.charAt(0) !== "#"  && value.indexOf("rgb") !== 0 && value.indexOf("hsl") !== 0)
                                );
                     //try converting entry to color
                     var color = tinycolor(value);
                                            
-                    if(value === "transparent" || value === "inherit" || color.ok == false){
+                    if(/*value === "transparent" ||*/ value === "inherit" || color.ok == false){
                         evt.stopImmediatePropagation();
+                    }
+                    //update color format 
+                    var format = "hex";
+                    if(color.ok){                      
+                        if(color.format !== "hex"){
+                            format = "rgb";
+                        }
+                        $input.attr("data-color-format",format);
+                        $input.data("color-format",format);
                     }
                     
                 }).on("blur",function(evt){
@@ -1262,19 +1279,35 @@ class Application{
                 	$(this).trigger("colorpickersliders.destroy");
 
                 }).click(function(evt){
+                    evt.stopPropagation();
 					//create colorpicker on demand
+                    var $this = $(this);
 					$this.ColorPickerSliders({
+                        swatches: false,
 						order: {
 							preview:1,
 							hsl: 2,
 							opacity:3
 						} ,
 						onchange: function(container, color) {
+                            var $input = this.connectedinput;
+                            
+                            //tinycolor object is in color.tiny
+                            //HSL are not supported
+                            var colorHex = color.tiny.toHexString();
+                            if(color.tiny.format !== "hex"){
+                                colorHex = color.tiny.toRgbString();
+                            }
+                            console.log("color="+colorHex);
+							//update scope variables double bindings
+                            Application.updateLESSVariables(controller, $input, colorHex);
+                            
+                            /* tODO causing problems color.tiny.toString()
 							var startTime1 = new(Date);
 							var $this = $(this);
 							  //update scope variables double bindings
 							  //tinycolor object is in color.tiny
-							var colorHex = color.tiny.toHexString();
+							var colorHex = color.tiny.toString();
 
 							var $input = this.connectedinput;
 							if(!($input instanceof jQuery)){
@@ -1304,7 +1337,7 @@ class Application{
 							}
 	              
 	                        Application.updateLESSVariables(controller,$input,colorHex);
-							
+							//*/
 						}
 						
 					});
@@ -1322,8 +1355,14 @@ class Application{
                         
                     }else{//does not contain variables
                         var color = tinycolor(value);
+                                                                   
                         if(color.ok){
-                            Application.removeLESSVariablesLinks(controller,$input,color.toHexString());
+                            //HSL are not supported
+                            var colorHex = color.toHexString();
+                            if(color.format !== "hex"){
+                                colorHex = color.toRgbString();
+                            }
+                            Application.removeLESSVariablesLinks(controller,$input,colorHex);
                         }else{
                             //reset this value to previous one
                             $input.val($input.data("prev-value"));
@@ -1340,7 +1379,17 @@ class Application{
                         var $input = $(this);
 						var newVal = ui.draggable.css('background-color');
                         var color = tinycolor(newVal);
-						var colorHex = color.toHexString();					  
+                        
+                        var format = "hex";
+                        //HSL are not supported
+                        var colorHex = color.toHexString();
+                        if(color.format !== "hex"){
+                            format = "rgb";
+                            colorHex = color.toRgbString();
+                        }
+                                           
+                        $input.attr("data-color-format",format);
+                        $input.data("color-format",format);
 						$input.val(colorHex);
 						Application.updateLESSVariables(controller,$input,colorHex);
 					}
@@ -1379,17 +1428,28 @@ class Application{
 				$this.before("<i class='icon-fixed-width icon-tint'></i>");
 				var key = $this.attr("data-var");
 				var value = $this.val();
-				$this.attr({
-					"data-color-format" : "hex",			
-				});
-				$this.css('background-color',value);
-				
-                $this.attr("data-toggle","tooltip");
-                $this.attr("data-placement","top");
                 
+				var color = tinycolor(value);
+               //update color format 
+                var format = "hex";
+                if(color.ok){                      
+                    if(color.format !== "hex"){
+                        format = "rgb";
+                    }
+                }
+                            
+				$this.attr({
+					"data-color-format" : format,
+                    "data-toggle" : "tooltip",
+                    "data-placement" : "top"
+				});
+                $this.data("color-format",format);    
+				$this.css('background-color',value);
+ 
                 Application.updateTooltip($this,value);
                 
 				$this.click(function (evt) {
+                    
                     var $input = $(this);
                     var value = $this.val();
 
@@ -1404,8 +1464,18 @@ class Application{
                     if(value === "transparent" || value === "inherit" || color.ok == false){
                         evt.stopImmediatePropagation();
                     }
+                    //update color format 
+                    var format = "hex";
+                    if(color.ok){                      
+                        if(color.format !== "hex"){
+                            format = "rgb";
+                        }
+                        $input.attr("data-color-format",format);
+                        $input.data("color-format",format);
+                    }
                     
                 }).click(function(evt){
+                    evt.stopPropagation();
 					//create colorpicker on demand
 					$(this).spectrum({
 						clickoutFiresChange: true,
@@ -1416,7 +1486,11 @@ class Application{
 						preferredFormat: "hex6",
 						move: function(color) {
 							var $input = $(this);//.closest("input");							
-							var colorHex = color.toHexString();
+							//HSL are not supported
+                            var colorHex = color.toHexString();
+                            if(color.format !== "hex"){
+                                colorHex = color.toRgbString();
+                            }
 							$input.val(colorHex);
 							Application.updateLESSVariables(controller,$input,colorHex);
 						},
@@ -1427,7 +1501,11 @@ class Application{
 						change: function(color) {
 							var $input = $(this);
 							//update scope variables double bindings
-							var colorHex = color.toHexString();
+							//HSL are not supported
+                            var colorHex = color.toHexString();
+                            if(color.format !== "hex"){
+                                colorHex = color.toRgbString();
+                            }
 							Application.updateLESSVariables(controller,$input,colorHex);
 						}
 							
@@ -1445,7 +1523,12 @@ class Application{
                     }else{//does not contain variables
                         var color = tinycolor(value);
                         if(color.ok){
-                            Application.removeLESSVariablesLinks(controller,$input,color.toHexString());
+                            //HSL are not supported
+                            var colorHex = color.toHexString();
+                            if(color.format !== "hex"){
+                                colorHex = color.toRgbString();
+                            }
+                            Application.removeLESSVariablesLinks(controller,$input,colorHex);
                         }else{
                             //reset this value to previous one
                             $input.val($input.data("prev-value"));
@@ -1462,7 +1545,17 @@ class Application{
                         var $input = $(this);
 						var newVal = ui.draggable.css('background-color');
                         var color = tinycolor(newVal);
-						var colorHex = color.toHexString();					  
+						
+                        var format = "hex";
+                         //HSL are not supported
+                        var colorHex = color.toHexString();
+                        if(color.format !== "hex"){
+                            format = "rgb";
+                            colorHex = color.toRgbString();
+                        }
+                        
+                        $input.attr("data-color-format",format);
+                        $input.data("color-format",format);
 						$input.val(colorHex);
 						Application.updateLESSVariables(controller,$input,colorHex);
 					}
@@ -1494,7 +1587,7 @@ class Application{
         if( typeof colorHex === "undefined" || colorHex == null){
             if($ref.css("background-color") != undefined){
                 var color = tinycolor($ref.css("background-color"));
-                colorHex = color.toHexString();
+                colorHex = color.toString();
                 $ref.data("computed-value",colorHex);
                Application.updateTooltip($ref,colorHex);
             }else{
@@ -1503,7 +1596,7 @@ class Application{
             
         }else{
             var color = tinycolor(colorHex);
-            colorHex = color.toHexString();
+            colorHex = color.toString();
         }
         
         //trigger refresh from the parent
@@ -1569,14 +1662,17 @@ class Application{
 		}
 		//dynamically update fontcolor
 		var fontColor = "black";
-
-		if($.xcolor.readable("white",colorHex)){
+        
+        var backgroundColor = colorHex;
+		if($.xcolor.readable("white",backgroundColor)){
 			fontColor = "white";
 		} else {
 			fontColor = "black";
 		}
 
-		$input.css( {'background-color' :colorHex, 'color' : fontColor} );
+        //use white color for transparent and inherit  
+        
+		$input.css( {'background-color' :backgroundColor, 'color' : fontColor} );
 		if(_DEBUG){
 			console.log("onchange - updateLESSVariables "+ key);
 			console.log(key+" 1.c - change "+ (new(Date) - startTime1) + "ms");
@@ -1989,8 +2085,8 @@ $(this).spectrum({
     showButtons: false,
     move: function(color) {
         var $input = $(this).closest("input");
-        $input.css("backgroundColor",color.toHexString());
-        $input.val(color.toHexString());
+        $input.css("backgroundColor",color.toString());
+        $input.val(color.toString());
     },
     hide: function(color) {
         $(this).closest("input").spectrum("destroy");

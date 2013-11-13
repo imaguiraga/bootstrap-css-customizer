@@ -31,7 +31,8 @@
         "grunt-contrib-watch": "~0.5.1",
         "grunt-html-validation": "git://github.com/praveenvijayan/grunt-html-validation.git",
         "grunt-jekyll": "~0.3.8",
-        "grunt-recess": "~0.3.3"
+        "grunt-recess": "~0.3.3",
+        "grunt-typescript": "*"
     },
     "jekyll": {
         "src": "./templates"
