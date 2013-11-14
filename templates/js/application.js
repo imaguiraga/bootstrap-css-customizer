@@ -863,7 +863,11 @@ var Application = (function () {
             fontColor = "white";
         } else {
             fontColor = "black";
+            if (color.alpha == 1) {
+                fontColor = "white";
+            }
         }
+
         return fontColor;
     };
 

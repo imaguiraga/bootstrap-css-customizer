@@ -991,10 +991,14 @@ class Application{
         var cielch = $.fn.ColorPickerSliders.rgb2lch(color.toRgb());
         if (cielch.l >0 && cielch.l < 60) {
             fontColor = "white";
-        }
-        else {
+        
+        }else {
             fontColor = "black";
+            if(color.alpha == 1){
+	        	fontColor = "white";
+	        }
         }
+
         return fontColor;
 	}
     
