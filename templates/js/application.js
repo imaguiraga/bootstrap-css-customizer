@@ -394,21 +394,9 @@ var Controller = (function () {
                         }
                         var rule = tree.toCSS({ 'compress': true }).match(regex);
                         if (rule.length == 3) {
-                            fontColor = "white";
+                            //dynamically update fontcolor
                             backgroundColor = rule[1];
-
-                            if ($.xcolor.readable("white", backgroundColor)) {
-                                fontColor = "white";
-                            } else {
-                                fontColor = "black";
-                            }
-                            var color = tinycolor(backgroundColor);
-                            var cielch = $.fn.ColorPickerSliders.rgb2lch(color.toRgb());
-                            if (cielch.l > 0 && cielch.l < 60) {
-                                fontColor = "white";
-                            } else {
-                                fontColor = "black";
-                            }
+                            fontColor = Application.getFontColor(backgroundColor);
 
                             if (_DEBUG) {
                                 console.log("1.0 -> parseLESSVariables " + id + " - " + (new (Date)() - startTime1) + "ms");
@@ -856,6 +844,29 @@ var $lessVariablesInput = $("input:text.form-control").filter("[data-var]");
 var Application = (function () {
     function Application() {
     }
+    Application.getFontColor = /**
+    * [getFontColor description]
+    * @param  {String} backgroundColor [description]
+    * @param  {String} fontColor [description]
+    */
+    function (backgroundColor) {
+        var fontColor = "white";
+
+        if ($.xcolor.readable("white", backgroundColor)) {
+            fontColor = "white";
+        } else {
+            fontColor = "black";
+        }
+        var color = tinycolor(backgroundColor);
+        var cielch = $.fn.ColorPickerSliders.rgb2lch(color.toRgb());
+        if (cielch.l > 0 && cielch.l < 60) {
+            fontColor = "white";
+        } else {
+            fontColor = "black";
+        }
+        return fontColor;
+    };
+
     Application.updateTooltip = /**
     * [updateTooltip description]
     * @param  {Object} $input [description]
@@ -1522,22 +1533,8 @@ var Application = (function () {
         }
 
         //dynamically update fontcolor
-        var fontColor = "black";
-
         var backgroundColor = colorHex;
-        if ($.xcolor.readable("white", backgroundColor)) {
-            fontColor = "white";
-        } else {
-            fontColor = "black";
-        }
-
-        var color = tinycolor(backgroundColor);
-        var cielch = $.fn.ColorPickerSliders.rgb2lch(color.toRgb());
-        if (cielch.l > 0 && cielch.l < 60) {
-            fontColor = "white";
-        } else {
-            fontColor = "black";
-        }
+        var fontColor = Application.getFontColor(backgroundColor);
 
         //use white color for transparent and inherit
         $input.css({ 'background-color': backgroundColor, 'color': fontColor });

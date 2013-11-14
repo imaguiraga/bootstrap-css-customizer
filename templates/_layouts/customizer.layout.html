@@ -32,7 +32,7 @@
     </div>
 
     <div class="navbar navbar-inverse navbar-fixed-top theme-edit" style="z-index:5500">
-        <div class="container">
+        <div id="bs-customizer-header" class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar">
@@ -50,7 +50,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li style="padding:6px;" >
+                    <li style="padding:9px;" >
 
                         <button style="padding:6px;" type="button" href="#" class="btn btn-default" id="btn-compile" onclick="logEvent(['_trackEvent', 'Customizer actions', 'compile']);">
                             <i class="icon-fixed-width icon-gears"></i>Compile CSS</button>
@@ -153,10 +153,10 @@
                     </li>
 					  <!-- template dropdown -->
 					<li class="dropdown">
-              
-					  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="label label-default">Template</span> <span id="template-name">Default </span> <b class="caret"></b>                        
+					
+					  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span style="font-size:1.2em" class="label label-default">Template</span> <span id="template-name">Default </span> <b class="caret"></b>                        
 						</a>
-					 
+					
 					  <ul id="template-drop-down" class="dropdown-menu">
 						<li class="dropdown-header">User Templates</li>
 						<li id="user-template-list">
@@ -222,8 +222,8 @@
 
 					  </ul>
 					</li>
-					<li style="padding-top: 12px;">
-						<div class=" btn-group" style="display:inline-block;margin-top-4px" >                   
+					<li style="padding-top: 9px;">
+						<div class=" btn-group" style="display:inline-block;">                   
 						   <button id="btn-template-download" type="button" class="btn btn-default disabled" title="Download template CSS">
 								<i class="icon-download-alt">
 								</i>

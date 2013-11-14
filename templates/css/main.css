@@ -32,6 +32,8 @@
 @import url("syntax.css");
 @import url("colors.css");
 
+@import url("bs-customizer-navbar.css");
+
 /*-----------------FONT AWESOME-----------------*/
 
 .icon-1 {

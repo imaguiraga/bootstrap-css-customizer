@@ -535,22 +535,10 @@ class Controller{
 						if (err) { return console.error(err) ;}
 						var rule = tree.toCSS({'compress':true}).match(regex);
 						if(rule.length == 3){
-							fontColor = "white";
+
+							//dynamically update fontcolor
 							backgroundColor = rule[1];
-							//determine fontcolor
-							if($.xcolor.readable("white",backgroundColor)){
-								fontColor = "white";
-							} else {
-								fontColor = "black";
-							}
-                            var color = tinycolor(backgroundColor);
-                            var cielch = $.fn.ColorPickerSliders.rgb2lch(color.toRgb());
-                            if (cielch.l >0 && cielch.l < 60) {
-                                fontColor = "white";
-                            }
-                            else {
-                                fontColor = "black";
-                            }
+							fontColor = Application.getFontColor(backgroundColor);
 
 							if(_DEBUG){console.log("1.0 -> parseLESSVariables "+ id+" - "+ (new(Date) - startTime1) + "ms");}		
 							$target.css({
@@ -986,6 +974,29 @@ var _DEBUG = false;
 var $lessVariablesInput = $("input:text.form-control").filter("[data-var]");
 
 class Application{
+	/**
+	 * [getFontColor description]
+	 * @param  {String} backgroundColor [description]
+     * @param  {String} fontColor [description]
+	 */
+	static getFontColor(backgroundColor){
+		var fontColor = "white";
+		//determine fontcolor
+		if($.xcolor.readable("white",backgroundColor)){
+			fontColor = "white";
+		} else {
+			fontColor = "black";
+		}
+        var color = tinycolor(backgroundColor);
+        var cielch = $.fn.ColorPickerSliders.rgb2lch(color.toRgb());
+        if (cielch.l >0 && cielch.l < 60) {
+            fontColor = "white";
+        }
+        else {
+            fontColor = "black";
+        }
+        return fontColor;
+	}
     
     /**
 	 * [updateTooltip description]
@@ -1670,23 +1681,9 @@ class Application{
 			console.log(key+" 0.c - change "+ (new(Date) - startTime1) + "ms");
 		}
 		//dynamically update fontcolor
-		var fontColor = "black";
-        
+		       
         var backgroundColor = colorHex;
-		if($.xcolor.readable("white",backgroundColor)){
-			fontColor = "white";
-		} else {
-			fontColor = "black";
-		}
-        
-        var color = tinycolor(backgroundColor);
-        var cielch = $.fn.ColorPickerSliders.rgb2lch(color.toRgb());
-        if (cielch.l >0 && cielch.l < 60) {
-            fontColor = "white";
-        }
-        else {
-            fontColor = "black";
-        }
+		var fontColor = Application.getFontColor(backgroundColor);
 
         //use white color for transparent and inherit  
         
