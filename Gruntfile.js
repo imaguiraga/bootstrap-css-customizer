@@ -1,93 +1,92 @@
-/* jshint node: true */
+/*global module:false*/
+module.exports = function (grunt) {
 
-module.exports = function(grunt) {
-  "use strict";
+    // Project configuration.
+    grunt.initConfig({
+        pkg: grunt.file.readJSON("package.json"),
+        yml: grunt.file.readYAML ("_config.yml"),
+        // Task configuration.
+        jshint: {
+            options: {
+                curly: true,
+                eqeqeq: true,
+                immed: true,
+                latedef: true,
+                newcap: true,
+                noarg: true,
+                sub: true,
+                undef: true,
+                unused: true,
+                boss: true,
+                eqnull: true,
+                browser: true,
+                globals: {
+                    jQuery: true
+                }
+            },
+            gruntfile: {
+                src: "Gruntfile.js"
+            },
+            lib_test: {
+                src: ["lib/**/*.js", "test/**/*.js"]
+            }
+        },
+        qunit: {
+            files: ["test/**/*.html"]
+        },
+        watch: {
+            gruntfile: {
+                files: "<%= jshint.gruntfile.src %>",
+                tasks: ["jshint:gruntfile"]
+            },
+            lib_test: {
+                files: "<%= jshint.lib_test.src %>",
+                tasks: ["jshint:lib_test", "qunit"]
+            },
+            jekyll_docs: {
+                files: "<%= yml.source %>",
+                tasks: ["jekyll:build"]
+            }
+        },
+        jekyll: {
+            options: {
+                serve: false
+            },
+            build: {
+                serve: false,
+                tasks: ["typescript"]
+            }
+            /*,
+            serve: {
+                serve: true
+            }*/
+        },
+        typescript: {
+            base: {
+                src: ["<%= yml.source %>/**/*.ts"],
+               // dest: "where/you/want/your/js/files",
+                options: {
+                    //module: "amd", //or commonjs
+                    //target: "es5", //or es3
+                    //base_path: "path/to/typescript/files",
+                    sourcemap: true,
+                    fullSourceMapPath: true,
+                    declaration: true,
+                    comments: false
+                }
+            }
+        }
+    });
 
-  // Project configuration.
-  grunt.initConfig({
+    // These plugins provide necessary tasks.
+    grunt.loadNpmTasks("grunt-contrib-qunit");
+    grunt.loadNpmTasks("grunt-contrib-jshint");
+    grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks("grunt-typescript");
+    grunt.loadNpmTasks("grunt-jekyll");
 
-    // Metadata.
-    pkg: grunt.file.readJSON('package.json'),
-    banner: '/**\n' +
-              '* <%= pkg.name %> v<%= pkg.version %>\n' +
-              '* Copyright <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
-              '* <%= _.pluck(pkg.licenses, "url").join(", ") %>\n' +
-              '*/\n',
-
-    // Task configuration.
-    clean: {
-      dist: ['deploy']
-    },
-
-    concat: {
-      bootstrap: {
-        src: [
-          'js/transition.js',
-          'js/alert.js',
-          'js/button.js',
-          'js/carousel.js',
-          'js/collapse.js',
-          'js/dropdown.js',
-          'js/modal.js',
-          'js/tooltip.js',
-          'js/popover.js',
-          'js/scrollspy.js',
-          'js/tab.js',
-          'js/affix.js'
-        ],
-        dest: 'dist/html/themePreview.html'
-      }
-    },
-
-
-    recess: {
-			dist: {
-				options: {
-					compile: true,
-					compress: false
-				},
-				files: {}
-			}
-		}},
-
-    copy: {
-      fonts: {
-        expand: true,
-        src: ["fonts/*"],
-        dest: 'deploy/'
-      }
-    },
-
-    jekyll: {
-      docs: {}
-    },
-
-    watch: {
-      src: {
-        files: 'less/*.less',
-        tasks: ['recess']
-      }
-    }
-  });
-
-
-  // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-qunit');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-html-validation');
-  grunt.loadNpmTasks('grunt-jekyll');
-  grunt.loadNpmTasks('grunt-recess');
-
-  // Docs HTML deploy task
-  grunt.registerTask('deploy', ['clean','jekyll', 'validation']);
-
-  // Default task.
-  grunt.registerTask('default', ['deploy']);
+    // Default task.
+    //grunt.registerTask("default", ["jshint", "qunit", "jekyll:build"]);
+    grunt.registerTask("default", ["typescript","jekyll:build"]);
 
 };

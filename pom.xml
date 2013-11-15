@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>imaguiraga</groupId>
-	<artifactId>bootstrap.colorpicker</artifactId>
+	<artifactId>bootstrap-css-customizer</artifactId>
 	<packaging>war</packaging>
 	<version>0.1.0</version>
 	<name>bootstrap.colorpicker</name>
@@ -94,7 +94,7 @@
 			<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
 			<id>openshift</id>
 			<build>
-				<finalName>bootstrap.colorpicker</finalName>
+				<finalName>bootstrap-css-customizer</finalName>
 				<plugins>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>

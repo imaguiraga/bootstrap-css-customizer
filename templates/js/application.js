@@ -6,6 +6,7 @@
 */
 //declare var $: any;
 //declare var jQuery: any;
+//"use strict";
 var TemplateSelector = (function () {
     function TemplateSelector(controller, selectorId) {
         _selector = $(selectorId);
@@ -48,14 +49,25 @@ var TemplateSelector = (function () {
     TemplateSelector.prototype.updateDescription = function (text, templateId) {
         var theme = _controller.setCurrentTheme(templateId);
         this.updateCSS(theme);
+        var selectedId = $("#template-name").data("selectedId");
+
+        if (selectedId != undefined && selectedId != null) {
+            $("#" + selectedId).find(".btn-template-delete").removeClass("disabled");
+        }
+
         if (theme.compiled) {
             $("#template-name").text(text);
+            $("#template-name").data("selectedId", templateId);
+
+            //disable delete for selected item
+            $("#" + templateId).find(".btn-template-delete").addClass("disabled");
             $("#btn-template-download").removeClass("disabled");
             $("#btn-template-remove").removeClass("disabled");
             $("#btn-template-link").addClass("disabled");
             $("#btn-template-link").attr("href", "#");
         } else {
             $("#template-name").text(text);
+            $("#template-name").data("selectedId", templateId);
             $("#btn-template-download").addClass("disabled");
             $("#btn-template-remove").addClass("disabled");
             $("#btn-template-link").removeClass("disabled");
@@ -145,6 +157,8 @@ var TemplateSelector = (function () {
             var $elt = $source.replaceWith($html);
 
             //$elt.remove();
+            //Update Drop down selection
+            $("#template-name").text(newName);
             Application.initDeleteButton(_controller, $html.find(".btn-template-delete"), this);
             Application.initRenameButton(_controller, $html.find(".btn-template-rename"), this);
         }
@@ -393,14 +407,10 @@ var Controller = (function () {
                         }
                         var rule = tree.toCSS({ 'compress': true }).match(regex);
                         if (rule.length == 3) {
-                            fontColor = "white";
+                            //dynamically update fontcolor
                             backgroundColor = rule[1];
+                            fontColor = Application.getFontColor(backgroundColor);
 
-                            if ($.xcolor.readable("white", backgroundColor)) {
-                                fontColor = "white";
-                            } else {
-                                fontColor = "black";
-                            }
                             if (_DEBUG) {
                                 console.log("1.0 -> parseLESSVariables " + id + " - " + (new (Date)() - startTime1) + "ms");
                             }
@@ -847,6 +857,59 @@ var $lessVariablesInput = $("input:text.form-control").filter("[data-var]");
 var Application = (function () {
     function Application() {
     }
+    Application.getFontColor = /**
+    * [getFontColor description]
+    * @param  {String} backgroundColor [description]
+    * @param  {String} fontColor [description]
+    */
+    function (backgroundColor) {
+        var fontColor = "white";
+
+        /*
+        if ($.xcolor.readable("white", backgroundColor)) {
+        fontColor = "white";
+        } else {
+        fontColor = "black";
+        }
+        //*/
+        var color = tinycolor(backgroundColor);
+        var cielch = $.fn.ColorPickerSliders.rgb2lch(color.toRgb());
+        if (cielch.l > 0 && cielch.l < 60) {
+            fontColor = "white";
+        } else {
+            fontColor = "black";
+        }
+
+        if (color.toHexString() === "#000000") {
+            fontColor = "white";
+            if (color.alpha < 0.5) {
+                fontColor = "black";
+            }
+        }
+
+        return fontColor;
+    };
+
+    Application.getColorFormat = /**
+    * [getColorFormat description]
+    * @param  {String} color [description]
+    * @param  {String} ColorFormat [description]
+    */
+    function (color) {
+        var name = "hex";
+        var value = color.toHexString();
+
+        if (color.alpha < 1 || color.format !== "hex") {
+            name = "rgb";
+            value = color.toRgbString();
+        }
+
+        return {
+            "name": name,
+            "value": value
+        };
+    };
+
     Application.updateTooltip = /**
     * [updateTooltip description]
     * @param  {Object} $input [description]
@@ -858,7 +921,7 @@ var Application = (function () {
         var tooltip = null;
         if (name === "false") {
             name = "Color";
-            //slow name = $.xcolor.nearestname(color.toHexString());
+            //slow name = $.xcolor.nearestname(color.toString());
         }
 
         tooltip = name + " [ " + color.toHexString() + " - " + color.toRgbString() + " - " + color.toHslString() + " ]";
@@ -1008,14 +1071,6 @@ var Application = (function () {
             var theme = controller.setCurrentTheme(templateSelector.getSelectedTemplate());
 
             //newly created themes from external templates
-            /*
-            var templateId = "compiled";
-            var description = "Compiled";
-            
-            if(theme.compiled == true){
-            templateId = theme.themeId;
-            description = theme.name;
-            }//*/
             theme = controller.updateCompiledCSS(theme);
             var templateId = theme.themeId;
             var description = theme.name;
@@ -1034,8 +1089,6 @@ var Application = (function () {
 
             //TODO Application.updateCSS(theme);
             templateSelector.setUserTemplate(templateId);
-
-            //TODO $("#template-selector").val(templateId);
             $("#gradients-check").closest("label").removeClass("disabled");
         });
 
@@ -1071,8 +1124,8 @@ var Application = (function () {
         });
     };
 
-    Application.initColorPickers = /**
-    * [initColorPickers description]
+    Application.initColorPickersV3 = /**
+    * [initColorPickersV3 description]
     * @param  {Controller} controller [description]
     * @return {Void}            [description]
     */
@@ -1091,84 +1144,124 @@ var Application = (function () {
             }
             controller.setVariable(key, { 'default': value, 'value': value });
 
-            if (value && value.indexOf("@") >= 0) {
+            if (value && value.indexOf("@") > -1) {
                 controller.updateLESSVariablesRef(key, value, $this);
             }
 
             if ($this.hasClass("color-input")) {
                 var $this = $(elt);
-                $this.before("<i class='icon-fixed-width icon-tint'></i><br />");
+                $this.before("<i class='icon-fixed-width icon-tint'></i>");
                 var key = $this.attr("data-var");
                 var value = $this.val();
+                var color = tinycolor(value);
+                var format = "hex";
+
+                if (color.ok) {
+                    format = color.format;
+                }
+
                 $this.attr({
-                    "data-color-format": "hex"
+                    "data-color-format": format,
+                    "data-toggle": "tooltip",
+                    "data-placement": "top"
                 });
+                $this.data("color-format", format);
+                $this.css('background-color', value);
 
-                //$this.css('background-color',value);
-                $this.css({
-                    "background-color": value,
-                    "display": "inline-block"
-                });
-                $this.ColorPickerSliders({
-                    order: {
-                        preview: 1,
-                        hsl: 2,
-                        opacity: 3
-                    },
-                    onchange: function (container, color) {
-                        var startTime1 = new (Date)();
-                        var $this = $(this);
+                Application.updateTooltip($this, value);
 
-                        //update scope variables double bindings
-                        //tinycolor object is in color.tiny
-                        var colorHex = color.tiny.toHexString();
+                $this.click(function (evt) {
+                    var $input = $(this);
+                    var value = $input.val();
 
-                        var $input = $(this.connectedinput);
-                        var key = $input.attr("data-var");
+                    //disable color pickers input for variables
+                    var stop = (value.indexOf("@") > -1 || value === "inherit" || (value.charAt(0) !== "#" && value.indexOf("rgb") !== 0 && value.indexOf("hsl") !== 0));
 
-                        if (_DEBUG) {
-                            console.log(key + " 0.c - change " + (new (Date)() - startTime1) + "ms");
-                        }
+                    //try converting entry to color
+                    var color = tinycolor(value);
 
-                        //dynamically update fontcolor
-                        var fontColor = "black";
-
-                        if (color.cielch.l < 60) {
-                            fontColor = "white";
-                        } else {
-                            fontColor = "black";
-                        }
-
-                        $this.css("color", fontColor);
-
-                        if (_DEBUG) {
-                            console.log("onchange - updateLESSVariables " + key);
-                            console.log(key + " 1.c - change " + (new (Date)() - startTime1) + "ms");
-                        }
-                        $this.data("computed-value", colorHex);
-                        Application.updateTooltip($this, colorHex);
-                        controller.updateLESSVariables(key, colorHex);
+                    if (value === "inherit" || color.ok == false) {
+                        evt.stopImmediatePropagation();
                     }
-                }).droppable({
+
+                    //update color format
+                    var format = "hex";
+                    if (color.ok) {
+                        if (color.format !== "hex") {
+                            format = "rgb";
+                        }
+                        $input.attr("data-color-format", format);
+                        $input.data("color-format", format);
+                    }
+                }).on("blur", function (evt) {
+                    //delete resources
+                    $(this).trigger("colorpickersliders.destroy");
+                }).click(function (evt) {
+                    evt.stopPropagation();
+
+                    //create colorpicker on demand
+                    var $this = $(this);
+                    $this.ColorPickerSliders({
+                        swatches: false,
+                        order: {
+                            preview: 1,
+                            hsl: 2,
+                            opacity: 3
+                        },
+                        onchange: function (container, color) {
+                            var $input = this.connectedinput;
+
+                            var format = Application.getColorFormat(color.tiny);
+                            console.log("color=" + format.value);
+
+                            //update scope variables double bindings
+                            Application.updateLESSVariables(controller, $input, format.value);
+                        }
+                    });
+
+                    //display popup
+                    $this.trigger("colorpickersliders.showPopup");
+                }).change(function (evt) {
+                    var $input = $(this);
+
+                    var value = $input.val();
+
+                    if (value.indexOf("@") > -1) {
+                        Application.updateLESSVariablesLinks(controller, $input, value);
+                    } else {
+                        var color = tinycolor(value);
+
+                        if (color.ok) {
+                            var format = Application.getColorFormat(color);
+                            Application.removeLESSVariablesLinks(controller, $input, format.value);
+                        } else {
+                            //reset this value to previous one
+                            $input.val($input.data("prev-value"));
+                        }
+                    }
+                });
+
+                //set as drop target
+                $this.droppable({
                     drop: function (event, ui) {
                         event.stopPropagation();
+                        var $input = $(this);
                         var newVal = ui.draggable.css('background-color');
-                        var colorHex = rgb2hex(newVal);
-                        var $this = $(this);
-                        $this.val(colorHex);
+                        var color = tinycolor(newVal);
 
-                        var fontColor = "white";
-
-                        if ($.xcolor.readable("white", newVal)) {
-                            fontColor = "white";
-                        } else {
-                            fontColor = "black";
-                        }
-
-                        $this.css({ 'background-color': colorHex, 'color': fontColor });
-                        $this.data("computed-value", colorHex);
-                        Application.updateTooltip($this, colorHex);
-                        $this.trigger("colorpickersliders.updateColor", newVal);
+                        /*
+                        var format = "hex";
+                        //HSL are not supported
+                        var colorHex = color.toHexString();
+                        if(color.format !== "hex"){
+                        format = "rgb";
+                        colorHex = color.toRgbString();
+                        }//*/
+                        var format = Application.getColorFormat(color);
+                        $input.attr("data-color-format", format.name);
+                        $input.data("color-format", format.name);
+                        $input.val(format.value);
+                        Application.updateLESSVariables(controller, $input, format.value);
                     }
                 });
             }
@@ -1204,13 +1297,24 @@ var Application = (function () {
                 $this.before("<i class='icon-fixed-width icon-tint'></i>");
                 var key = $this.attr("data-var");
                 var value = $this.val();
-                $this.attr({
-                    "data-color-format": "hex"
-                });
-                $this.css('background-color', value);
 
-                $this.attr("data-toggle", "tooltip");
-                $this.attr("data-placement", "top");
+                var color = tinycolor(value);
+
+                //update color format
+                var format = "hex";
+                if (color.ok) {
+                    if (color.format !== "hex") {
+                        format = "rgb";
+                    }
+                }
+
+                $this.attr({
+                    "data-color-format": format,
+                    "data-toggle": "tooltip",
+                    "data-placement": "top"
+                });
+                $this.data("color-format", format);
+                $this.css('background-color', value);
 
                 Application.updateTooltip($this, value);
 
@@ -1227,7 +1331,20 @@ var Application = (function () {
                     if (value === "transparent" || value === "inherit" || color.ok == false) {
                         evt.stopImmediatePropagation();
                     }
+
+                    //update color format
+                    var format = "hex";
+                    if (color.ok) {
+                        if (color.format !== "hex") {
+                            format = "rgb";
+                        }
+                        $input.attr("data-color-format", format);
+                        $input.data("color-format", format);
+                    }
                 }).click(function (evt) {
+                    evt.stopPropagation();
+
+                    //create colorpicker on demand
                     $(this).spectrum({
                         clickoutFiresChange: true,
                         showAlpha: true,
@@ -1237,9 +1354,9 @@ var Application = (function () {
                         preferredFormat: "hex6",
                         move: function (color) {
                             var $input = $(this);
-                            var colorHex = color.toHexString();
-                            $input.val(colorHex);
-                            Application.updateLESSVariables(controller, $input, colorHex);
+                            var format = Application.getColorFormat(color);
+                            $input.val(format.value);
+                            Application.updateLESSVariables(controller, $input, format.value);
                         },
                         hide: function (color) {
                             var $input = $(this);
@@ -1247,11 +1364,8 @@ var Application = (function () {
                         },
                         change: function (color) {
                             var $input = $(this);
-
-                            //update scope variables double bindings
-                            //tinycolor object is in color
-                            var colorHex = color.toHexString();
-                            Application.updateLESSVariables(controller, $input, colorHex);
+                            var format = Application.getColorFormat(color);
+                            Application.updateLESSVariables(controller, $input, format.value);
                         }
                     }).show();
                     $this.spectrum("set", $this.val());
@@ -1266,7 +1380,8 @@ var Application = (function () {
                     } else {
                         var color = tinycolor(value);
                         if (color.ok) {
-                            Application.removeLESSVariablesLinks(controller, $input, color.toHexString());
+                            var format = Application.getColorFormat(color);
+                            Application.removeLESSVariablesLinks(controller, $input, format.value);
                         } else {
                             //reset this value to previous one
                             $input.val($input.data("prev-value"));
@@ -1281,9 +1396,12 @@ var Application = (function () {
                         var $input = $(this);
                         var newVal = ui.draggable.css('background-color');
                         var color = tinycolor(newVal);
-                        var colorHex = color.toHexString();
-                        $input.val(colorHex);
-                        Application.updateLESSVariables(controller, $input, colorHex);
+
+                        var format = Application.getColorFormat(color);
+                        $input.attr("data-color-format", format.name);
+                        $input.data("color-format", format.name);
+                        $input.val(format.value);
+                        Application.updateLESSVariables(controller, $input, format.value);
                     }
                 });
             }
@@ -1310,7 +1428,7 @@ var Application = (function () {
         if (typeof colorHex === "undefined" || colorHex == null) {
             if ($ref.css("background-color") != undefined) {
                 var color = tinycolor($ref.css("background-color"));
-                colorHex = color.toHexString();
+                colorHex = color.toString();
                 $ref.data("computed-value", colorHex);
                 Application.updateTooltip($ref, colorHex);
             } else {
@@ -1318,7 +1436,7 @@ var Application = (function () {
             }
         } else {
             var color = tinycolor(colorHex);
-            colorHex = color.toHexString();
+            colorHex = color.toString();
         }
 
         if (color.ok) {
@@ -1380,15 +1498,11 @@ var Application = (function () {
         }
 
         //dynamically update fontcolor
-        var fontColor = "black";
+        var backgroundColor = colorHex;
+        var fontColor = Application.getFontColor(backgroundColor);
 
-        if ($.xcolor.readable("white", colorHex)) {
-            fontColor = "white";
-        } else {
-            fontColor = "black";
-        }
-
-        $input.css({ 'background-color': colorHex, 'color': fontColor });
+        //use white color for transparent and inherit
+        $input.css({ 'background-color': backgroundColor, 'color': fontColor });
         if (_DEBUG) {
             console.log("onchange - updateLESSVariables " + key);
             console.log(key + " 1.c - change " + (new (Date)() - startTime1) + "ms");
@@ -1707,17 +1821,13 @@ var Application = (function () {
     function () {
         var controller = new Controller();
 
-        //Application.initLocalStorage(controller);
         Application.initGradientsCheck(controller);
 
-        //Application.initDownloadButton(controller,"#btn-download");
         Application.initDownloadButton(controller, "#btn-template-download");
 
-        //Application.initPreviewToggle(controller);
         Application.initDraggable(controller);
 
-        //Application.initColorPickers(controller);
-        Application.initColorPickersV2(controller);
+        Application.initColorPickersV3(controller);
 
         Application.tooltipInit();
 
@@ -1764,5 +1874,9 @@ var Application = (function () {
     $(function main() {
         Application.main();
         spinner.stop();
+        if (window.loadtime != undefined) {
+            window.loadtime = new Date() - window.loadtime;
+            console.log("===> window.loadtime = " + window.loadtime);
+        }
     });
 })();
