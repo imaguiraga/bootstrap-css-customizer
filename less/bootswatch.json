@@ -9,8 +9,8 @@
             "css": "http://bootswatch.com/amelia/bootstrap.css",
             "cssMin": "http://bootswatch.com/amelia/bootstrap.min.css",
             "cssCdn": "//netdna.bootstrapcdn.com/bootswatch/latest/amelia/bootstrap.min.css",
-            "less": "bootswatch/amelia/bootswatch.less",
-            "lessVariables": "bootswatch/amelia/variables.less"
+            "less": "less/bootswatch/amelia/bootswatch.less",
+            "lessVariables": "less/bootswatch/amelia/variables.less"
         },
         {
             "name": "Cerulean",
@@ -20,8 +20,8 @@
             "css": "http://bootswatch.com/cerulean/bootstrap.css",
             "cssMin": "http://bootswatch.com/cerulean/bootstrap.min.css",
             "cssCdn": "//netdna.bootstrapcdn.com/bootswatch/latest/cerulean/bootstrap.min.css",
-            "less": "bootswatch/cerulean/bootswatch.less",
-            "lessVariables": "bootswatch/cerulean/variables.less"
+            "less": "less/bootswatch/cerulean/bootswatch.less",
+            "lessVariables": "less/bootswatch/cerulean/variables.less"
         },
         {
             "name": "Cosmo",
@@ -31,8 +31,8 @@
             "css": "http://bootswatch.com/cosmo/bootstrap.css",
             "cssMin": "http://bootswatch.com/cosmo/bootstrap.min.css",
             "cssCdn": "//netdna.bootstrapcdn.com/bootswatch/latest/cosmo/bootstrap.min.css",
-            "less": "bootswatch/cosmo/bootswatch.less",
-            "lessVariables": "bootswatch/cosmo/variables.less"
+            "less": "less/bootswatch/cosmo/bootswatch.less",
+            "lessVariables": "less/bootswatch/cosmo/variables.less"
         },
         {
             "name": "Cyborg",
@@ -42,8 +42,8 @@
             "css": "http://bootswatch.com/cyborg/bootstrap.css",
             "cssMin": "http://bootswatch.com/cyborg/bootstrap.min.css",
             "cssCdn": "//netdna.bootstrapcdn.com/bootswatch/latest/cyborg/bootstrap.min.css",
-            "less": "bootswatch/cyborg/bootswatch.less",
-            "lessVariables": "bootswatch/cyborg/variables.less"
+            "less": "less/bootswatch/cyborg/bootswatch.less",
+            "lessVariables": "less/bootswatch/cyborg/variables.less"
         },
         {
             "name": "Flatly",
@@ -53,8 +53,8 @@
             "css": "http://bootswatch.com/flatly/bootstrap.css",
             "cssMin": "http://bootswatch.com/flatly/bootstrap.min.css",
             "cssCdn": "//netdna.bootstrapcdn.com/bootswatch/latest/flatly/bootstrap.min.css",
-            "less": "bootswatch/flatly/bootswatch.less",
-            "lessVariables": "bootswatch/flatly/variables.less"
+            "less": "less/bootswatch/flatly/bootswatch.less",
+            "lessVariables": "less/bootswatch/flatly/variables.less"
         },
         {
             "name": "Journal",
@@ -64,8 +64,8 @@
             "css": "http://bootswatch.com/journal/bootstrap.css",
             "cssMin": "http://bootswatch.com/journal/bootstrap.min.css",
             "cssCdn": "//netdna.bootstrapcdn.com/bootswatch/latest/journal/bootstrap.min.css",
-            "less": "bootswatch/journal/bootswatch.less",
-            "lessVariables": "bootswatch/journal/variables.less"
+            "less": "less/bootswatch/journal/bootswatch.less",
+            "lessVariables": "less/bootswatch/journal/variables.less"
         },
         {
             "name": "Readable",
@@ -75,8 +75,8 @@
             "css": "http://bootswatch.com/readable/bootstrap.css",
             "cssMin": "http://bootswatch.com/readable/bootstrap.min.css",
             "cssCdn": "//netdna.bootstrapcdn.com/bootswatch/latest/readable/bootstrap.min.css",
-            "less": "bootswatch/readable/bootswatch.less",
-            "lessVariables": "bootswatch/readable/variables.less"
+            "less": "less/bootswatch/readable/bootswatch.less",
+            "lessVariables": "less/bootswatch/readable/variables.less"
         },
         {
             "name": "Simplex",
@@ -86,8 +86,8 @@
             "css": "http://bootswatch.com/simplex/bootstrap.css",
             "cssMin": "http://bootswatch.com/simplex/bootstrap.min.css",
             "cssCdn": "//netdna.bootstrapcdn.com/bootswatch/latest/simplex/bootstrap.min.css",
-            "less": "bootswatch/simplex/bootswatch.less",
-            "lessVariables": "bootswatch/simplex/variables.less"
+            "less": "less/bootswatch/simplex/bootswatch.less",
+            "lessVariables": "less/bootswatch/simplex/variables.less"
         },
         {
             "name": "Slate",
@@ -97,8 +97,8 @@
             "css": "http://bootswatch.com/slate/bootstrap.css",
             "cssMin": "http://bootswatch.com/slate/bootstrap.min.css",
             "cssCdn": "//netdna.bootstrapcdn.com/bootswatch/latest/slate/bootstrap.min.css",
-            "less": "bootswatch/slate/bootswatch.less",
-            "lessVariables": "bootswatch/slate/variables.less"
+            "less": "less/bootswatch/slate/bootswatch.less",
+            "lessVariables": "less/bootswatch/slate/variables.less"
         },
         {
             "name": "Spacelab",
@@ -108,8 +108,8 @@
             "css": "http://bootswatch.com/spacelab/bootstrap.css",
             "cssMin": "http://bootswatch.com/spacelab/bootstrap.min.css",
             "cssCdn": "//netdna.bootstrapcdn.com/bootswatch/latest/spacelab/bootstrap.min.css",
-            "less": "bootswatch/spacelab/bootswatch.less",
-            "lessVariables": "bootswatch/spacelab/variables.less"
+            "less": "less/bootswatch/spacelab/bootswatch.less",
+            "lessVariables": "less/bootswatch/spacelab/variables.less"
         },
         {
             "name": "United",
@@ -119,8 +119,8 @@
             "css": "http://bootswatch.com/united/bootstrap.css",
             "cssMin": "http://bootswatch.com/united/bootstrap.min.css",
             "cssCdn": "//netdna.bootstrapcdn.com/bootswatch/latest/united/bootstrap.min.css",
-            "less": "bootswatch/united/bootswatch.less",
-            "lessVariables": "bootswatch/united/variables.less"
+            "less": "less/bootswatch/united/bootswatch.less",
+            "lessVariables": "less/bootswatch/united/variables.less"
         }
     ]
 }
