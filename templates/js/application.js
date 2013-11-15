@@ -49,14 +49,25 @@ var TemplateSelector = (function () {
     TemplateSelector.prototype.updateDescription = function (text, templateId) {
         var theme = _controller.setCurrentTheme(templateId);
         this.updateCSS(theme);
+        var selectedId = $("#template-name").data("selectedId");
+
+        if (selectedId != undefined && selectedId != null) {
+            $("#" + selectedId).find(".btn-template-delete").removeClass("disabled");
+        }
+
         if (theme.compiled) {
             $("#template-name").text(text);
+            $("#template-name").data("selectedId", templateId);
+
+            //disable delete for selected item
+            $("#" + templateId).find(".btn-template-delete").addClass("disabled");
             $("#btn-template-download").removeClass("disabled");
             $("#btn-template-remove").removeClass("disabled");
             $("#btn-template-link").addClass("disabled");
             $("#btn-template-link").attr("href", "#");
         } else {
             $("#template-name").text(text);
+            $("#template-name").data("selectedId", templateId);
             $("#btn-template-download").addClass("disabled");
             $("#btn-template-remove").addClass("disabled");
             $("#btn-template-link").removeClass("disabled");
@@ -146,6 +157,8 @@ var TemplateSelector = (function () {
             var $elt = $source.replaceWith($html);
 
             //$elt.remove();
+            //Update Drop down selection
+            $("#template-name").text(newName);
             Application.initDeleteButton(_controller, $html.find(".btn-template-delete"), this);
             Application.initRenameButton(_controller, $html.find(".btn-template-rename"), this);
         }
