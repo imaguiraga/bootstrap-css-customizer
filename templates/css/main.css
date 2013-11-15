@@ -212,3 +212,18 @@ div {}
 .brand > span{
 	/*font-size:16px;*/
 }
+
+.docs{
+	font-size:1em;
+}
+
+.docs img{
+	border: 1px solid gray;
+	margin: 5px;
+	padding: 5px;
+	
+	-moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -khtml-border-radius: 4px;
+    border-radius: 4px;
+}
