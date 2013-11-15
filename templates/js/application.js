@@ -1952,5 +1952,9 @@ var Application = (function () {
     $(function main() {
         Application.main();
         spinner.stop();
+        if (window.loadtime != undefined) {
+            window.loadtime = new Date() - window.loadtime;
+            console.log("===> window.loadtime = " + window.loadtime);
+        }
     });
 })();
