@@ -1,0 +1,31 @@
+<div class="page-header">
+    <h3>Typography</h3>
+</div>
+<div class="row edit-view">
+    <div class="col-md-6">
+        <label>@font-family-sans-serif</label>
+        <input type="text" class="form-control" placeholder="'Helvetica Neue', Helvetica, Arial, sans-serif" data-var="@font-family-sans-serif" id="font-family-sans-serif" />
+        <p class="help-block">Default sans-serif fonts.</p>
+        <label>@font-family-serif</label>
+        <input type="text" class="form-control" placeholder="Georgia, 'Times New Roman', Times, serif" data-var="@font-family-serif" id="font-family-serif" />
+        <p class="help-block">Default serif fonts.</p>
+        <label>@font-family-monospace</label>
+        <input type="text" class="form-control" placeholder="Monaco, Menlo, Consolas, 'Courier New', monospace" data-var="@font-family-monospace" id="font-family-monospace" />
+        <p class="help-block">Default monospace fonts for
+            <code>&lt;code&gt;</code>and
+            <code>&lt;pre&gt;</code>.</p>
+    </div>
+    <div class="col-md-6">
+        <label>@font-family-base</label>
+        <input type="text" class="form-control" placeholder="@font-family-sans-serif" data-var="@font-family-base" id="font-family-base" />
+        <p class="help-block">Used to globally set font-family in Bootstrap.</p>
+        <label>@font-size-base</label>
+        <input type="text" class="form-control" placeholder="14px" data-var="@font-size-base" id="font-size-base" />
+        <p class="help-block">Used to calculate font-size throughout Bootstrap.</p>
+        <label>@line-height-base</label>
+        <input type="text" class="form-control" placeholder="1.428571429" data-var="@line-height-base" id="line-height-base" />
+        <p class="help-block">Used to calculate line-height throughout Bootstrap.</p>
+    </div>
+</div>
+
+{% include fragments/less/preview-typography.inc.html %}

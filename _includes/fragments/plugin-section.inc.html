@@ -1,0 +1,101 @@
+<div class="bs-docs-section edit-view" id="plugin-section">
+    <div class="page-header">
+        <button class="btn btn-default toggle" type="button">Toggle all</button>
+        <h1 id="plugins">jQuery plugins</h1>
+    </div>
+    <p class="lead">Choose which jQuery plugins should be included in your custom JavaScript files. Unsure what to include? Read the
+        <a href="../javascript/">JavaScript</a>page in the docs.</p>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="page-header">
+                <h4>Linked to components</h4>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked value="alert.js">Alert dismissal
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked value="button.js">Advanced buttons
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked value="carousel.js">Carousel functionality
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked value="dropdown.js">Dropdowns
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked value="modal.js">Modals
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked value="tooltip.js">Tooltips
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked value="popover.js" data-dependency="tooltip.js">Popovers
+                    <small>(requires Tooltips)</small>
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked value="tab.js">Togglable tabs
+                </label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="page-header">
+                <h4>Magic</h4>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked value="affix.js">Affix
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked value="collapse.js">Collapse
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked value="scrollspy.js">Scrollspy
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked value="transition.js">Transitions
+                    <small>(required for any kind of animation)</small>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="bs-callout bs-callout-info">
+        <div class="page-header">
+            <h4>Produces two files</h4>
+        </div>
+        <p>All checked plugins will be compiled into a readable
+            <code>bootstrap.js</code>and a minified
+            <code>bootstrap.min.js</code>. We recommend you use the minified version in production.</p>
+    </div>
+
+    <div class="bs-callout bs-callout-danger">
+        <div class="page-header">
+            <h4>jQuery required</h4>
+        </div>
+        <p>All plugins require the latest version of
+            <a href="http://jquery.com/" target="_blank">jQuery</a>to be included.</p>
+    </div>
+    <button class="btn btn-default toggle" type="button">Reset to defaults</button>
+</div>
+

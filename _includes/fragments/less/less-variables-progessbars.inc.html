@@ -1,0 +1,53 @@
+<div class="page-header">
+    <h2 id="variables-progress">Progress bars</h2>
+</div>
+<div class="edit-view">
+    <div class="row">
+        <div class="col-md-4">
+            <label>@progress-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="#f5f5f5" value="#f5f5f5" data-var="@progress-bg" id="progress-bg" />
+            <p class="help-block">Background color of the whole progress component</p>
+        </div>
+        <div class="col-md-4">
+            <label>@progress-bar-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@brand-primary" data-var="@progress-bar-bg" id="progress-bar-bg" />
+            <p class="help-block">Default progress bar color</p>
+        </div>
+        <div class="col-md-4">
+            <label>@progress-bar-success-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@brand-success" data-var="@progress-bar-success-bg" id="progress-bar-success-bg" />
+            <p class="help-block">Success progress bar color</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label>@progress-bar-warning-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@brand-warning" data-var="@progress-bar-warning-bg" id="progress-bar-warning-bg" />
+            <p class="help-block">Warning progress bar color</p>
+        </div>
+        <div class="col-md-4">
+            <label>@progress-bar-danger-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@brand-danger" data-var="@progress-bar-danger-bg" id="progress-bar-danger-bg" />
+            <p class="help-block">Danger progress bar color</p>
+        </div>
+        <div class="col-md-4">
+            <label>@progress-bar-info-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@brand-info" data-var="@progress-bar-info-bg" id="progress-bar-info-bg" />
+            <p class="help-block">Info progress bar color</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label>@progress-bar-color</label>
+            <input type="text" class="color-box color-input form-control" placeholder="#fff" value="#fff" data-var="@progress-bar-color" id="progress-bar-color" />
+            <p class="help-block">Info progress bar text color</p>
+        </div>
+        <div class="col-md-4">
+            <label>@progress-bar-text-shadow</label>
+            <input type="text" class="form-control" placeholder="0 -1px 0 rgba(0,0,0,.25)" data-var="@progress-bar-text-shadow" id="progress-bar-text-shadow" />
+            <p class="help-block">Info progress bar text shadow</p>
+        </div>
+    </div>
+</div>
+
+{% include fragments/less/preview-progessbars.inc.html %}

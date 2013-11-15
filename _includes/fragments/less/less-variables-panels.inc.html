@@ -1,0 +1,97 @@
+<div class="page-header">
+    <h2 id="variables-panels-wells">Panels and wells</h2>
+</div>
+<div class="edit-view">
+    <div class="page-header">
+        <h3>Common panel styles</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label>@panel-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="#fff" value="#fff" data-var="@panel-bg" id="panel-bg" />
+            <label>@panel-inner-border</label>
+            <input type="text" class="color-box color-input form-control" placeholder="#ddd" value="#ddd" data-var="@panel-inner-border" id="panel-inner-border" />
+            <p class="help-block">Border color for elements within panels</p>
+        </div>
+        <div class="col-md-6">
+            <label>@panel-border-radius</label>
+            <input type="text" class="form-control" placeholder="@border-radius-base" data-var="@panel-border-radius" id="panel-border-radius" />
+            <label>@panel-footer-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="#f5f5f5" value="#f5f5f5" data-var="@panel-footer-bg" id="panel-footer-bg" />
+        </div>
+    </div>
+    <div class="page-header">
+        <h3>Contextual panel colors</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="page-header">
+                <h4>Default</h4>
+            </div>
+            <label>@panel-default-text</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@gray-dark" data-var="@panel-default-text" id="panel-default-text" />
+            <label>@panel-default-border</label>
+            <input type="text" class="color-box color-input form-control" placeholder="#ddd" value="#ddd" data-var="@panel-default-border" id="panel-default-border" />
+            <label>@panel-default-heading-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="#f5f5f5" value="#f5f5f5" data-var="@panel-default-heading-bg" id="panel-default-heading-bg" />
+        </div>
+        <div class="col-md-4">
+            <div class="page-header">
+                <h4>Primary</h4>
+            </div>
+            <label>@panel-primary-text</label>
+            <input type="text" class="color-box color-input form-control" placeholder="#fff" value="#fff" data-var="@panel-primary-text" id="panel-primary-text" />
+            <label>@panel-primary-border</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@brand-primary" data-var="@panel-primary-border" id="panel-primary-border" />
+            <label>@panel-primary-heading-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@brand-primary" data-var="@panel-primary-heading-bg" id="panel-primary-heading-bg" />
+        </div>
+        <div class="col-md-4">
+            <div class="page-header">
+                <h4>Success</h4>
+            </div>
+            <label>@panel-success-text</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@state-success-text" data-var="@panel-success-text" id="panel-success-text" />
+            <label>@panel-success-border</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@state-success-border" data-var="@panel-success-border" id="panel-success-border" />
+            <label>@panel-success-heading-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@state-success-bg" data-var="@panel-success-heading-bg" id="panel-success-heading-bg" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="page-header">
+                <h4>Info</h4>
+            </div>
+            <label>@panel-info-text</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@state-info-text" data-var="@panel-info-text" id="panel-info-text" />
+            <label>@panel-info-border</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@state-info-border" data-var="@panel-info-border" id="panel-info-border" />
+            <label>@panel-info-heading-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@state-info-bg" data-var="@panel-info-heading-bg" id="panel-info-heading-bg" />
+        </div>
+        <div class="col-md-4">
+            <div class="page-header">
+                <h4>Warning</h4>
+            </div>
+            <label>@panel-warning-text</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@state-warning-text" data-var="@panel-warning-text" id="panel-warning-text" />
+            <label>@panel-warning-border</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@state-warning-border" data-var="@panel-warning-border" id="panel-warning-border" />
+            <label>@panel-warning-heading-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@state-warning-bg" data-var="@panel-warning-heading-bg" id="panel-warning-heading-bg" />
+        </div>
+        <div class="col-md-4">
+            <div class="page-header">
+                <h4>Danger</h4>
+            </div>
+            <label>@panel-danger-text</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@state-danger-text" data-var="@panel-danger-text" id="panel-danger-text" />
+            <label>@panel-danger-border</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@state-danger-border" data-var="@panel-danger-border" id="panel-danger-border" />
+            <label>@panel-danger-heading-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@state-danger-bg" data-var="@panel-danger-heading-bg" id="panel-danger-heading-bg" />
+        </div>
+    </div>
+</div>
+{% include fragments/less/preview-panels.inc.html %} {% include fragments/less/less-variables-wells.inc.html %}

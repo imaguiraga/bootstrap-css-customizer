@@ -1,0 +1,24 @@
+<!-- Customizer form -->
+
+<form class="bs-customizer" role="form">
+
+{% raw %}
+<!--
+{% include fragments/less-section.inc.html %}
+{% include fragments/plugin-section.inc.html %}
+-->
+{% endraw %}
+    <div class="bs-callout bs-callout-info">
+    <div class="page-header">
+      <h1>Generated Files</h1>
+    </div>
+      <p>All Variables will be compiled into a readable <code>bootstrap.css</code>, <code>bootstrap-theme.css</code> and their minified versions <code>bootstrap.min.css</code>, <code>bootstrap-theme.min.css</code> in addition there will be <code>variables.less</code> file containing the modified variables.<br/>
+		<code>bootstrap-theme.css</code> contains gradients stylesheets to be combined with <code>bootstrap.css</code>
+	  </p>
+
+    </div>
+{% include fragments/less-variables-section.inc.html %}
+
+ 
+</form>
+

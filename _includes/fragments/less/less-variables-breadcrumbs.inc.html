@@ -1,0 +1,22 @@
+<div class="page-header">
+    <h2 id="variables-breadcrumbs">Breadcrumbs</h2>
+</div>
+<div class="row edit-view">
+    <div class="col-md-4">
+        <label>@breadcrumb-color</label>
+        <input type="text" class="color-box color-input form-control" placeholder="#ccc" value="#ccc" data-var="@breadcrumb-color" id="breadcrumb-color" />
+        <p>Breadcrumb text color</p>
+    </div>
+    <div class="col-md-4">
+        <label>@breadcrumb-bg</label>
+        <input type="text" class="color-box color-input form-control" placeholder="#f5f5f5" value="#f5f5f5" data-var="@breadcrumb-bg" id="breadcrumb-bg" />
+        <p>Breadcrumb background color</p>
+    </div>
+    <div class="col-md-4">
+        <label>@breadcrumb-active-color</label>
+        <input type="text" class="color-box color-input form-control" placeholder="@gray-light" data-var="@breadcrumb-active-color" id="breadcrumb-active-color" />
+        <p>Text color of current page in the breadcrumb</p>
+    </div>
+</div>
+
+{% include fragments/less/preview-breadcrumbs.inc.html %}

@@ -1,0 +1,51 @@
+---
+layout: index.layout
+title: Bootstrap CSS Customizer
+base_url: "./"
+permalink: /index.html
+---
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand brand" href="#"><span class="label label-primary">Bootstrap</span>
+                    <span class="label label-success">CSS</span>
+                    <span class="label label-danger">Customizer {{ site.version }}</span></a>
+		  
+        </div>
+        <div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav pull-right">
+				<li class="active"><a href="#"><i class="icon-fixed-width icon-home"></i>Home</a></li>
+				<li><a href="customizer.html" onclick="logEvent(['_trackEvent', 'Home Page actions', 'goto', this.href]);"><i class="icon-fixed-width icon-gears"></i> Customizer</a></li>
+				<li><a href="docs.html" onclick="logEvent(['_trackEvent', 'Home Page actions', 'goto', this.href]);"><i class="icon-fixed-width icon-book"></i> Docs</a></li>
+				<li><a id="forkme_banner" href="{{ site.github_url }}" onclick="logEvent(['_trackEvent', 'Home Page actions', 'goto', this.href]);"><i class="icon-github-sign"></i></a></li>     
+				<li>
+					<a style="padding-bottom:0px">
+						<iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=imaguiraga&amp;repo=bootstrap-css-customizer&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+						<iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=imaguiraga&amp;repo=bootstrap-css-customizer&amp;type=fork&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="102px" height="20px"></iframe>
+					</a>
+				</li>
+			</ul>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron" id="jumbotron">
+      <div class="container">
+        <h1>An Advanced Bootstrap CSS Customizer</h1>
+        <p>with drag-and-drop color pickers and CSS previews.</p>
+        <p><a class="btn btn-success btn-lg" href="customizer.html" onclick="logEvent(['_trackEvent', 'Home Page Jumbotron actions', 'goto', this.href]);">Start Here</a></p>
+      </div>
+    </div>
+
+    <div class="container" style="text-align:center">
+
+      <p>
+			<img class="img-responsive media-object" data-src="holder.js/800x600" src="assets/images/bootstrap-css-customizer.png" style="display:block;width:800px;height:600px" alt="Main Screen" title="Main Screen">
+	</p>
+    </div> <!-- /container -->

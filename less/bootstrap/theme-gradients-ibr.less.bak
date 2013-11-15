@@ -1,0 +1,274 @@
+/*!
+ * Bootstrap v3.0.0
+ *
+ * Copyright 2013 Twitter, Inc
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Designed and built with all the love in the world by @mdo and @fat.
+ */
+
+///CUSTOM
+
+//
+// Buttons
+// --------------------------------------------------
+
+.btn-default:active,
+.btn-primary:active,
+.btn-success:active,
+.btn-info:active,
+.btn-warning:active,
+.btn-danger:active,
+.btn-default.active,
+.btn-primary.active,
+.btn-success.active,
+.btn-info.active,
+.btn-warning.active,
+.btn-danger.active {
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+          box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+// Common styles
+.btn {
+  // Remove the gradient for the pressed/active state
+  &:active,
+  &.active {
+    background-image: none;
+  }
+}
+
+.btn-background-gradient(@start-color,@border-color: darken(@start-color,5%)){
+	@stop-color: darken(@start-color, 10%);
+	& {
+	  //text-shadow: 0 0px 0 #fff;
+	  text-shadow: none;
+	  .background-gradient(@start-color,@stop-color,@border-color);
+	  border-color: @border-color;
+	}
+
+	&:active,
+	&.active {
+	  //background-color: @stop-color;
+	  .background-gradient(@stop-color,@start-color,@border-color);
+	  border-color: @border-color;
+	  
+	}
+}
+
+.btn-default {
+	.btn-background-gradient(@btn-default-bg,@btn-default-border);
+}
+
+.btn-primary {
+	.btn-background-gradient(@btn-primary-bg,@btn-primary-border);
+}
+
+.btn-success {
+	.btn-background-gradient(@btn-success-bg,@btn-success-border);
+}
+
+.btn-warning {
+	.btn-background-gradient(@btn-warning-bg,@btn-warning-border);
+}
+
+.btn-danger {
+	.btn-background-gradient(@btn-danger-bg,@btn-danger-border);
+}
+
+.btn-info {
+	.btn-background-gradient(@btn-info-bg,@btn-info-border);
+}
+
+//
+// Images
+// --------------------------------------------------
+.thumbnail,
+.img-thumbnail {
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
+}
+
+//
+// Dropdowns
+// --------------------------------------------------
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus,
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+  @darken: darken(@brand-primary, 5%);
+  background-color: @darken;
+  	.background-gradient(@brand-primary,@darken);
+ }
+
+ 
+//
+// Navbar
+// --------------------------------------------------
+
+// Basic navbar
+.navbar {
+	.background-gradient(@body-bg,@navbar-default-bg);
+   border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 5px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 5px rgba(0, 0, 0, 0.075);
+}
+
+.navbar .navbar-nav > .active > a {
+  background-color: @navbar-default-bg;
+}
+
+.navbar-brand,
+.navbar-nav > li > a {
+  //text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+  text-shadow: none;
+}
+
+// Inverted navbar
+.navbar-inverse {
+	@navbar-inverse-start : lighten(@navbar-inverse-bg, 10%);
+	.background-gradient(@navbar-inverse-start,@navbar-inverse-bg);
+}
+
+.navbar-inverse .navbar-nav > .active > a {
+  background-color: @navbar-inverse-bg;
+}
+
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-nav > li > a {
+  //text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  text-shadow: none;
+}
+
+
+// Undo rounded corners in static and fixed navbars
+
+.navbar-static-top,
+.navbar-fixed-top,
+.navbar-fixed-bottom {
+  border-radius: 0;
+}
+
+//
+// Alerts
+// --------------------------------------------------
+
+// Common styles
+.alert {
+  //text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+  text-shadow: none;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+// Apply the mixin to the alerts
+.alert-success {
+	.background-gradient(@state-success-bg, darken(@state-success-bg, 7.5%),darken(@state-success-bg, 15%));
+ }
+
+.alert-info {
+	.background-gradient(@state-info-bg,darken(@state-info-bg, 7.5%),darken(@state-info-bg, 15%));
+}
+
+.alert-warning {
+	.background-gradient(@state-warning-bg,darken(@state-warning-bg, 7.5%),darken(@state-warning-bg, 15%));
+}
+
+.alert-danger {
+	.background-gradient(@state-danger-bg,darken(@state-danger-bg, 7.5%),darken(@state-danger-bg, 15%));
+}
+
+
+.background-gradient(@start-color,@stop-color: darken(@start-color, 10%),@border-color: darken(@start-color,5%)){
+	
+	  background-image: -webkit-gradient(linear, left 0%, left 100%, from(@start-color), to(@stop-color));
+	  background-image: -webkit-linear-gradient(top, @start-color, 0%, @stop-color, 100%);
+	  background-image:    -moz-linear-gradient(top, @start-color 0%, @stop-color 100%);
+	  background-image:      -o-linear-gradient(top, @start-color 0%, @stop-color 100%);
+	  background-image:   linear-gradient(to bottom, @start-color 0%, @stop-color 100%);
+	  background-repeat: repeat-x;
+	  border-color: @border-color;
+	  filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",argb(@start-color),argb(@stop-color))); // IE9 and down
+}
+
+//
+// Progress bars
+// --------------------------------------------------
+
+// Give the progress background some depth
+.progress {
+	.background-gradient(darken(@progress-bg, 4%),@progress-bg);
+}
+
+.progress-bar {
+	.background-gradient(@progress-bar-bg);
+}
+
+.progress-bar-success {
+	.background-gradient(@progress-bar-success-bg);
+}
+
+.progress-bar-info {
+	.background-gradient(@progress-bar-info-bg);
+}
+
+.progress-bar-warning {
+	.background-gradient(@progress-bar-warning-bg);
+}
+
+.progress-bar-danger {
+	.background-gradient(@progress-bar-danger-bg);
+}
+
+.list-group {
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
+}
+
+.list-group-item.active,
+.list-group-item.active:hover,
+.list-group-item.active:focus {
+  text-shadow: 0 -1px 0 darken(@brand-primary, 10%);
+  .background-gradient(@brand-primary, darken(@brand-primary, 7.5%));
+   border-color:  darken(@brand-primary, 7.5%);
+}
+
+.panel {
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.panel-default > .panel-heading {
+	.background-gradient(@panel-default-heading-bg,darken(@panel-default-heading-bg,5%));
+}
+
+.panel-primary > .panel-heading {
+	.background-gradient(@panel-primary-heading-bg,darken(@panel-primary-heading-bg,5%));
+}
+
+.panel-success > .panel-heading {
+	.background-gradient(@panel-success-heading-bg,darken(@panel-success-heading-bg,5%));
+}
+
+.panel-info > .panel-heading {
+	.background-gradient(@panel-info-heading-bg,darken(@panel-info-heading-bg,5%));
+}
+
+.panel-warning > .panel-heading {
+	.background-gradient(@panel-warning-heading-bg,darken(@panel-warning-heading-bg,5%));
+}
+
+.panel-danger > .panel-heading {
+	.background-gradient(@panel-danger-heading-bg,darken(@panel-danger-heading-bg,5%));
+ }
+
+.well {
+	.background-gradient(darken(@well-bg,5%),@well-bg);
+  border-color: #dcdcdc;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1);
+          box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1);
+}

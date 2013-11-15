@@ -1,0 +1,22 @@
+h1. HMTL5 Client 
+
+provides a dashboard to view application related statistics
+
+h2. Statistics
+
+h3. Realtime Statistics
+
+Realtime statistics are refreshed using a timer.  They are metrics gathered during the day
+
+
+# Number of Daily requests day range is in UTC 0000 - 23:59
+# Number of requests during a certain sampling range period.  The different ranges are 1 min (60 samples 1/second), 5 mins, 10 mins, 15 mins
+
+# Average response time per request
+# Max response time not null per request
+# Min response time not null Time per request
+
+
+h3. Snapshots  
+
+These represent statistics aggregated over a period of time

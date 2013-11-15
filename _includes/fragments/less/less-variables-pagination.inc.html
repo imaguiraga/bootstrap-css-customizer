@@ -1,0 +1,36 @@
+<div class="page-header">
+    <h2 id="variables-pagination">Pagination</h2>
+</div>
+<div class="edit-view">
+    <div class="row" >
+        <div class="col-md-4">
+            <label>@pagination-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="#fff" value="#fff" data-var="@pagination-bg" id="pagination-bg" />
+            <p class="help-block">Background color</p>
+        </div>
+        <div class="col-md-4">
+            <label>@pagination-border</label>
+            <input type="text" class="color-box color-input form-control" placeholder="#ddd" value="#ddd" data-var="@pagination-border" id="pagination-border" />
+            <p class="help-block">Border color</p>
+        </div>
+        <div class="col-md-4">
+            <label>@pagination-active-bg</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@brand-primary" data-var="@pagination-active-bg" id="pagination-active-bg" />
+            <p class="help-block">Active background color</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <label>@pagination-active-color</label>
+            <input type="text" class="color-box color-input form-control" placeholder="#fff" value="#fff" data-var="@pagination-active-color" id="pagination-active-color" />
+            <p class="help-block">Active text color</p>
+        </div>
+        <div class="col-md-4">
+            <label>@pagination-disabled-color</label>
+            <input type="text" class="color-box color-input form-control" placeholder="@gray-light" data-var="@pagination-disabled-color" id="pagination-disabled-color" />
+            <p class="help-block">Disabled text color</p>
+        </div>
+    </div>
+</div>
+
+{% include fragments/less/preview-pagination.inc.html %}
