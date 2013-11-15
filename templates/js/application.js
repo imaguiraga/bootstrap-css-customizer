@@ -1058,14 +1058,6 @@ var Application = (function () {
             var theme = controller.setCurrentTheme(templateSelector.getSelectedTemplate());
 
             //newly created themes from external templates
-            /*
-            var templateId = "compiled";
-            var description = "Compiled";
-            
-            if(theme.compiled == true){
-            templateId = theme.themeId;
-            description = theme.name;
-            }//*/
             theme = controller.updateCompiledCSS(theme);
             var templateId = theme.themeId;
             var description = theme.name;
@@ -1084,8 +1076,6 @@ var Application = (function () {
 
             //TODO Application.updateCSS(theme);
             templateSelector.setUserTemplate(templateId);
-
-            //TODO $("#template-selector").val(templateId);
             $("#gradients-check").closest("label").removeClass("disabled");
         });
 
@@ -1208,52 +1198,11 @@ var Application = (function () {
                         onchange: function (container, color) {
                             var $input = this.connectedinput;
 
-                            //tinycolor object is in color.tiny
-                            //HSL are not supported
-                            var colorHex = color.tiny.toHexString();
-                            if (color.tiny.format !== "hex") {
-                                colorHex = color.tiny.toRgbString();
-                            }
-                            console.log("color=" + colorHex);
+                            var format = Application.getColorFormat(color.tiny);
+                            console.log("color=" + format.value);
 
                             //update scope variables double bindings
-                            Application.updateLESSVariables(controller, $input, colorHex);
-                            /* tODO causing problems color.tiny.toString()
-                            var startTime1 = new(Date);
-                            var $this = $(this);
-                            //update scope variables double bindings
-                            //tinycolor object is in color.tiny
-                            var colorHex = color.tiny.toString();
-                            
-                            var $input = this.connectedinput;
-                            if(!($input instanceof jQuery)){
-                            $input = $($input);
-                            }
-                            var key = $input.attr("data-var");
-                            //slow process
-                            //var colorName = $.xcolor.nearestname(colorHex);
-                            if(_DEBUG){
-                            console.log(key+" 0.c - change "+ (new(Date) - startTime1) + "ms");
-                            }
-                            //dynamically update fontcolor
-                            var fontColor = "black";
-                            
-                            if (color.cielch.l < 60) {
-                            fontColor = "white";
-                            }
-                            else {
-                            fontColor = "black";
-                            }
-                            
-                            $this.css("color", fontColor);
-                            
-                            if(_DEBUG){
-                            console.log("onchange - updateLESSVariables "+ key);
-                            console.log(key+" 1.c - change "+ (new(Date) - startTime1) + "ms");
-                            }
-                            
-                            Application.updateLESSVariables(controller,$input,colorHex);
-                            //*/
+                            Application.updateLESSVariables(controller, $input, format.value);
                         }
                     });
 
@@ -1270,14 +1219,7 @@ var Application = (function () {
                         var color = tinycolor(value);
 
                         if (color.ok) {
-                            /*
-                            //HSL are not supported
-                            
-                            var colorHex = color.toHexString();
-                            if(color.format !== "hex"){
-                            colorHex = color.toRgbString();
-                            }//*/
-                            var format = getColorFormat(color);
+                            var format = Application.getColorFormat(color);
                             Application.removeLESSVariablesLinks(controller, $input, format.value);
                         } else {
                             //reset this value to previous one
@@ -1302,7 +1244,7 @@ var Application = (function () {
                         format = "rgb";
                         colorHex = color.toRgbString();
                         }//*/
-                        var format = getColorFormat(color);
+                        var format = Application.getColorFormat(color);
                         $input.attr("data-color-format", format.name);
                         $input.data("color-format", format.name);
                         $input.val(format.value);
@@ -1399,14 +1341,7 @@ var Application = (function () {
                         preferredFormat: "hex6",
                         move: function (color) {
                             var $input = $(this);
-
-                            /*
-                            //HSL are not supported
-                            var colorHex = color.toHexString();
-                            if(color.format !== "hex"){
-                            colorHex = color.toRgbString();
-                            }//*/
-                            var format = getColorFormat(color);
+                            var format = Application.getColorFormat(color);
                             $input.val(format.value);
                             Application.updateLESSVariables(controller, $input, format.value);
                         },
@@ -1416,15 +1351,7 @@ var Application = (function () {
                         },
                         change: function (color) {
                             var $input = $(this);
-
-                            //update scope variables double bindings
-                            /*
-                            //HSL are not supported
-                            var colorHex = color.toHexString();
-                            if(color.format !== "hex"){
-                            colorHex = color.toRgbString();
-                            }//*/
-                            var format = getColorFormat(color);
+                            var format = Application.getColorFormat(color);
                             Application.updateLESSVariables(controller, $input, format.value);
                         }
                     }).show();
@@ -1440,13 +1367,7 @@ var Application = (function () {
                     } else {
                         var color = tinycolor(value);
                         if (color.ok) {
-                            /*
-                            //HSL are not supported
-                            var colorHex = color.toHexString();
-                            if(color.format !== "hex"){
-                            colorHex = color.toRgbString();
-                            }//*/
-                            var format = getColorFormat(color);
+                            var format = Application.getColorFormat(color);
                             Application.removeLESSVariablesLinks(controller, $input, format.value);
                         } else {
                             //reset this value to previous one
@@ -1463,16 +1384,7 @@ var Application = (function () {
                         var newVal = ui.draggable.css('background-color');
                         var color = tinycolor(newVal);
 
-                        /*
-                        var format = "hex";
-                        //HSL are not supported
-                        var colorHex = color.toHexString();
-                        if(color.format !== "hex"){
-                        format = "rgb";
-                        colorHex = color.toRgbString();
-                        }
-                        //*/
-                        var format = getColorFormat(color);
+                        var format = Application.getColorFormat(color);
                         $input.attr("data-color-format", format.name);
                         $input.data("color-format", format.name);
                         $input.val(format.value);
@@ -1896,13 +1808,10 @@ var Application = (function () {
     function () {
         var controller = new Controller();
 
-        //Application.initLocalStorage(controller);
         Application.initGradientsCheck(controller);
 
-        //Application.initDownloadButton(controller,"#btn-download");
         Application.initDownloadButton(controller, "#btn-template-download");
 
-        //Application.initPreviewToggle(controller);
         Application.initDraggable(controller);
 
         Application.initColorPickersV3(controller);

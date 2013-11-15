@@ -1333,7 +1333,7 @@ class Application{
 						onchange: function(container, color) {
                             var $input = this.connectedinput;
                             
-                            var format = getColorFormat(color.tiny);
+                            var format = Application.getColorFormat(color.tiny);
                             console.log("color="+format.value);
 							//update scope variables double bindings
                             Application.updateLESSVariables(controller, $input, format.value);
@@ -1357,7 +1357,7 @@ class Application{
                         var color = tinycolor(value);
                                                                    
                         if(color.ok){
-                            var format = getColorFormat(color);
+                            var format = Application.getColorFormat(color);
                             Application.removeLESSVariablesLinks(controller,$input,format.value);
 
                         }else{
@@ -1385,7 +1385,7 @@ class Application{
                             format = "rgb";
                             colorHex = color.toRgbString();
                         }//*/
-                         var format = getColorFormat(color);                  
+                         var format = Application.getColorFormat(color);                  
                         $input.attr("data-color-format",format.name);
                         $input.data("color-format",format.name);
 						$input.val(format.value);
@@ -1484,7 +1484,7 @@ class Application{
 						preferredFormat: "hex6",
 						move: function(color) {
 							var $input = $(this);	
-                            var format = getColorFormat(color);
+                            var format = Application.getColorFormat(color);
 							$input.val(format.value);
 							Application.updateLESSVariables(controller,$input,format.value);
 						},
@@ -1494,7 +1494,7 @@ class Application{
 						},
 						change: function(color) {
 							var $input = $(this);
-                            var format = getColorFormat(color);
+                            var format = Application.getColorFormat(color);
 							Application.updateLESSVariables(controller,$input,format.value);
 						}
 							
@@ -1512,7 +1512,7 @@ class Application{
                     }else{//does not contain variables
                         var color = tinycolor(value);
                         if(color.ok){
-                            var format = getColorFormat(color);
+                            var format = Application.getColorFormat(color);
                             Application.removeLESSVariablesLinks(controller,$input,format.value);
 
                         }else{
@@ -1532,7 +1532,7 @@ class Application{
 						var newVal = ui.draggable.css('background-color');
                         var color = tinycolor(newVal);
 
-                        var format = getColorFormat(color);
+                        var format = Application.getColorFormat(color);
                         $input.attr("data-color-format",format.name);
                         $input.data("color-format",format.name);
 						$input.val(format.value);
