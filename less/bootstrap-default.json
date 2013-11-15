@@ -1,0 +1,17 @@
+{
+    "version": "3.0.2",
+    "themes": [
+
+        {
+            "name": "Default",
+            "description": "Default",
+            "thumbnail": null,
+            "preview": null,
+            "css": "assets/css/theme/default/bootstrap.css",
+            "cssMin": "assets/css/theme/default/bootstrap.min.css",
+            "cssCdn": null,
+            "less": [],
+            "lessVariables": []
+        }
+    ]
+}
