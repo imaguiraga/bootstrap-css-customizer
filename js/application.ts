@@ -226,6 +226,7 @@ class Controller{
 	static _CORE_LESS : any  = {
 		"lessCore": 	[
 		   /*
+<<<<<<< HEAD
 			"bootstrap/mixins.less",
 
 			"bootstrap/normalize.less",
@@ -274,6 +275,56 @@ class Controller{
 		
 			],
 			"lessVariables": ["bootstrap/variables.less"]
+=======
+			"less/bootstrap/mixins.less",
+
+			"less/bootstrap/normalize.less",
+			"less/bootstrap/print.less",
+
+			"less/bootstrap/scaffolding.less",
+			"less/bootstrap/type.less",
+			"less/bootstrap/code.less",
+			"less/bootstrap/grid.less",
+			"less/bootstrap/tables.less",
+			"less/bootstrap/forms.less",
+			"less/bootstrap/buttons.less",
+
+			"less/bootstrap/component-animations.less",
+			"less/bootstrap/glyphicons.less",
+			"less/bootstrap/dropdowns.less",
+			"less/bootstrap/button-groups.less",
+			"less/bootstrap/input-groups.less",
+			"less/bootstrap/navs.less",
+			"less/bootstrap/navbar.less",
+			"less/bootstrap/breadcrumbs.less",
+			"less/bootstrap/pagination.less",
+			"less/bootstrap/pager.less",
+			"less/bootstrap/labels.less",
+			"less/bootstrap/badges.less",
+			"less/bootstrap/jumbotron.less",
+			"less/bootstrap/thumbnails.less",
+			"less/bootstrap/alerts.less",
+			"less/bootstrap/progress-bars.less",
+			"less/bootstrap/media.less",
+			"less/bootstrap/list-group.less",
+			"less/bootstrap/panels.less",
+			"less/bootstrap/wells.less",
+			"less/bootstrap/close.less",
+
+			"less/bootstrap/modals.less",
+			"less/bootstrap/tooltip.less",
+			"less/bootstrap/popovers.less",
+			"less/bootstrap/carousel.less",
+
+			"less/bootstrap/utilities.less",
+			"less/bootstrap/responsive-utilities.less",
+			//*/
+			"less/bootstrap/bootstrap-ibr.less"
+			//,"less/bootstrap/theme-gradients-ibr.less"
+		
+			],
+			"lessVariables": ["less/bootstrap/variables.less"]
+>>>>>>> gh-pages
 		};
 
 	/**
@@ -284,11 +335,19 @@ class Controller{
 	static _THEME_LESS :any = {
 				"lessCore": [
 				/*
+<<<<<<< HEAD
 				"bootstrap/mixins.less",        
 				//*/
 				"bootstrap/theme-ibr.less"
 				],
 				"lessVariables": ["bootstrap/variables.less"]
+=======
+				"less/bootstrap/mixins.less",        
+				//*/
+				"less/bootstrap/theme-ibr.less"
+				],
+				"lessVariables": ["less/bootstrap/variables.less"]
+>>>>>>> gh-pages
 			};
 			
 	constructor(){
@@ -371,7 +430,11 @@ class Controller{
 					//adding new properties
 					/*
 						"compiled" : true,
+<<<<<<< HEAD
 						"lessVariables": "bootstrap/variables.less",
+=======
+						"lessVariables": "less/bootstrap/variables.less",
+>>>>>>> gh-pages
 						"compiledLessVariables": null,
 						"compiledCssMin": null
 					//*/

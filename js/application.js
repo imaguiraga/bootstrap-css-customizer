@@ -832,16 +832,28 @@ var Controller = (function () {
 
     Controller._CORE_LESS = {
         "lessCore": [
+<<<<<<< HEAD
             "bootstrap/bootstrap-ibr.less"
         ],
         "lessVariables": ["bootstrap/variables.less"]
+=======
+            "less/bootstrap/bootstrap-ibr.less"
+        ],
+        "lessVariables": ["less/bootstrap/variables.less"]
+>>>>>>> gh-pages
     };
 
     Controller._THEME_LESS = {
         "lessCore": [
+<<<<<<< HEAD
             "bootstrap/theme-ibr.less"
         ],
         "lessVariables": ["bootstrap/variables.less"]
+=======
+            "less/bootstrap/theme-ibr.less"
+        ],
+        "lessVariables": ["less/bootstrap/variables.less"]
+>>>>>>> gh-pages
     };
     return Controller;
 })();
