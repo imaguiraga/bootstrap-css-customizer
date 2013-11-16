@@ -226,54 +226,54 @@ class Controller{
 	static _CORE_LESS : any  = {
 		"lessCore": 	[
 		   /*
-			"bootstrap/mixins.less",
+			"less/bootstrap/mixins.less",
 
-			"bootstrap/normalize.less",
-			"bootstrap/print.less",
+			"less/bootstrap/normalize.less",
+			"less/bootstrap/print.less",
 
-			"bootstrap/scaffolding.less",
-			"bootstrap/type.less",
-			"bootstrap/code.less",
-			"bootstrap/grid.less",
-			"bootstrap/tables.less",
-			"bootstrap/forms.less",
-			"bootstrap/buttons.less",
+			"less/bootstrap/scaffolding.less",
+			"less/bootstrap/type.less",
+			"less/bootstrap/code.less",
+			"less/bootstrap/grid.less",
+			"less/bootstrap/tables.less",
+			"less/bootstrap/forms.less",
+			"less/bootstrap/buttons.less",
 
-			"bootstrap/component-animations.less",
-			"bootstrap/glyphicons.less",
-			"bootstrap/dropdowns.less",
-			"bootstrap/button-groups.less",
-			"bootstrap/input-groups.less",
-			"bootstrap/navs.less",
-			"bootstrap/navbar.less",
-			"bootstrap/breadcrumbs.less",
-			"bootstrap/pagination.less",
-			"bootstrap/pager.less",
-			"bootstrap/labels.less",
-			"bootstrap/badges.less",
-			"bootstrap/jumbotron.less",
-			"bootstrap/thumbnails.less",
-			"bootstrap/alerts.less",
-			"bootstrap/progress-bars.less",
-			"bootstrap/media.less",
-			"bootstrap/list-group.less",
-			"bootstrap/panels.less",
-			"bootstrap/wells.less",
-			"bootstrap/close.less",
+			"less/bootstrap/component-animations.less",
+			"less/bootstrap/glyphicons.less",
+			"less/bootstrap/dropdowns.less",
+			"less/bootstrap/button-groups.less",
+			"less/bootstrap/input-groups.less",
+			"less/bootstrap/navs.less",
+			"less/bootstrap/navbar.less",
+			"less/bootstrap/breadcrumbs.less",
+			"less/bootstrap/pagination.less",
+			"less/bootstrap/pager.less",
+			"less/bootstrap/labels.less",
+			"less/bootstrap/badges.less",
+			"less/bootstrap/jumbotron.less",
+			"less/bootstrap/thumbnails.less",
+			"less/bootstrap/alerts.less",
+			"less/bootstrap/progress-bars.less",
+			"less/bootstrap/media.less",
+			"less/bootstrap/list-group.less",
+			"less/bootstrap/panels.less",
+			"less/bootstrap/wells.less",
+			"less/bootstrap/close.less",
 
-			"bootstrap/modals.less",
-			"bootstrap/tooltip.less",
-			"bootstrap/popovers.less",
-			"bootstrap/carousel.less",
+			"less/bootstrap/modals.less",
+			"less/bootstrap/tooltip.less",
+			"less/bootstrap/popovers.less",
+			"less/bootstrap/carousel.less",
 
-			"bootstrap/utilities.less",
-			"bootstrap/responsive-utilities.less",
+			"less/bootstrap/utilities.less",
+			"less/bootstrap/responsive-utilities.less",
 			//*/
-			"bootstrap/bootstrap-ibr.less"
-			//,"bootstrap/theme-gradients-ibr.less"
+			"less/bootstrap/bootstrap-ibr.less"
+			//,"less/bootstrap/theme-gradients-ibr.less"
 		
 			],
-			"lessVariables": ["bootstrap/variables.less"]
+			"lessVariables": ["less/bootstrap/variables.less"]
 		};
 
 	/**
@@ -284,11 +284,11 @@ class Controller{
 	static _THEME_LESS :any = {
 				"lessCore": [
 				/*
-				"bootstrap/mixins.less",        
+				"less/bootstrap/mixins.less",        
 				//*/
-				"bootstrap/theme-ibr.less"
+				"less/bootstrap/theme-ibr.less"
 				],
-				"lessVariables": ["bootstrap/variables.less"]
+				"lessVariables": ["less/bootstrap/variables.less"]
 			};
 			
 	constructor(){
@@ -371,7 +371,7 @@ class Controller{
 					//adding new properties
 					/*
 						"compiled" : true,
-						"lessVariables": "bootstrap/variables.less",
+						"lessVariables": "less/bootstrap/variables.less",
 						"compiledLessVariables": null,
 						"compiledCssMin": null
 					//*/
