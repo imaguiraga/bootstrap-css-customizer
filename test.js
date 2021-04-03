@@ -1,3 +1,8 @@
+let x= 6;
+export function test() {
+    return 'hello';
+}
+/*
 define(["require", "exports"], function (require, exports) {
   "use strict";
   Object.defineProperty(exports, "__esModule", { value: true });
@@ -8,3 +13,4 @@ define(["require", "exports"], function (require, exports) {
   }
   exports.test = test;
 });
+//*/
