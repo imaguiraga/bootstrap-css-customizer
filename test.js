@@ -1,16 +1,4 @@
 let x= 6;
 export function test() {
-    return 'hello';
+    return '======== hello from bootstrap-css-customizer';
 }
-/*
-define(["require", "exports"], function (require, exports) {
-  "use strict";
-  Object.defineProperty(exports, "__esModule", { value: true });
-  exports.test = void 0;
-  let x = 6;
-  function test() {
-      return 'hello';
-  }
-  exports.test = test;
-});
-//*/
