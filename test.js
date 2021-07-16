@@ -1,4 +1,4 @@
 let x= 6;
 export function test() {
-    return 'UNLOADED ==== hello from bootstrap-css-customizer '+ new Date();
+    return 'LOADED ==== hello from bootstrap-css-customizer '+ new Date();
 }
